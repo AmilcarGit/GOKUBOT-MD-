@@ -114,6 +114,7 @@ function progressMission(player, key, amount = 1) {
   if (player.missionDate !== today) {
     player.missionDate = today;
     player.missionProgress = {};
+    player.missionClaimed = false;
   }
   player.missionProgress[key] = (player.missionProgress[key] || 0) + amount;
 }
