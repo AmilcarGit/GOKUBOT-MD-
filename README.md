@@ -226,7 +226,7 @@ No compartas ni subas la copia de seguridad de tu sesión.
 GOKUBOT-MD-
 ├── config.js       # Lee la configuración y el archivo .env
 ├── index.js        # Conexión WhatsApp y comandos principales
-├── navidad.js      # Módulo Saiyajin / Navidad
+├── goku/           # Comandos Goku y temporadas festivas editables\n│   ├── index.js    # Router y respuestas del módulo\n│   ├── temporadas.js # Contenido y temporada activa\n│   └── README.md   # Guía para personalizar temporadas\n├── navidad.js      # Compatibilidad con la ruta anterior
 ├── yui.js          # Integración de comandos YuiAPI
 ├── package.json    # Dependencias y script de inicio
 ├── .env.example   # Plantilla de configuración
