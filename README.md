@@ -1,7 +1,7 @@
 # GokuBot-MD
   menuVideo: read('MENU_VIDEO', 'https://files.catbox.moe/nc2k5n.mp4'),
 
-Bot de WhatsApp basado en Baileys, con comandos generales, búsquedas y descargas multimedia, utilidades de YuiAPI y comandos temáticos de Navidad.
+Bot de WhatsApp basado en Baileys, con una identidad visual temática que combina el universo de Goku y la Navidad, además de comandos generales, búsquedas y utilidades multimedia.
 
 ## Requisitos
 
@@ -53,7 +53,10 @@ Las variables se leen desde el entorno o desde un archivo `.env` si cargas uno c
 - Búsquedas: `.wiki`, `.anime`, `.libro`, `.serie`, `.pais`, `.paper`, `.ebook`, `.musica`
 - Imágenes: `.imagen`, `.pinterest`
 - Utilidades: `.sticker`, `.stickertxt`, `.rmbg`, `.qr`, `.clima`, `.cambio`, `.traducir`, `.hash`, `.uuid`, `.password`
+- Goku: `.goku`, `.ki`, `.transformacion`
 - Navidad: `.navidad`, `.frase`, `.regalo`, `.arbol`, `.felicitar`, `.sorteo`
+
+El menú combina ambos temas: estética Saiyajin con detalles navideños. Los comandos de Goku siguen disponibles aunque `NAVIDAD_ENABLED=false`.
 
 Algunos comandos requieren que configures las claves de API correspondientes.
 
