@@ -2,8 +2,6 @@ const cfg = require('../config');
 const seasonal = require('./temporadas');
 
 const pick = items => items[Math.floor(Math.random() * items.length)];
-const activeName = seasonal.ACTIVE_SEASON;
-const event = cfg.navidad === false || activeName === 'ninguna' ? null : seasonal.seasons[activeName];
 
 function countdown(target) {
   if (!target) return '';
@@ -27,6 +25,7 @@ function tree() {
 }
 
 function menu(p) {
+  const event = seasonal.getEvent();
   const goku = `╭━━〔 🐉 UNIVERSO GOKU 〕━━╮
 │ ${p}goku
 │ ${p}ki
@@ -75,13 +74,14 @@ ${goku}${festive}
 }
 
 const BASE_COMMANDS = new Set(['menu', 'help', 'menú', 'goku', 'ki', 'transformacion', 'transformación']);
-const EVENT_COMMANDS = new Set(['evento', 'navidad', 'frase', 'regalo', 'arbol', 'felicitar', 'sorteo']);
+const EVENT_COMMANDS = new Set(['evento', 'temporada', 'navidad', 'frase', 'regalo', 'arbol', 'felicitar', 'sorteo']);
 
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
   if (!BASE_COMMANDS.has(cmd) && !EVENT_COMMANDS.has(cmd)) return false;
+  const event = seasonal.getEvent();
   if (EVENT_COMMANDS.has(cmd) && !event) return false;
 
-  const reply = value => sock.sendMessage(jid, { text: value }, { quoted: m });
+  const reply = value => sock.sendMessage(jid, { text: seasonal.decorate(value) }, { quoted: m });
 
   switch (cmd) {
     case 'menu': case 'help': case 'menú': {
@@ -105,8 +105,8 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
     case 'transformacion': case 'transformación':
       await reply(`🐉 *TRANSFORMACIONES SAIYAJIN*\n\n${seasonal.goku.transformations.join('\n\n')}`);
       return true;
-    case 'evento': case 'navidad':
-      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown)}\n\n${pick(event.phrases)}\n\n${event.greeting}`);
+    case 'evento': case 'temporada': case 'navidad':
+      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown)}\n\n${pick(event.phrases)}\n\n${event.greeting}\n\n⚙️ Modo: ${cfg.seasons.mode} • Zona: ${cfg.seasons.timezone}`);
       return true;
     case 'frase':
       await reply(`${event.emoji} ${pick(event.phrases)}`);
