@@ -12,7 +12,10 @@ if (fs.existsSync(envPath)) {
 
 const read = (name, fallback = '') => process.env[name] || fallback;
 
-// CONFIGURA AQUÍ LAS TEMPORADAS.\n// mode: 'auto' detecta fechas; 'manual' fuerza la temporada indicada.\n// manual: 'navidad' | 'anio-nuevo' | 'san-valentin' | 'halloween' | 'pascua' | 'ninguna'.\nconst SEASON_CONFIG = {
+// CONFIGURA AQUÍ LAS TEMPORADAS.
+// mode: 'auto' detecta fechas; 'manual' fuerza la temporada indicada.
+// manual: 'navidad' | 'anio-nuevo' | 'san-valentin' | 'halloween' | 'pascua' | 'ninguna'.
+const SEASON_CONFIG = {
   enabled: true,
   mode: 'auto',
   manual: 'navidad',
