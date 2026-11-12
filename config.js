@@ -12,6 +12,13 @@ if (fs.existsSync(envPath)) {
 
 const read = (name, fallback = '') => process.env[name] || fallback;
 
+const SEASON_CONFIG = {
+  enabled: true,
+  mode: 'auto',
+  manual: 'navidad',
+  timezone: 'America/Lima'
+};
+
 module.exports = {
   botName: read('BOT_NAME', 'GokuBot-MD'),
   creator: read('BOT_CREATOR', 'AmilcarGit'),
@@ -24,9 +31,9 @@ module.exports = {
   yuiKey: read('YUI_API_KEY'),
   navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false',
   seasons: {
-    enabled: read('SEASONS_ENABLED', 'true').toLowerCase() !== 'false',
-    mode: read('SEASON_MODE', 'auto').toLowerCase(),
-    manual: read('ACTIVE_SEASON', 'navidad').toLowerCase(),
-    timezone: read('SEASON_TIMEZONE', 'America/Lima')
+    enabled: read('SEASONS_ENABLED', String(SEASON_CONFIG.enabled)).toLowerCase() !== 'false',
+    mode: read('SEASON_MODE', SEASON_CONFIG.mode).toLowerCase(),
+    manual: read('ACTIVE_SEASON', SEASON_CONFIG.manual).toLowerCase(),
+    timezone: read('SEASON_TIMEZONE', SEASON_CONFIG.timezone)
   }
 };
