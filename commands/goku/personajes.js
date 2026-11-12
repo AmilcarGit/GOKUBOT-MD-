@@ -119,10 +119,10 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
     let result;
     if (currentLevel) {
       user.fragments += character.fragments;
-      result = '♻️ *¡DUPLICADO CONVERTIDO!*\\n\\n' + character.stars + ' ' + character.name + '\\n🧩 +' + character.fragments + ' fragmentos\\n🧩 Total: ' + user.fragments;
+      result = '♻️ *¡DUPLICADO CONVERTIDO!*\n\n' + character.stars + ' ' + character.name + '\n🧩 +' + character.fragments + ' fragmentos\n🧩 Total: ' + user.fragments;
     } else {
       user.characters[character.id] = 1;
-      result = '✨ *¡NUEVO GUERRERO OBTENIDO!*\\n\\n' + character.stars + ' *' + character.name + '*\\n🏷️ Rareza: ' + character.rarity + '\\n⚡ Poder: ' + character.power;
+      result = '✨ *¡NUEVO GUERRERO OBTENIDO!*\n\n' + character.stars + ' *' + character.name + '*\n🏷️ Rareza: ' + character.rarity + '\n⚡ Poder: ' + character.power;
     }
 
     await rpg.saveDB();
