@@ -71,7 +71,7 @@ function newPlayer(id, name) {
     id, name: cleanName(name), level: 1, xp: 0, coins: 100,
     wins: 0, losses: 0, training: 0, power: 100,
     balls: [], inventory: {}, transform: 'Base',
-    cooldowns: {}, missionDate: '', missionProgress: {},
+    cooldowns: {}, missionDate: '', missionProgress: {}, missionClaimed: false,
     createdAt: Date.now()
   };
 }
@@ -141,7 +141,7 @@ function fmtTime(ms) {
 
 function mentionedJid(m) {
   const msg = m.message?.ephemeralMessage?.message || m.message?.extendedTextMessage?.contextInfo?.quotedMessage || m.message;
-  const ctx = msg?.extendedTextMessage?.contextInfo || m.message?.extendedTextMessage?.contextInfo;
+  const ctx = m.message?.extendedTextMessage?.contextInfo || m.message?.ephemeralMessage?.message?.extendedTextMessage?.contextInfo;
   return ctx?.mentionedJid?.[0] || null;
 }
 
@@ -298,7 +298,7 @@ async function sendCard(sock, jid, player, m) {
 }
 
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
-  const allowed = new Set(['perfil','nivel','entrenar','transformar','duelo','ranking','misiones','tienda','comprar','inventario','shenlong']);
+  const allowed = new Set(['perfil','nivel','entrenar','transformar','duelo','ranking','misiones','reclamar','tienda','comprar','inventario','shenlong']);
   if (!allowed.has(cmd)) return false;
 
   const sender = (m.key.participant || m.key.remoteJid || '').split('@')[0].split(':')[0];
@@ -386,13 +386,27 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
 
   if (cmd === 'misiones') {
     const today = new Date().toISOString().slice(0, 10);
-    if (player.missionDate !== today) { player.missionDate = today; player.missionProgress = {}; }
+    if (player.missionDate !== today) { player.missionDate = today; player.missionProgress = {}; player.missionClaimed = false; }
     const lines = MISSIONS.map(mission => {
       const count = Math.min(mission.goal, player.missionProgress[mission.id] || 0);
       return `${count >= mission.goal ? '✅' : '▫️'} ${mission.name}: ${count}/${mission.goal} — ${mission.description} — recompensa ${mission.reward} Zenis`;
     });
     await saveDB();
     await reply(`📜 *MISIONES DIARIAS*\n\n${lines.join('\n\n')}\n\nLas recompensas se acreditan al reclamar con ${prefix}reclamar.`);
+    return true;
+  }
+
+  if (cmd === 'reclamar') {
+    const today = new Date().toISOString().slice(0, 10);
+    if (player.missionDate !== today) { player.missionDate = today; player.missionProgress = {}; player.missionClaimed = false; }
+    if (player.missionClaimed) { await reply('Ya reclamaste las recompensas de hoy.'); return true; }
+    const completed = MISSIONS.filter(mission => (player.missionProgress[mission.id] || 0) >= mission.goal);
+    if (!completed.length) { await reply(`Todavía no completaste misiones. Usa ${prefix}misiones para consultar el progreso.`); return true; }
+    const reward = completed.reduce((sum, mission) => sum + mission.reward, 0);
+    player.coins += reward;
+    player.missionClaimed = true;
+    await saveDB();
+    await reply(`🎉 *RECOMPENSAS RECLAMADAS*\n\n${completed.map(mission => '✅ ' + mission.name).join('\n')}\n\n💰 +${reward} Zenis\n💳 Saldo: ${player.coins}`);
     return true;
   }
 
