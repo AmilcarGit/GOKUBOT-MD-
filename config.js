@@ -22,5 +22,11 @@ module.exports = {
   apiKey: read('MEDIA_API_KEY'),
   yuiApi: read('YUI_API_URL', 'https://yuiapi.vercel.app'),
   yuiKey: read('YUI_API_KEY'),
-  navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false'
+  navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false',
+  seasons: {
+    enabled: read('SEASONS_ENABLED', 'true').toLowerCase() !== 'false',
+    mode: read('SEASON_MODE', 'auto').toLowerCase(),
+    manual: read('ACTIVE_SEASON', 'navidad').toLowerCase(),
+    timezone: read('SEASON_TIMEZONE', 'America/Lima')
+  }
 };
