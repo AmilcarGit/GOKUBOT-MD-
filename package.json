@@ -1,0 +1,14 @@
+{
+  "name": "gokubot-md",
+  "version": "1.0.0",
+  "description": "Bot de WhatsApp basado en Baileys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@yui-bails/yui-bails": "^1.4.0",
+    "pino": "^8.19.0",
+    "yui-bails": "npm:@yui-bails/yui-bails@^1.4.0"
+  }
+}
