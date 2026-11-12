@@ -3,14 +3,14 @@ const seasonal = require('./temporadas');
 
 const pick = items => items[Math.floor(Math.random() * items.length)];
 
-function countdown(target) {
+function countdown(target, eventName) {
   if (!target) return '';
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   let date = new Date(now.getFullYear(), target.month, target.day);
   if (today > date) date = new Date(now.getFullYear() + 1, target.month, target.day);
   const days = Math.round((date - today) / 86400000);
-  return days === 0 ? '🎉 ¡¡HOY ES EL DÍA!!' : `⏳ Faltan *${days}* día${days === 1 ? '' : 's'} para ${event.name}.`;
+  return days === 0 ? '🎉 ¡¡HOY ES EL DÍA!!' : `⏳ Faltan *${days}* día${days === 1 ? '' : 's'} para ${eventName}.`;
 }
 
 function tree() {
@@ -106,7 +106,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
       await reply(`🐉 *TRANSFORMACIONES SAIYAJIN*\n\n${seasonal.goku.transformations.join('\n\n')}`);
       return true;
     case 'evento': case 'temporada': case 'navidad':
-      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown)}\n\n${pick(event.phrases)}\n\n${event.greeting}\n\n⚙️ Modo: ${cfg.seasons.mode} • Zona: ${cfg.seasons.timezone}`);
+      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown, event.name)}\n\n${pick(event.phrases)}\n\n${event.greeting}\n\n⚙️ Modo: ${cfg.seasons.mode} • Zona: ${cfg.seasons.timezone}`);
       return true;
     case 'frase':
       await reply(`${event.emoji} ${pick(event.phrases)}`);
