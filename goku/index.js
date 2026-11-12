@@ -44,6 +44,13 @@ function menu(p) {
 │ ${p}reclamar
 │ ${p}tienda / ${p}comprar <id>
 │ ${p}inventario / ${p}shenlong
+╰━━━━━━━━━━━━━━━━━━━━╯
+
+╭━━〔 👥 PERSONAJES 〕━━╮
+│ ${p}personajes
+│ ${p}invocar
+│ ${p}misguerreros
+│ ${p}mejorar <id>
 ╰━━━━━━━━━━━━━━━━━━━━╯`;
   const festive = event ? `\n\n╭━━〔 ${event.emoji} ${event.name.toUpperCase()} 〕━━╮
 │ ${p}evento
