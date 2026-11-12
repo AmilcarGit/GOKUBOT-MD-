@@ -96,3 +96,6 @@ module.exports = {
     ]
   }
 };
+
+module.exports.seasons = module.exports.seasons;
+module.exports.goku = module.exports.goku;
