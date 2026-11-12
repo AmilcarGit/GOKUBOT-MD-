@@ -84,26 +84,44 @@ async function main() {
   })
 
   const p = cfg.prefix
-  const menuText = () => `╭━━━〔 *${cfg.botName}* 〕━━━⬣
-┃ 👑 Creador: ${cfg.creator}
-┃ 📞 Owner: ${cfg.owner ? 'wa.me/' + cfg.owner : 'No configurado'}
-┃ 🔰 Prefijo: ${p}
-╰━━━━━━━━━━━━━━⬣
+  const menuText = () => `╔════════════════════════════════╗
+║   🐉 *GOKUBOT-MD • SAIYAN XMAS* 🎄
+╚════════════════════════════════╝
 
-╭─〔 🔎 *YOUTUBE* 〕
-│ ${p}yts <texto>  → buscar con botones
-│ ${p}play <texto> → buscar con botones
-│ ${p}ytmp3 <texto|link> → audio
-│ ${p}ytmp4 <texto|link> → video
-╰────────────
+       ❄️  ⭐  🎄  ⭐  ❄️
+       *${cfg.botName}*
+   🔥 PODER SAIYAJIN • ESPÍRITU NAVIDEÑO 🔥
 
-╭─〔 ⚙️ *GENERAL* 〕
-│ ${p}menu
-│ ${p}ping
-│ ${p}owner
-│ ${p}menuapi → comandos API Yui
-╰────────────
-_${cfg.botName} • by ${cfg.creator}_`
+╭━━━〔 🐉 *UNIVERSO GOKU* 〕━━━╮
+┃ ⚡ ${p}goku → saludo Saiyajin
+┃ 🔥 ${p}ki → libera tu energía
+┃ 💥 ${p}transformacion → niveles Saiyajin
+╰━━━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+╭━━〔 🎅 *MODO NAVIDAD* 〕━━╮
+┃ 🎄 ${p}navidad → cuenta regresiva
+┃ ✨ ${p}frase → frase navideña
+┃ 🎁 ${p}regalo → regalo sorpresa
+┃ 🌲 ${p}arbol → árbol navideño
+┃ 💌 ${p}felicitar <nombre>
+┃ 🎲 ${p}sorteo → sorteo grupal
+╰━━━━━━━━━━━━━━━━━━━━━━━━╯
+
+╭━━━〔 🎬 *YOUTUBE* 〕━━━╮
+┃ 🔎 ${p}yts <texto> / ${p}play <texto>
+┃ 🎵 ${p}ytmp3 <texto|link>
+┃ 🎥 ${p}ytmp4 <texto|link>
+╰━━━━━━━━━━━━━━━━━━━━━━╯
+
+╭━━━〔 🌐 *UTILIDADES* 〕━━━╮
+┃ ${p}menuapi → comandos de YuiAPI
+┃ ${p}ping → velocidad del bot
+┃ ${p}owner → contacto del creador
+╰━━━━━━━━━━━━━━━━━━━━━━━╯
+
+🎄❄️ *FELICES FIESTAS, GUERRERO Z* ❄️🎄
+👑 ${cfg.creator}  •  🔰 Prefijo: ${p}`
+
 
   async function search(jid, q, m) {
     const d = await api('/api/ytsearch', { q })
