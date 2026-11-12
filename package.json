@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node --check index.js && node --check config.js && node --check goku/index.js && node --check goku/temporadas.js && node --check goku/rpg.js"
+    "test": "node --check index.js && node --check config.js && node --check goku/index.js && node --check goku/temporadas.js && node --check goku/rpg.js && node --check commands/goku/personajes.js"
   },
   "dependencies": {
     "@yui-bails/yui-bails": "^1.4.0",
