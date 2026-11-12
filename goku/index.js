@@ -3,7 +3,7 @@ const seasonal = require('./temporadas');
 
 const pick = items => items[Math.floor(Math.random() * items.length)];
 const activeName = seasonal.ACTIVE_SEASON;
-const event = activeName === 'ninguna' ? null : seasonal.seasons[activeName];
+const event = cfg.navidad === false || activeName === 'ninguna' ? null : seasonal.seasons[activeName];
 
 function countdown(target) {
   if (!target) return '';
