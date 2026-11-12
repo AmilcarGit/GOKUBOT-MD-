@@ -5,4 +5,8 @@ session/
 !.env.example
 npm-debug.log*
 .DS_Store
-\ngoku/data/*.json\ngoku/data/*.tmp\n
+
+goku/data/*.json
+goku/data/*.tmp
+goku/data/*.json
+goku/data/*.tmp
