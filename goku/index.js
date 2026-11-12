@@ -83,7 +83,10 @@ const EVENT_COMMANDS = new Set(['evento', 'temporada', 'navidad', 'frase', 'rega
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
   if (!BASE_COMMANDS.has(cmd) && !EVENT_COMMANDS.has(cmd)) return false;
   const event = seasonal.getEvent();
-  if (EVENT_COMMANDS.has(cmd) && !event) {\n    await sock.sendMessage(jid, { text: 'No hay una temporada activa. Cambia SEASON_MODE a manual y elige ACTIVE_SEASON en config.js si quieres activar una.' }, { quoted: m });\n    return true;\n  }
+  if (EVENT_COMMANDS.has(cmd) && !event) {
+    await sock.sendMessage(jid, { text: 'No hay una temporada activa. Cambia SEASON_MODE a manual y elige ACTIVE_SEASON en config.js si quieres activar una.' }, { quoted: m });
+    return true;
+  }
 
   const reply = value => sock.sendMessage(jid, { text: seasonal.decorate(value) }, { quoted: m });
 
