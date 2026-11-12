@@ -104,14 +104,8 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
   }
 
   if (cmd === 'invocar') {
-    const rpgFile = path.join(__dirname, '../../goku/data/players.json');
-    let rpgDB;
-    try { rpgDB = JSON.parse(fs.readFileSync(rpgFile, 'utf8')); } catch {}
-    const player = rpgDB && rpgDB.players && rpgDB.players[senderId];
-    if (!player) {
-      await send(sock, jid, { text: 'Primero crea tu perfil RPG con ' + prefix + 'perfil y consigue Zenis entrenando.' }, m);
-      return true;
-    }
+    const rpg = require('../../goku/rpg');
+    const player = rpg.getPlayer(senderId, m.pushName || senderId.split('@')[0]);
     if ((Number(player.coins) || 0) < COST) {
       await send(sock, jid, { text: 'Necesitas ' + COST + ' Zenis para invocar. Tu saldo: ' + (player.coins || 0) + '. Entrena con ' + prefix + 'entrenar.' }, m);
       return true;
@@ -125,16 +119,14 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
     let result;
     if (currentLevel) {
       user.fragments += character.fragments;
-      result = '♻️ *¡DUPLICADO CONVERTIDO!*\n\n' + character.stars + ' ' + character.name + '\n🧩 +' + character.fragments + ' fragmentos\n🧩 Total: ' + user.fragments;
+      result = '♻️ *¡DUPLICADO CONVERTIDO!*\\n\\n' + character.stars + ' ' + character.name + '\\n🧩 +' + character.fragments + ' fragmentos\\n🧩 Total: ' + user.fragments;
     } else {
       user.characters[character.id] = 1;
-      result = '✨ *¡NUEVO GUERRERO OBTENIDO!*\n\n' + character.stars + ' *' + character.name + '*\n🏷️ Rareza: ' + character.rarity + '\n⚡ Poder: ' + character.power;
+      result = '✨ *¡NUEVO GUERRERO OBTENIDO!*\\n\\n' + character.stars + ' *' + character.name + '*\\n🏷️ Rareza: ' + character.rarity + '\\n⚡ Poder: ' + character.power;
     }
 
-    const temp = rpgFile + '.tmp';
-    fs.writeFileSync(temp, JSON.stringify(rpgDB, null, 2));
-    fs.renameSync(temp, rpgFile);
-    await saveDB();
+    await rpg.saveDB();
+
     const response = '🎴 *INVOCACIÓN SAIYAJIN*\n\n' + result + '\n\n💰 Coste: ' + COST + ' Zenis\n💳 Saldo: ' + player.coins;
     await send(sock, jid, buttonMessage(response, [
       { id: prefix + 'invocar', label: '🔁 Invocar otra vez' },
