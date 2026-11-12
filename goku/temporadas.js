@@ -1,10 +1,41 @@
-// PERSONALIZA AQUÍ LOS EVENTOS Y TEMPORADAS DE GOKUBOT-MD.
-// Cambia ACTIVE_SEASON por: 'navidad', 'anio-nuevo', 'san-valentin', 'halloween' o 'pascua'.
-// También puedes usar 'ninguna' para desactivar los comandos festivos.
+const cfg = require('../config');
 
-module.exports = {
-  ACTIVE_SEASON: 'navidad',
+function dateParts() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: cfg.seasons.timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+  const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+  return { year: Number(values.year), month: Number(values.month), day: Number(values.day) };
+}
 
+function easterDate(year) {
+  const a = year % 19, b = Math.floor(year / 100), c = year % 100;
+  const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31);
+  return { month, day: (h + l - 7 * m + 114) % 31 + 1 };
+}
+
+function autoSeason() {
+  const { year, month, day } = dateParts();
+  if (month === 12 && day <= 25) return 'navidad';
+  if ((month === 12 && day >= 26) || (month === 1 && day <= 5)) return 'anio-nuevo';
+  if (month === 2 && day <= 14) return 'san-valentin';
+  if (month === 10) return 'halloween';
+  const easter = easterDate(year);
+  const current = new Date(year, month - 1, day);
+  const start = new Date(year, easter.month - 1, easter.day - 3);
+  const end = new Date(year, easter.month - 1, easter.day + 1);
+  if (current >= start && current <= end) return 'pascua';
+  return 'ninguna';
+}
+
+const definitions = {
   seasons: {
     navidad: {
       name: 'Navidad',
@@ -97,5 +128,25 @@ module.exports = {
   }
 };
 
-module.exports.seasons = module.exports.seasons;
-module.exports.goku = module.exports.goku;
+function getActiveSeason() {
+  if (!cfg.seasons.enabled) return 'ninguna';
+  if (cfg.seasons.mode === 'manual') {
+    return Object.prototype.hasOwnProperty.call(definitions.seasons, cfg.seasons.manual)
+      ? cfg.seasons.manual
+      : 'ninguna';
+  }
+  return autoSeason();
+}
+
+function getEvent() {
+  const key = getActiveSeason();
+  return key === 'ninguna' ? null : definitions.seasons[key];
+}
+
+function decorate(message) {
+  const event = getEvent();
+  if (!event) return message;
+  return `${event.emoji} ${message}\n\n_${event.greeting}_`;
+}
+
+module.exports = { ...definitions, getActiveSeason, getEvent, decorate };
