@@ -65,7 +65,7 @@ ${goku}${festive}
 }
 
 const BASE_COMMANDS = new Set(['menu', 'help', 'menú', 'goku', 'ki', 'transformacion', 'transformación']);
-const EVENT_COMMANDS = new Set(['navidad', 'frase', 'regalo', 'arbol', 'felicitar', 'sorteo']);
+const EVENT_COMMANDS = new Set(['evento', 'navidad', 'frase', 'regalo', 'arbol', 'felicitar', 'sorteo']);
 
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
   if (!BASE_COMMANDS.has(cmd) && !EVENT_COMMANDS.has(cmd)) return false;
