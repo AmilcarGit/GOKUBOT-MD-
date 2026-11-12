@@ -452,3 +452,5 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
 };
 
 module.exports.makeCard = makeCard;
+module.exports.getPlayer = getPlayer;
+module.exports.saveDB = saveDB;
