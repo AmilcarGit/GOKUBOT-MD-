@@ -170,6 +170,7 @@ async function main() {
     const cmd = cmdRaw.toLowerCase()
     const text = rest.join(' ')
     try {
+      if (await require('./goku/rpg')(sock, m, jid, cmd, text, p)) return
       if (await require('./navidad')(sock, m, jid, cmd, text, p)) return
       if (await require('./yui')(sock, m, jid, cmd, text, p)) return
       switch (cmd) {
