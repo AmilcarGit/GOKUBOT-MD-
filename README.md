@@ -236,14 +236,19 @@ No compartas ni subas la copia de seguridad de tu sesión.
 
 ```text
 GOKUBOT-MD-
-├── config.js       # Lee la configuración y el archivo .env
-├── index.js        # Conexión WhatsApp y comandos principales
-├── goku/           # Comandos Goku y temporadas festivas editables\n│   ├── index.js    # Router y respuestas del módulo\n│   ├── temporadas.js # Contenido y temporada activa\n│   └── README.md   # Guía para personalizar temporadas\n├── navidad.js      # Compatibilidad con la ruta anterior
-├── yui.js          # Integración de comandos YuiAPI
-├── package.json    # Dependencias y script de inicio
-├── .env.example   # Plantilla de configuración
-├── .gitignore     # Excluye secretos y sesión
-└── session/        # Se crea al vincular; no subir a GitHub
+├── config.js       # Configuración y variables de entorno
+├── index.js        # Conexión WhatsApp y router de comandos
+├── goku/
+│   ├── index.js    # Comandos Goku y temporadas
+│   ├── temporadas.js # Textos festivos editables
+│   ├── rpg.js      # Motor RPG y generador de tarjetas PNG
+│   ├── RPG-README.md # Guía del sistema RPG
+│   └── data/       # Perfiles locales (se crea al jugar)
+├── navidad.js      # Compatibilidad con la ruta anterior
+├── yui.js          # Integración de YuiAPI
+├── package.json
+├── .env.example
+└── session/        # Sesión privada, no subir
 ```
 
 ## ❓ Problemas frecuentes
