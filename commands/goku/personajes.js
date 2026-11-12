@@ -128,10 +128,28 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
     await rpg.saveDB();
 
     const response = '🎴 *INVOCACIÓN SAIYAJIN*\n\n' + result + '\n\n💰 Coste: ' + COST + ' Zenis\n💳 Saldo: ' + player.coins;
-    await send(sock, jid, buttonMessage(response, [
-      { id: prefix + 'invocar', label: '🔁 Invocar otra vez' },
-      { id: prefix + 'misguerreros', label: '👥 Ver colección' }
-    ], 'GOKUBOT-MD • SUMMON'), m);
+    const card = rpg.makeCard({
+      name: character.name,
+      level: 1,
+      xp: 0,
+      coins: player.coins,
+      wins: 0,
+      losses: 0,
+      balls: [],
+      power: character.power,
+      inventory: {}
+    });
+    await send(sock, jid, {
+      image: card,
+      mimetype: 'image/png',
+      caption: response,
+      footer: 'GOKUBOT-MD • CHARACTER CARD',
+      buttons: [
+        { buttonId: prefix + 'invocar', buttonText: { displayText: '🔁 Invocar otra vez' }, type: 1 },
+        { buttonId: prefix + 'misguerreros', buttonText: { displayText: '👥 Ver colección' }, type: 1 }
+      ],
+      headerType: 4
+    }, m);
     return true;
   }
 
