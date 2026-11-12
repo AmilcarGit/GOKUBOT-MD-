@@ -154,14 +154,14 @@ Usa el prefijo que hayas configurado. Con el valor predeterminado, todos los eje
 
 | Comando | Función |
 |---|---|
-| `.navidad` | Cuenta regresiva y frase navideña |
+| `.evento` / `.navidad` | Muestra el evento de la temporada activa |
 | `.frase` | Frase aleatoria |
 | `.regalo` | Regalo sorpresa |
 | `.arbol` | Árbol navideño en texto |
 | `.felicitar <nombre>` | Felicitación personalizada |
 | `.sorteo` | Elige un participante al azar en un grupo |
 
-Para desactivar el módulo navideño, cambia `NAVIDAD_ENABLED=false` en `.env`. Los comandos Saiyajin permanecen disponibles.
+Para cambiar el evento (Navidad, Año Nuevo, San Valentín, Halloween o Pascua), edita `ACTIVE_SEASON` en `goku/temporadas.js`. Usa `ninguna` para desactivar los comandos festivos. Los comandos Saiyajin permanecen disponibles.
 
 ### 🎬 YouTube y multimedia
 
