@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
+const seasonal = require('./temporadas');
 
 const DATA_DIR = path.join(__dirname, 'data');
 const DATA_FILE = path.join(DATA_DIR, 'players.json');
@@ -294,7 +295,7 @@ async function sendCard(sock, jid, player, m) {
   await sock.sendMessage(jid, {
     image,
     mimetype: 'image/png',
-    caption: `🐉 *PERFIL SAIYAJIN*\n👤 ${player.name}\n⭐ Nivel: ${player.level}\n🏅 Rango: ${rankFor(player.level).name}\n⚡ Poder: ${powerFor(player).toLocaleString('es-PE')}\n🔥 Transformación: ${transformFor(player.level).name}\n💰 Zenis: ${player.coins}`
+    caption: seasonal.decorate(`🐉 *PERFIL SAIYAJIN*\n👤 ${player.name}\n⭐ Nivel: ${player.level}\n🏅 Rango: ${rankFor(player.level).name}\n⚡ Poder: ${powerFor(player).toLocaleString('es-PE')}\n🔥 Transformación: ${transformFor(player.level).name}\n💰 Zenis: ${player.coins}`)
   }, { quoted: m });
 }
 
@@ -306,7 +307,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
   const senderId = m.key.participant || m.key.remoteJid;
   const displayName = m.pushName || sender;
   const player = getPlayer(senderId, displayName);
-  const reply = value => sock.sendMessage(jid, { text: value }, { quoted: m });
+  const reply = value => sock.sendMessage(jid, { text: seasonal.decorate(value) }, { quoted: m });
 
   if (cmd === 'perfil') {
     await saveDB();
@@ -371,7 +372,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
     progressMission(target, 'social');
     await saveDB();
     await sock.sendMessage(jid, {
-      text: `⚔️ *DUELO SAIYAJIN*\n\n🥊 ${player.name}: ${Math.floor(a).toLocaleString('es-PE')} poder\n🥊 ${target.name}: ${Math.floor(b).toLocaleString('es-PE')} poder\n\n🏆 ¡Ganador: @${winner.id.split('@')[0]}!\n💰 +80 Zenis y +45 XP\n${levels ? '⭐ ¡Subió de nivel!' : ''}`,
+      text: seasonal.decorate(`⚔️ *DUELO SAIYAJIN*\n\n🥊 ${player.name}: ${Math.floor(a).toLocaleString('es-PE')} poder\n🥊 ${target.name}: ${Math.floor(b).toLocaleString('es-PE')} poder\n\n🏆 ¡Ganador: @${winner.id.split('@')[0]}!\n💰 +80 Zenis y +45 XP\n${levels ? '⭐ ¡Subió de nivel!' : ''}`),
       mentions: [player.id, target.id]
     }, { quoted: m });
     return true;
