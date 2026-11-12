@@ -1,4 +1,5 @@
 # GokuBot-MD
+  menuVideo: read('MENU_VIDEO', 'https://files.catbox.moe/nc2k5n.mp4'),
 
 Bot de WhatsApp basado en Baileys, con comandos generales, búsquedas y descargas multimedia, utilidades de YuiAPI y comandos temáticos de Navidad.
 
