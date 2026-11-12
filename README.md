@@ -7,6 +7,8 @@ Bot de WhatsApp construido con Node.js y Baileys. Combina comandos de Goku, un m
 ## ✨ Características
 
 - 🐉 Comandos temáticos de Goku y transformaciones Saiyajin.
+- ⚔️ Sistema RPG Saiyajin con niveles, experiencia, duelos, misiones, tienda y esferas del dragón.
+- 🖼️ Tarjetas de perfil PNG generadas localmente, sin API de imágenes.
 - 🎄 Comandos navideños: cuenta regresiva, frases, regalos, árbol y sorteos.
 - 🎬 Búsqueda y descarga multimedia de YouTube.
 - 🌐 Herramientas de YuiAPI: búsquedas, stickers, QR, clima, conversión, traducción y más.
@@ -149,6 +151,16 @@ Usa el prefijo que hayas configurado. Con el valor predeterminado, todos los eje
 | `.goku` | Saludo temático de Goku |
 | `.ki` | Lectura de ki ficticia y recreativa |
 | `.transformacion` | Muestra transformaciones Saiyajin |
+| `.perfil` | Genera una tarjeta de perfil PNG |
+| `.nivel` | Consulta nivel, XP y poder |
+| `.entrenar` | Gana XP y Zenis |
+| `.transformar` | Consulta transformaciones desbloqueadas |
+| `.duelo @usuario` | Reta a otro jugador |
+| `.ranking` | Top 10 guerreros |
+| `.misiones` / `.reclamar` | Misiones y recompensas diarias |
+| `.tienda` / `.comprar <id>` | Tienda de objetos |
+| `.inventario` | Objetos y esferas reunidas |
+| `.shenlong` | Canjea las siete esferas |
 
 ### 🎄 Navidad
 
@@ -196,7 +208,7 @@ Los comandos de YuiAPI requieren una clave válida en `YUI_API_KEY`. Las funcion
 1. Cambia `BOT_NAME`, `BOT_CREATOR` y `BOT_PREFIX` en `.env`.
 2. Cambia `MENU_VIDEO` por una URL directa a tu propio video MP4 o conserva el video predeterminado.
 3. Configura `BOT_OWNER` para que el comando `.owner` muestre tu contacto.
-4. Añade tus comandos en `index.js` o crea un módulo JavaScript separado siguiendo el patrón de `navidad.js` y `yui.js`.
+4. Personaliza Goku y las temporadas desde `goku/temporadas.js`. El RPG está en `goku/rpg.js` y su guía en `goku/RPG-README.md`.
 5. Reinicia el proceso con `npm start` para aplicar los cambios.
 
 ## 🔄 Actualizar el bot
