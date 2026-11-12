@@ -118,7 +118,7 @@ El archivo `.env` es privado y no se sube a GitHub. Estas son las variables disp
 | `MEDIA_API_KEY` | Clave del servicio multimedia, si el proveedor la requiere | Tu clave privada |
 | `YUI_API_URL` | URL base de YuiAPI | `https://yuiapi.vercel.app` |
 | `YUI_API_KEY` | Clave necesaria para los comandos de YuiAPI | Tu clave privada |
-| `SEASONS_ENABLED` | Activa o desactiva todas las temporadas | `true` / `false` |\n| `SEASON_MODE` | `auto` detecta la fecha; `manual` usa la temporada elegida | `auto` / `manual` |\n| `ACTIVE_SEASON` | Temporada usada en modo manual | `navidad`, `anio-nuevo`, `san-valentin`, `halloween`, `pascua`, `ninguna` |\n| `SEASON_TIMEZONE` | Zona horaria del calendario automático | `America/Lima` |
+
 
 ### Ejemplo de archivo .env
 
@@ -173,7 +173,7 @@ Usa el prefijo que hayas configurado. Con el valor predeterminado, todos los eje
 | `.felicitar <nombre>` | Felicitación personalizada |
 | `.sorteo` | Elige un participante al azar en un grupo |
 
-Las temporadas se detectan automáticamente según el calendario de Perú: Navidad (1–25 dic.), Año Nuevo (26 dic.–5 ene.), San Valentín (1–14 feb.), Pascua (desde 3 días antes hasta 1 día después del domingo de Pascua) y Halloween (octubre). En modo automático, fuera de esas fechas no se muestra un evento. Para elegir manualmente, cambia `SEASON_MODE=manual` y selecciona `ACTIVE_SEASON` en `config.js` o en `.env`. También puedes desactivar todo con `SEASONS_ENABLED=false`. El menú, los textos festivos y las respuestas del RPG usan el tema activo.
+Las temporadas se detectan automáticamente según el calendario de Perú: Navidad (1–25 dic.), Año Nuevo (26 dic.–5 ene.), San Valentín (1–14 feb.), Pascua (desde 3 días antes hasta 1 día después del domingo de Pascua) y Halloween (octubre). En modo automático, fuera de esas fechas no se muestra un evento. Para elegir manualmente, abre `config.js` y cambia `SEASON_CONFIG.mode` a `'manual'` y `SEASON_CONFIG.manual` al evento deseado. Para desactivar todas las temporadas, usa `enabled: false`. El menú, los textos festivos y las respuestas del RPG usan el tema activo.
 
 ### 🎬 YouTube y multimedia
 
