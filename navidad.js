@@ -111,7 +111,9 @@ const NAMES = new Set([
 ])
 
 module.exports = async function (sock, m, jid, cmd, text, p) {
-  if (cfg.navidad === false || !NAMES.has(cmd)) return false
+  if (!NAMES.has(cmd)) return false
+  const gokuCommands = ['goku', 'ki', 'transformacion', 'transformación']
+  if (cfg.navidad === false && !gokuCommands.includes(cmd)) return false
   const reply = t => sock.sendMessage(jid, { text: t }, { quoted: m })
 
   switch (cmd) {
