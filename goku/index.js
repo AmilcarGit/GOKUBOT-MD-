@@ -13,8 +13,12 @@ function countdown(target, eventName) {
   return days === 0 ? '🎉 ¡¡HOY ES EL DÍA!!' : `⏳ Faltan *${days}* día${days === 1 ? '' : 's'} para ${eventName}.`;
 }
 
-function tree() {
-  const decorations = ['🎄', '🎁', '🔴', '🟡', '✨'];
+function tree(event) {
+  const decorations = event.name === 'Halloween' ? ['🎃', '👻', '🦇', '💀', '✨']
+    : event.name === 'San Valentín' ? ['💘', '🌹', '💝', '❤️', '✨']
+    : event.name === 'Año Nuevo' ? ['🎆', '🎉', '🥂', '⭐', '✨']
+    : event.name === 'Pascua' ? ['🐰', '🥚', '🌷', '🐣', '✨']
+    : ['🎄', '🎁', '🔴', '🟡', '✨'];
   let result = '          ⭐\n';
   for (let i = 1; i <= 6; i++) {
     let row = '';
@@ -79,7 +83,7 @@ const EVENT_COMMANDS = new Set(['evento', 'temporada', 'navidad', 'frase', 'rega
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
   if (!BASE_COMMANDS.has(cmd) && !EVENT_COMMANDS.has(cmd)) return false;
   const event = seasonal.getEvent();
-  if (EVENT_COMMANDS.has(cmd) && !event) return false;
+  if (EVENT_COMMANDS.has(cmd) && !event) {\n    await sock.sendMessage(jid, { text: 'No hay una temporada activa. Cambia SEASON_MODE a manual y elige ACTIVE_SEASON en config.js si quieres activar una.' }, { quoted: m });\n    return true;\n  }
 
   const reply = value => sock.sendMessage(jid, { text: seasonal.decorate(value) }, { quoted: m });
 
