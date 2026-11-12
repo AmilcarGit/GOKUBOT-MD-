@@ -33,7 +33,7 @@ function menu(p) {
 │ ${p}transformacion
 ╰━━━━━━━━━━━━━━━━━━━━╯`;
   const festive = event ? `\n\n╭━━〔 ${event.emoji} ${event.name.toUpperCase()} 〕━━╮
-│ ${p}navidad
+│ ${p}evento
 │ ${p}frase
 │ ${p}regalo
 │ ${p}arbol
@@ -95,7 +95,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
     case 'transformacion': case 'transformación':
       await reply(`🐉 *TRANSFORMACIONES SAIYAJIN*\n\n${seasonal.goku.transformations.join('\n\n')}`);
       return true;
-    case 'navidad':
+    case 'evento': case 'navidad':
       await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown)}\n\n${pick(event.phrases)}\n\n${event.greeting}`);
       return true;
     case 'frase':
