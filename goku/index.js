@@ -31,6 +31,16 @@ function menu(p) {
 │ ${p}goku
 │ ${p}ki
 │ ${p}transformacion
+╰━━━━━━━━━━━━━━━━━━━━╯
+
+╭━━〔 ⚔️ SAIYAJIN RPG 〕━━╮
+│ ${p}perfil / ${p}nivel
+│ ${p}entrenar / ${p}transformar
+│ ${p}duelo @usuario
+│ ${p}ranking / ${p}misiones
+│ ${p}reclamar
+│ ${p}tienda / ${p}comprar <id>
+│ ${p}inventario / ${p}shenlong
 ╰━━━━━━━━━━━━━━━━━━━━╯`;
   const festive = event ? `\n\n╭━━〔 ${event.emoji} ${event.name.toUpperCase()} 〕━━╮
 │ ${p}evento
