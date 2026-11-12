@@ -12,7 +12,7 @@ if (fs.existsSync(envPath)) {
 
 const read = (name, fallback = '') => process.env[name] || fallback;
 
-const SEASON_CONFIG = {
+// CONFIGURA AQUÍ LAS TEMPORADAS.\n// mode: 'auto' detecta fechas; 'manual' fuerza la temporada indicada.\n// manual: 'navidad' | 'anio-nuevo' | 'san-valentin' | 'halloween' | 'pascua' | 'ninguna'.\nconst SEASON_CONFIG = {
   enabled: true,
   mode: 'auto',
   manual: 'navidad',
@@ -31,9 +31,6 @@ module.exports = {
   yuiKey: read('YUI_API_KEY'),
   navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false',
   seasons: {
-    enabled: read('SEASONS_ENABLED', String(SEASON_CONFIG.enabled)).toLowerCase() !== 'false',
-    mode: read('SEASON_MODE', SEASON_CONFIG.mode).toLowerCase(),
-    manual: read('ACTIVE_SEASON', SEASON_CONFIG.manual).toLowerCase(),
-    timezone: read('SEASON_TIMEZONE', SEASON_CONFIG.timezone)
+    ...SEASON_CONFIG
   }
 };
