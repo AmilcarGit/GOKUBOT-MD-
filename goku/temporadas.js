@@ -129,7 +129,7 @@ const definitions = {
 };
 
 function getActiveSeason() {
-  if (!cfg.seasons.enabled) return 'ninguna';
+  if (!cfg.seasons.enabled || cfg.navidad === false) return 'ninguna';
   if (cfg.seasons.mode === 'manual') {
     return Object.prototype.hasOwnProperty.call(definitions.seasons, cfg.seasons.manual)
       ? cfg.seasons.manual
