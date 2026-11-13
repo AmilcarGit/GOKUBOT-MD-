@@ -14,7 +14,7 @@ async function main() {
   const makeWASocket = (typeof B.default === 'function' ? B.default : B.default?.default) || B.makeWASocket
   const { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion, Browsers, makeCacheableSignalKeyStore, delay } = B.default && typeof B.default === 'object' ? { ...B.default, ...B } : B
 
-  const { state, saveCreds } = await useMultiFileAuthState('session')
+  const { state, saveCreds } = await useMultiFileAuthState(cfg.sessionDir)
   let version
   try { version = (await fetchLatestBaileysVersion()).version } catch {}
   const logger = pino({ level: 'silent' })
@@ -29,7 +29,14 @@ async function main() {
   })
 
   if (!sock.authState.creds.registered) {
-    const num = (await ask('📱 Número del bot con código de país (ej: 519XXXXXXXX): ')).replace(/\D/g, '')
+    let num = cfg.botNumber
+    if (!num) {
+      if (!process.stdin.isTTY) {
+        console.log('❌ Falta BOT_NUMBER (número del bot con código de país, solo dígitos) para generar el código de vinculación.')
+        process.exit(1)
+      }
+      num = (await ask('📱 Número del bot con código de país (ej: 519XXXXXXXX): ')).replace(/\D/g, '')
+    }
     await delay(2500)
     const code = await sock.requestPairingCode(num)
     console.log('\n🔑 Código de vinculación: ' + (code?.match(/.{1,4}/g)?.join('-') || code))
@@ -42,7 +49,7 @@ async function main() {
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode
       if (code === DisconnectReason.loggedOut) {
-        console.log('❌ Sesión cerrada. Borra la carpeta session y vuelve a iniciar.')
+        console.log('❌ Sesión cerrada. Borra la carpeta de sesión (SESSION_DIR) y vuelve a iniciar.')
         process.exit(0)
       }
       console.log('🔄 Reconectando...')

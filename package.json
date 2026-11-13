@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Bot de WhatsApp basado en Baileys",
   "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node index.js",
     "test": "node scripts/check.js"

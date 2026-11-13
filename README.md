@@ -211,6 +211,10 @@ Los comandos de YuiAPI requieren una clave válida en `YUI_API_KEY`. Las funcion
 4. Personaliza las frases y regalos en `commands/goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `commands/goku/rpg.js`; las guías están en `docs/` (comandos, temporadas y RPG).
 5. Reinicia el proceso con `npm start` para aplicar los cambios.
 
+## ☁️ Despliegue en Railway
+
+Consulta la guía paso a paso en [`docs/railway.md`](docs/railway.md): necesitas un Volume para conservar la sesión y la variable `BOT_NUMBER` para generar el código de vinculación.
+
 ## 🔄 Actualizar el bot
 
 Antes de actualizar, conserva una copia privada de tu archivo `.env` y de la carpeta `session/`. Después:
@@ -255,6 +259,7 @@ GOKUBOT-MD-
 │   └── check.js        # Validación de sintaxis (npm test)
 ├── docs/
 │   ├── comandos.md     # Lista de comandos por categoría
+│   ├── railway.md      # Guía de despliegue en Railway
 │   ├── temporadas.md   # Guía de temporadas
 │   └── rpg.md          # Guía del sistema RPG
 ├── data/               # Perfiles locales (se crea al jugar, no se sube)

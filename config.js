@@ -26,6 +26,8 @@ module.exports = {
   botName: read('BOT_NAME', 'GokuBot-MD'),
   creator: read('BOT_CREATOR', 'AmilcarGit'),
   owner: read('BOT_OWNER'),
+  botNumber: read('BOT_NUMBER').replace(/\D/g, ''),
+  sessionDir: read('SESSION_DIR', path.join(__dirname, 'session')),
   prefix: read('BOT_PREFIX', '.'),
   menuVideo: read('MENU_VIDEO', 'https://files.catbox.moe/nc2k5n.mp4'),
   api: read('MEDIA_API_URL', 'https://api-yosoyyo-api-ofc.onrender.com'),
