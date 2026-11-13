@@ -208,7 +208,7 @@ Los comandos de YuiAPI requieren una clave válida en `YUI_API_KEY`. Las funcion
 1. Cambia `BOT_NAME`, `BOT_CREATOR` y `BOT_PREFIX` en `.env`.
 2. Cambia `MENU_VIDEO` por una URL directa a tu propio video MP4 o conserva el video predeterminado.
 3. Configura `BOT_OWNER` para que el comando `.owner` muestre tu contacto.
-4. Personaliza las frases y regalos en `commands/goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `commands/goku/rpg.js`; las guías están en `docs/temporadas.md` y `docs/rpg.md`.
+4. Personaliza las frases y regalos en `commands/goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `commands/goku/rpg.js`; las guías están en `docs/` (comandos, temporadas y RPG).
 5. Reinicia el proceso con `npm start` para aplicar los cambios.
 
 ## 🔄 Actualizar el bot
@@ -236,20 +236,25 @@ No compartas ni subas la copia de seguridad de tu sesión.
 
 ```text
 GOKUBOT-MD-
-├── index.js            # Conexión WhatsApp y router de comandos
+├── index.js            # Conexión WhatsApp
 ├── config.js           # Configuración y variables de entorno
 ├── commands/
+│   ├── index.js        # Router: orden y registro de comandos
+│   ├── general.js      # ping, owner
+│   ├── youtube.js      # Búsqueda y descarga de YouTube
 │   ├── yui.js          # Integración de YuiAPI
 │   └── goku/
-│       ├── index.js        # Comandos Goku y temporadas
+│       ├── index.js        # Menú, Goku y temporadas
 │       ├── temporadas.js   # Textos festivos editables
-│       ├── rpg.js          # Motor RPG y generador de tarjetas PNG
+│       ├── rpg.js          # Motor RPG y tarjetas PNG
 │       └── personajes.js   # Colección de personajes
 ├── lib/
+│   ├── message.js      # Lectura de mensajes entrantes
 │   └── paths.js        # Rutas compartidas y carpeta de datos
 ├── scripts/
 │   └── check.js        # Validación de sintaxis (npm test)
 ├── docs/
+│   ├── comandos.md     # Lista de comandos por categoría
 │   ├── temporadas.md   # Guía de temporadas
 │   └── rpg.md          # Guía del sistema RPG
 ├── data/               # Perfiles locales (se crea al jugar, no se sube)
