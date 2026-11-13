@@ -12,20 +12,22 @@ if (fs.existsSync(envPath)) {
 
 const read = (name, fallback = '') => process.env[name] || fallback;
 
-// CONFIGURA AQUÍ LAS TEMPORADAS.
-// mode: 'auto' detecta fechas; 'manual' fuerza la temporada indicada.
-// manual: 'navidad' | 'anio-nuevo' | 'san-valentin' | 'halloween' | 'pascua' | 'ninguna'.
+// TEMPORADAS (se pueden cambiar con variables de entorno o editando aquí).
+// SEASON_MODE: 'theme' usa la temporada del tema activo (themes/*.js);
+//              'auto' detecta fechas; 'manual' fuerza la temporada de ACTIVE_SEASON.
+// ACTIVE_SEASON: 'navidad' | 'anio-nuevo' | 'san-valentin' | 'halloween' | 'pascua' | 'ninguna'.
 const SEASON_CONFIG = {
-  enabled: true,
-  mode: 'auto',
-  manual: 'navidad',
-  timezone: 'America/Lima'
+  enabled: read('SEASONS_ENABLED', 'true').toLowerCase() !== 'false',
+  mode: read('SEASON_MODE', 'theme'),
+  manual: read('ACTIVE_SEASON', 'navidad'),
+  timezone: read('SEASON_TIMEZONE', 'America/Lima')
 };
 
 module.exports = {
   botName: read('BOT_NAME', 'GokuBot-MD'),
   creator: read('BOT_CREATOR', 'AmilcarGit'),
   owner: read('BOT_OWNER'),
+  theme: read('BOT_THEME', 'navidad'),
   botNumber: read('BOT_NUMBER').replace(/\D/g, ''),
   sessionDir: read('SESSION_DIR', path.join(__dirname, 'session')),
   prefix: read('BOT_PREFIX', '.'),

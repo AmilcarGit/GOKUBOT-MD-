@@ -1,17 +1,22 @@
 // Router de comandos: cada módulo recibe (sock, m, jid, cmd, text, prefix)
 // y devuelve true si atendió el comando. El orden define la prioridad.
 const handlers = [
+  require('./menu'),             // Menú principal (themed)
   require('./goku/rpg'),         // RPG: perfil, entrenar, duelo, tienda...
   require('./goku/personajes'),  // Colección de personajes
-  require('./goku'),             // Menú, Goku y temporadas
+  require('./goku'),             // Goku y temporadas
   require('./yui'),              // Utilidades de YuiAPI
   require('./general'),          // ping, owner
-  require('./youtube')           // YouTube (respaldo sin YuiAPI)
+  require('./youtube')           // YouTube: yts, play, ytmp3, ytmp4
 ]
 
-module.exports = async function runCommand(...args) {
+const { wrapSock } = require('../lib/theme')
+
+// Todo mensaje saliente pasa por el tema activo (themes/*.js).
+module.exports = async function runCommand(sock, ...args) {
+  const themed = wrapSock(sock)
   for (const handler of handlers) {
-    if (await handler(...args)) return true
+    if (await handler(themed, ...args)) return true
   }
   return false
 }

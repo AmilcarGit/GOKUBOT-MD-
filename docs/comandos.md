@@ -1,11 +1,15 @@
 # Comandos de GokuBot-MD
 
+Todos los mensajes salen con el tema activo (`BOT_THEME`, carpeta `themes/`).
+
 Los ejemplos usan el prefijo `.` (configurable con `BOT_PREFIX`). Cada categoría vive en un archivo distinto dentro de `commands/`; el orden de prioridad está en `commands/index.js`.
+
+## 📋 Menú — `commands/menu.js`
+`.menu` / `.help`. La lista de comandos del menú está en `CATEGORIES` dentro de ese archivo.
 
 ## 🐉 Goku y temporadas — `commands/goku/index.js`
 | Comando | Descripción |
 |---|---|
-| `.menu` / `.help` | Menú principal |
 | `.goku` | Saludo Saiyajin |
 | `.ki` | Lectura de energía |
 | `.transformacion` | Niveles Saiyajin |
@@ -25,19 +29,23 @@ Guía completa en [rpg.md](rpg.md).
 `.personajes` (o `.coleccion`) · `.invocar` · `.misguerreros` · `.mejorar <id>`
 
 ## 🌐 Utilidades YuiAPI — `commands/yui.js`
-Requieren `YUI_API_KEY` en `.env`.
+Requieren `YUI_API_KEY`.
 
 - **Búsquedas:** `.wiki` `.anime` `.libro` `.serie` `.pais` `.paper` `.ebook` `.musica`
 - **Imágenes:** `.imagen` `.pinterest` `.pindl`
 - **Stickers:** `.sticker` (`.s`) `.stickertxt` `.rmbg`
 - **Herramientas:** `.qr` `.clima` `.cambio` `.traducir` `.hash` `.uuid` `.password` `.plan`
-- **YouTube:** `.ytmp3` `.yta` `.ytaudio` `.ytmp4` `.ytv` `.ytvideo`
 - `.menuapi`: lista de comandos de YuiAPI
 
-## 🎬 YouTube (respaldo) — `commands/youtube.js`
-`.yts` / `.play` / `.ytsearch <texto>` · `.ytmp3` · `.ytmp4`
+## 🎬 YouTube — `commands/youtube.js`
+| Comando | Descripción |
+|---|---|
+| `.yts <texto>` (`.ytsearch`) | 5 resultados numerados |
+| `.play <texto>` | Busca y envía el audio del primer resultado |
+| `.ytmp3` (`.yta`, `.ytaudio`) `<texto \| link \| nº>` | Descarga audio |
+| `.ytmp4` (`.ytv`, `.ytvideo`) `<texto \| link \| nº>` | Descarga video |
 
-Usa `MEDIA_API_URL`. Si hay `YUI_API_KEY`, `.ytmp3` y `.ytmp4` los atiende YuiAPI.
+Tras `.yts`, el número elige un resultado: `.ytmp3 2`. Se prueba YuiAPI primero y luego `MEDIA_API_URL` como respaldo (`lib/youtube.js`). Límite: 90 MB.
 
 ## ⚙️ Generales — `commands/general.js`
 `.ping` · `.owner`

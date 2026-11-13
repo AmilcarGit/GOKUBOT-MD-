@@ -28,88 +28,20 @@ function tree(event) {
   return result + '          🟫🟫';
 }
 
-function menu(p) {
-  const event = seasonal.getEvent();
-  const goku = `╭━━〔 🐉 UNIVERSO GOKU 〕━━╮
-│ ${p}goku
-│ ${p}ki
-│ ${p}transformacion
-╰━━━━━━━━━━━━━━━━━━━━╯
-
-╭━━〔 ⚔️ SAIYAJIN RPG 〕━━╮
-│ ${p}perfil / ${p}nivel
-│ ${p}entrenar / ${p}transformar
-│ ${p}duelo @usuario
-│ ${p}ranking / ${p}misiones
-│ ${p}reclamar
-│ ${p}tienda / ${p}comprar <id>
-│ ${p}inventario / ${p}shenlong
-╰━━━━━━━━━━━━━━━━━━━━╯
-
-╭━━〔 👥 PERSONAJES 〕━━╮
-│ ${p}personajes
-│ ${p}invocar
-│ ${p}misguerreros
-│ ${p}mejorar <id>
-╰━━━━━━━━━━━━━━━━━━━━╯`;
-  const festive = event ? `\n\n╭━━〔 ${event.emoji} ${event.name.toUpperCase()} 〕━━╮
-│ ${p}evento
-│ ${p}frase
-│ ${p}regalo
-│ ${p}arbol
-│ ${p}felicitar <nombre>
-│ ${p}sorteo
-╰━━━━━━━━━━━━━━━━━━━━╯` : '';
-  return `╔════════════════════════════════╗
-║       🐉 *GOKUBOT-MD*          ║
-╚════════════════════════════════╝
-
-* ${cfg.botName} *
-🔥 PODER SAIYAJIN 🔥
-
-${goku}${festive}
-
-╭━━〔 🎬 YOUTUBE 〕━━╮
-│ ${p}yts <texto> / ${p}play <texto>
-│ ${p}ytmp3 <texto|link>
-│ ${p}ytmp4 <texto|link>
-╰━━━━━━━━━━━━━━━━━━╯
-
-╭━━〔 🌐 UTILIDADES 〕━━╮
-│ ${p}menuapi
-│ ${p}ping
-│ ${p}owner
-╰━━━━━━━━━━━━━━━━━━╯
-
-👑 ${cfg.creator} • Prefijo: ${p}`;
-}
-
-const BASE_COMMANDS = new Set(['menu', 'help', 'menú', 'goku', 'ki', 'transformacion', 'transformación']);
+const BASE_COMMANDS = new Set(['goku', 'ki', 'transformacion', 'transformación']);
 const EVENT_COMMANDS = new Set(['evento', 'temporada', 'navidad', 'frase', 'regalo', 'arbol', 'felicitar', 'sorteo']);
 
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
   if (!BASE_COMMANDS.has(cmd) && !EVENT_COMMANDS.has(cmd)) return false;
   const event = seasonal.getEvent();
   if (EVENT_COMMANDS.has(cmd) && !event) {
-    await sock.sendMessage(jid, { text: 'No hay una temporada activa. Cambia SEASON_MODE a manual y elige ACTIVE_SEASON en config.js si quieres activar una.' }, { quoted: m });
+    await sock.sendMessage(jid, { text: 'No hay una temporada activa en el tema actual. Usa BOT_THEME=navidad o cambia el modo de temporadas en config.js.' }, { quoted: m });
     return true;
   }
 
   const reply = value => sock.sendMessage(jid, { text: seasonal.decorate(value) }, { quoted: m });
 
   switch (cmd) {
-    case 'menu': case 'help': case 'menú': {
-      const caption = menu(prefix);
-      try {
-        const response = await fetch(cfg.menuVideo, { signal: AbortSignal.timeout(60000) });
-        if (!response.ok) throw new Error('No se pudo obtener el video del menú');
-        const video = Buffer.from(await response.arrayBuffer());
-        await sock.sendMessage(jid, { video, mimetype: 'video/mp4', gifPlayback: true, caption }, { quoted: m });
-      } catch {
-        await reply(caption);
-      }
-      return true;
-    }
     case 'goku':
       await reply(`🐉 *¡HEY! SOY GOKU* 🐉\n\n${pick(seasonal.goku.greetings)}${event ? `\n\n${event.emoji} ${event.greeting}` : ''}`);
       return true;
@@ -120,7 +52,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
       await reply(`🐉 *TRANSFORMACIONES SAIYAJIN*\n\n${seasonal.goku.transformations.join('\n\n')}`);
       return true;
     case 'evento': case 'temporada': case 'navidad':
-      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown, event.name)}\n\n${pick(event.phrases)}\n\n${event.greeting}\n\n⚙️ Modo: ${cfg.seasons.mode} • Zona: ${cfg.seasons.timezone}`);
+      await reply(`${event.emoji} *MODO ${event.name.toUpperCase()}* ${event.emoji}\n${countdown(event.countdown, event.name)}\n\n${pick(event.phrases)}\n\n${event.greeting}\n\n⚙️ Tema: ${cfg.theme} • Zona: ${cfg.seasons.timezone}`);
       return true;
     case 'frase':
       await reply(`${event.emoji} ${pick(event.phrases)}`);
@@ -129,7 +61,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
       await reply(`🎁 *REGALO SORPRESA*\n\n${pick(event.gifts)}\n\n${event.greeting}`);
       return true;
     case 'arbol':
-      await reply(`${tree()}\n\n${event.greeting}`);
+      await reply(`${tree(event)}\n\n${event.greeting}`);
       return true;
     case 'felicitar':
       if (!text) { await reply(`Ejemplo: ${prefix}felicitar nombre`); return true; }
@@ -150,4 +82,3 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
   return true;
 };
 
-module.exports.menu = menu;

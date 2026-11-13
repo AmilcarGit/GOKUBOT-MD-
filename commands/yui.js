@@ -1,55 +1,6 @@
 const cfg = require('../config')
-const BASE = (cfg.yuiApi || 'https://yuiapi.vercel.app').replace(/\/$/, '')
-const hasKey = () => !!cfg.yuiKey
-
-async function call(path, params = {}, o = {}) {
-  const u = new URL(BASE + '/api/v1' + path)
-  for (const k in params) if (params[k] !== undefined && params[k] !== '') u.searchParams.set(k, params[k])
-  const r = await fetch(u, {
-    method: o.method || 'GET',
-    headers: { ...(cfg.yuiKey ? { 'x-api-key': cfg.yuiKey } : {}), ...(o.headers || {}) },
-    body: o.body,
-    signal: AbortSignal.timeout(180000)
-  })
-  const type = r.headers.get('content-type') || ''
-  if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + (await r.text().catch(() => '')).slice(0, 150))
-  if (type.includes('json')) {
-    const json = await r.json()
-    if (json.ok === false) throw new Error(json.error || 'error de la API')
-    return { json, type }
-  }
-  if (o.max && Number(r.headers.get('content-length') || 0) > o.max) throw new Error('TOO_BIG')
-  return { buf: Buffer.from(await r.arrayBuffer()), type }
-}
-
-function findUrl(o) {
-  let best = ''
-  const walk = (v, k = '') => {
-    if (typeof v === 'string' && /^https?:\/\//.test(v) && !best && !/thumb|image|cover/i.test(k)) best = v
-    else if (v && typeof v === 'object') for (const x in v) walk(v[x], x)
-  }
-  walk(o)
-  return best
-}
-
-async function media(path, params, max) {
-  const r = await call(path, params, { max })
-  if (r.buf) return r
-  const url = findUrl(r.json)
-  if (!url) throw new Error('La API no devolvió archivo')
-  const x = await fetch(url, { signal: AbortSignal.timeout(180000) })
-  if (!x.ok) throw new Error('HTTP ' + x.status)
-  return { buf: Buffer.from(await x.arrayBuffer()), type: x.headers.get('content-type') || '' }
-}
-
-const first = (o, keys) => { for (const k of keys) if (o && o[k]) return String(o[k]); return '' }
-
-function listOf(d) {
-  if (Array.isArray(d)) return d
-  for (const k in d) if (Array.isArray(d[k])) return d[k]
-  if (d && d.data && typeof d.data === 'object') return listOf(d.data)
-  return []
-}
+const T = require('../lib/theme')
+const { hasKey, call, media, first, listOf } = require('../lib/yuiapi')
 
 function pretty(o, ind = '', depth = 0) {
   if (o === null || typeof o !== 'object') return ind + String(o)
@@ -87,37 +38,19 @@ const SEARCH = {
   ebook: ['/search/ebooks'], musica: ['/search/music']
 }
 const IMGS = { imagen: '/search/images', pinterest: '/search/pinterest' }
-const YT = ['ytmp3', 'yta', 'ytaudio', 'ytmp4', 'ytv', 'ytvideo']
 const OTHERS = ['sticker', 's', 'stickertxt', 'rmbg', 'qr', 'clima', 'cambio', 'traducir', 'hash', 'uuid', 'password', 'pindl', 'plan', 'menuapi']
-const NAMES = new Set([...Object.keys(SEARCH), ...Object.keys(IMGS), ...YT, ...OTHERS])
+const NAMES = new Set([...Object.keys(SEARCH), ...Object.keys(IMGS), ...OTHERS])
 
 module.exports = async function (sock, m, jid, cmd, text, p) {
   if (!NAMES.has(cmd)) return false
   const reply = t => sock.sendMessage(jid, { text: t }, { quoted: m })
   const usage = s => reply(`Ejemplo: ${p}${cmd} ${s}`)
   if (!hasKey()) {
-    if (YT.includes(cmd)) return false
-    await reply('⚠️ Falta YUI_API_KEY en .env.')
+    await reply(T.msg('warn', 'Falta YUI_API_KEY en las variables del bot.'))
     return true
   }
   const sender = (m.key.participant || m.key.remoteJid || '').split('@')[0].split(':')[0]
   try {
-    if (YT.includes(cmd)) {
-      if (!text) return (await usage('gura'), true)
-      const audio = ['ytmp3', 'yta', 'ytaudio'].includes(cmd)
-      let url = text.split(/\s+/)[0]
-      if (!/^https?:\/\//.test(url)) {
-        const it = listOf((await call('/search/youtube', { q: text, limit: 1 })).json)[0]
-        url = first(it, ['url', 'link', 'videoUrl'])
-        if (!url) return (await reply('❌ No encontré resultados.'), true)
-      }
-      await reply(audio ? '⏳ Descargando audio...' : '⏳ Descargando video...')
-      const r = await media(audio ? '/download/ytaudio' : '/download/ytvideo', { url }, 90 * 1024 * 1024)
-      if (r.buf.length > 90 * 1024 * 1024) throw new Error('TOO_BIG')
-      if (audio) await sock.sendMessage(jid, { audio: r.buf, mimetype: 'audio/mpeg' }, { quoted: m })
-      else await sock.sendMessage(jid, { video: r.buf, mimetype: 'video/mp4', caption: `🎬 ${cfg.botName}` }, { quoted: m })
-      return true
-    }
     if (SEARCH[cmd]) {
       if (!text) return (await usage('texto'), true)
       const [path, extra] = SEARCH[cmd]
@@ -193,34 +126,25 @@ module.exports = async function (sock, m, jid, cmd, text, p) {
         await reply(pretty((await call('/tools/password', { length: Math.min(Math.max(parseInt(text) || 16, 8), 64), symbols: 'true' })).json))
         break
       case 'plan':
-        if (sender !== cfg.owner) return (await reply('🔒 Solo el owner.'), true)
+        if (sender !== cfg.owner) return (await reply(T.msg('warn', 'Solo el owner.')), true)
         await reply(pretty((await call('/me')).json))
         break
       case 'menuapi':
-        await reply(`╭─〔 🌐 *API YUI* 〕
-│ ${p}ytmp3 / ${p}ytmp4 <texto|link>
-│ ${p}sticker (imagen o respondiendo)
-│ ${p}stickertxt <texto>
-│ ${p}rmbg (imagen, quita fondo liso)
-│ ${p}qr <texto>
-│ ${p}clima <ciudad>
-│ ${p}cambio 100 usd pen
-│ ${p}traducir en <texto>
-│ ${p}wiki ${p}anime ${p}libro ${p}serie
-│ ${p}pais ${p}paper ${p}ebook ${p}musica <q>
-│ ${p}imagen ${p}pinterest <q>
-│ ${p}pindl <link>
-│ ${p}hash ${p}uuid ${p}password
-│ ${p}plan (owner)
-╰────────────`)
+        await sock.sendMessage(jid, { text: T.mark(T.section('API Yui', [
+          `${p}sticker (imagen o respondiendo)`, `${p}stickertxt <texto>`, `${p}rmbg (quita fondo liso)`, `${p}qr <texto>`,
+          `${p}clima <ciudad>`, `${p}cambio 100 usd pen`, `${p}traducir en <texto>`,
+          `${p}wiki ${p}anime ${p}libro ${p}serie`, `${p}pais ${p}paper ${p}ebook ${p}musica <q>`,
+          `${p}imagen ${p}pinterest <q>`, `${p}pindl <link>`, `${p}hash ${p}uuid ${p}password`, `${p}plan (owner)`
+        ])) }, { quoted: m })
         break
     }
   } catch (e) {
     const s = String(e.message)
-    await reply(s === 'TOO_BIG' ? '❌ El archivo es muy pesado para WhatsApp.'
-      : s.includes('HTTP 401') ? '❌ apiKey de Yui inválida.'
-      : s.includes('HTTP 429') ? '⏳ Límite de la API alcanzado, intenta más tarde.'
-      : '⚠️ Error: ' + s.slice(0, 120)).catch(() => {})
+    console.error(`[yui] .${cmd}:`, s)
+    await reply(s === 'TOO_BIG' ? T.msg('err', 'El archivo es muy pesado para WhatsApp.')
+      : s.includes('HTTP 401') ? T.msg('err', 'La apiKey de Yui no es válida.')
+      : s.includes('HTTP 429') ? T.msg('warn', 'Límite de la API alcanzado, intenta más tarde.')
+      : T.msg('err', 'Error: ' + s.slice(0, 120))).catch(() => {})
   }
   return true
 }

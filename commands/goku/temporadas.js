@@ -1,4 +1,5 @@
 const cfg = require('../../config');
+const { theme } = require('../../lib/theme');
 
 function dateParts() {
   const parts = new Intl.DateTimeFormat('en-CA', {
@@ -130,6 +131,9 @@ const definitions = {
 
 function getActiveSeason() {
   if (!cfg.seasons.enabled || cfg.navidad === false) return 'ninguna';
+  if (cfg.seasons.mode === 'theme') {
+    return theme.season && Object.prototype.hasOwnProperty.call(definitions.seasons, theme.season) ? theme.season : 'ninguna';
+  }
   if (cfg.seasons.mode === 'manual') {
     return Object.prototype.hasOwnProperty.call(definitions.seasons, cfg.seasons.manual)
       ? cfg.seasons.manual
@@ -143,10 +147,9 @@ function getEvent() {
   return key === 'ninguna' ? null : definitions.seasons[key];
 }
 
+// El aspecto de los mensajes lo define el tema (lib/theme.js); aquí no se modifica el texto.
 function decorate(message) {
-  const event = getEvent();
-  if (!event) return message;
-  return `${event.emoji} ${message}\n\n_${event.greeting}_`;
+  return message;
 }
 
 module.exports = { ...definitions, getActiveSeason, getEvent, decorate };

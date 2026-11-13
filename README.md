@@ -1,46 +1,169 @@
-# 🐉 GokuBot-MD — Saiyan Xmas 🎄
+<div align="center">
 
-Bot de WhatsApp construido con Node.js y Baileys. Combina comandos de Goku, un modo navideño y utilidades multimedia mediante YuiAPI.
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b3d2e,50:c0392b,100:0b3d2e&height=230&section=header&text=GokuBot-MD&fontSize=68&fontColor=ffffff&animation=twinkling&fontAlignY=36&desc=🎄%20Saiyan%20Xmas%20Edition%20🎄&descSize=24&descAlignY=58" alt="GokuBot-MD Saiyan Xmas" />
 
-> **Crea tu propia instancia:** instala el proyecto, vincula tu propio número de WhatsApp, configura tus claves y personaliza el nombre, prefijo y menú.
+<a href="https://github.com/AmilcarGit/GOKUBOT-MD-">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3200&pause=900&color=FF4D4D&center=true&vCenter=true&width=640&lines=🎅+Feliz+Navidad,+Guerrero+Z!;🐉+Bot+de+WhatsApp+con+poder+Saiyajin;❄️+RPG,+YouTube,+stickers+y+mucho+más;🎁+Cambia+todo+el+estilo+con+un+solo+archivo" alt="Animación de texto" />
+</a>
+
+<br/>
+
+![Node](https://img.shields.io/badge/Node.js-20%2B-2e7d32?style=for-the-badge&logo=node.js&logoColor=white)
+![WhatsApp](https://img.shields.io/badge/WhatsApp-Bot-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)
+![Railway](https://img.shields.io/badge/Deploy-Railway-8e44ad?style=for-the-badge&logo=railway&logoColor=white)
+![Tema](https://img.shields.io/badge/Tema-Navidad_🎄-c0392b?style=for-the-badge)
+![Licencia](https://img.shields.io/github/license/AmilcarGit/GOKUBOT-MD-?style=for-the-badge&color=f1c40f)
+
+**❄️ 🎄 ⭐ 🎁 🔔 🎅 🦌 ⛄ 🕯️ ✨ 🎄 ❄️ ⭐ 🎁 🔔 🎅 🦌 ⛄**
+
+</div>
+
+Bot de WhatsApp construido con **Node.js** y **Baileys**. Combina comandos de Goku, un RPG Saiyajin, descargas de YouTube y herramientas de YuiAPI, todo con un **tema navideño** que vive en un solo archivo.
+
+> 🎁 **Crea tu propia instancia:** instala el proyecto, vincula tu propio número de WhatsApp, configura tus claves y personaliza el nombre, prefijo y tema.
+
+---
+
+## 📑 Contenido
+
+- [✨ Características](#-características)
+- [🎄 Tema navideño](#-tema-navideño)
+- [🎮 Comandos](#-comandos)
+- [🚀 Instalación](#-instalación-en-android-termux)
+- [☁️ Railway](#️-despliegue-en-railway)
+- [⚙️ Configuración](#️-configura-tu-propio-bot)
+- [🎨 Crea tu propio tema](#-crea-tu-propio-tema)
+- [📁 Estructura](#-estructura-del-proyecto)
+- [❓ Problemas frecuentes](#-problemas-frecuentes)
+
+---
 
 ## ✨ Características
 
-- 🐉 Comandos temáticos de Goku y transformaciones Saiyajin.
-- ⚔️ Sistema RPG Saiyajin con niveles, experiencia, duelos, misiones, tienda y esferas del dragón.
-- 🖼️ Tarjetas de perfil PNG generadas localmente, sin API de imágenes.
-- 🎄 Comandos navideños: cuenta regresiva, frases, regalos, árbol y sorteos.
-- 🎬 Búsqueda y descarga multimedia de YouTube.
-- 🌐 Herramientas de YuiAPI: búsquedas, stickers, QR, clima, conversión, traducción y más.
-- 📱 Compatible con Termux en Android y con PC.
-- ⚙️ Configuración mediante variables de entorno en `.env`.
-- 🔐 Sesión y claves privadas fuera del repositorio mediante `.gitignore`.
+| | |
+|---|---|
+| 🎄 **Temas visuales** | Emojis, marcos y letras navideñas definidos en `themes/`. Cambias un archivo y cambian **todos** los comandos |
+| 🐉 **Universo Goku** | Saludos, lectura de ki y transformaciones Saiyajin |
+| ⚔️ **RPG Saiyajin** | Niveles, XP, duelos, misiones diarias, tienda y esferas del dragón |
+| 🎴 **Personajes** | Invoca guerreros, junta fragmentos y mejóralos |
+| 🖼️ **Tarjetas PNG** | Perfil generado localmente, sin API de imágenes |
+| 🎬 **YouTube** | `.yts`, `.play`, `.ytmp3` y `.ytmp4` con respaldo automático entre varias APIs |
+| 🌐 **YuiAPI** | Stickers, QR, clima, traducción, búsquedas y más |
+| 🎅 **Modo Navidad** | Cuenta regresiva, frases, regalos, árbol y sorteos |
+| ☁️ **Listo para Railway** | Sesión en volumen y vinculación sin terminal |
+| 📱 **Termux y PC** | Funciona en Android y en computadora |
+
+---
+
+## 🎄 Tema navideño
+
+Todos los mensajes del bot pasan por el tema activo: marcos con nieve y regalos, encabezados con **letras navideñas** y un pie festivo.
+
+```text
+╔═══ ❄️ ═══ 🎄 ═══ ❄️ ═══╗
+   ✨ *𝓟𝓮𝓻𝓯𝓲𝓵 𝓢𝓪𝓲𝔂𝓪𝓳𝓲𝓷* ✨
+╚═══ 🎁 ═══ ⭐ ═══ 🎁 ═══╝
+
+╭━━〔 🎅 𝓨𝓸𝓾𝓣𝓾𝓫𝓮 〕━━╮
+┃ 🎁 .yts <texto>
+┃ 🎁 .play <texto>
+┃ 🎁 .ytmp3 <texto|link|nº>
+┃ 🎁 .ytmp4 <texto|link|nº>
+╰━━━━ ❄️ ⭐ ❄️ ━━━━╯
+
+🎄❄️⭐❄️🎄
+```
+
+**¿Cómo funciona?**
+
+- 🎨 El aspecto está en [`themes/navidad.js`](themes/navidad.js): emojis, marcos, tipo de letra y frases del pie.
+- 🔌 Un adaptador (`lib/theme.js`) aplica el tema a **todo** mensaje saliente, incluidos los comandos que agregues después.
+- 🔁 Cambia de tema con una variable: `BOT_THEME=navidad` o `BOT_THEME=clasico`.
+- 🎅 El tema Navidad también activa los comandos festivos (`.navidad`, `.frase`, `.regalo`, `.arbol`, `.felicitar`, `.sorteo`).
+
+---
+
+## 🎮 Comandos
+
+Los ejemplos usan el prefijo `.` (configurable con `BOT_PREFIX`). La lista completa por categoría está en [`docs/comandos.md`](docs/comandos.md).
+
+### 🐉 Goku y Saiyajin
+
+| Comando | Función |
+|---|---|
+| `.menu` | Menú principal con el tema activo |
+| `.goku` · `.ki` · `.transformacion` | Saludo, lectura de ki y transformaciones |
+| `.perfil` · `.nivel` | Tarjeta PNG, nivel, XP y poder |
+| `.entrenar` | Gana XP y Zenis |
+| `.transformar` | Transformaciones desbloqueadas |
+| `.duelo @usuario` | Reta a otro jugador |
+| `.ranking` | Top 10 guerreros |
+| `.misiones` · `.reclamar` | Misiones y recompensas diarias |
+| `.tienda` · `.comprar <id>` | Tienda de objetos |
+| `.inventario` · `.shenlong` | Objetos y esferas del dragón |
+
+### 🎴 Personajes
+
+| Comando | Función |
+|---|---|
+| `.personajes` | Colección de guerreros |
+| `.invocar` | Invoca un guerrero (250 Zenis) |
+| `.misguerreros` | Tu colección |
+| `.mejorar <id>` | Sube de nivel un personaje con fragmentos |
+
+### 🎅 Navidad
+
+| Comando | Función |
+|---|---|
+| `.evento` · `.navidad` | Cuenta regresiva y frase de la temporada |
+| `.frase` | Frase navideña al azar |
+| `.regalo` | Regalo sorpresa 🎁 |
+| `.arbol` | Árbol navideño en texto 🎄 |
+| `.felicitar <nombre>` | Felicitación personalizada |
+| `.sorteo` | Elige un participante al azar en un grupo |
+
+### 🎬 YouTube
+
+| Comando | Función |
+|---|---|
+| `.yts <texto>` | Muestra 5 resultados numerados |
+| `.play <texto>` | Busca y envía el audio del primer resultado |
+| `.ytmp3 <texto \| link \| nº>` | Descarga el audio |
+| `.ytmp4 <texto \| link \| nº>` | Descarga el video |
+
+💡 **Truco:** después de `.yts villancicos`, usa `.ytmp3 2` o `.ytmp4 2` para elegir el resultado número 2.
+
+El bot prueba primero YuiAPI (si hay `YUI_API_KEY`) y, si falla, usa la API multimedia (`MEDIA_API_URL`). Los archivos de más de 90 MB no se envían.
+
+### 🌐 Herramientas YuiAPI
+
+Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
+
+- 🔎 **Búsqueda:** `.wiki` `.anime` `.libro` `.serie` `.pais` `.paper` `.ebook` `.musica`
+- 🖼️ **Imágenes:** `.imagen` `.pinterest` `.pindl <URL>`
+- 🏷️ **Stickers:** `.sticker` `.stickertxt` `.rmbg`
+- 🧰 **Herramientas:** `.qr` `.clima` `.cambio` `.traducir` `.hash` `.uuid` `.password`
+- 👑 **Propietario:** `.plan`
+
+### 🧰 Generales
+
+`.ping` · `.owner`
+
+---
 
 ## 📋 Requisitos
 
-- Node.js **20 LTS o superior**.
-- npm (se instala junto con Node.js).
-- Git.
+- Node.js **20 LTS o superior**, npm y Git.
 - Una cuenta de WhatsApp para vincular el bot.
-- Conexión a Internet durante la instalación y para los servicios/API que utilices.
+- Conexión a Internet durante la instalación y para las APIs que uses.
 
 ## 🚀 Instalación en Android (Termux)
 
-### 1. Instala Termux y prepara el entorno
-
-Se recomienda instalar Termux desde una fuente oficial y mantenerlo actualizado. Abre Termux y ejecuta:
+### 1. Prepara el entorno
 
 ```bash
 pkg update && pkg upgrade -y
 pkg install git nodejs-lts nano -y
-```
-
-Comprueba las versiones:
-
-```bash
-node -v
-npm -v
-git --version
 ```
 
 ### 2. Descarga el proyecto
@@ -63,7 +186,7 @@ cp .env.example .env
 nano .env
 ```
 
-Completa los valores que necesites. Guarda en nano con **Ctrl + O**, Enter y sal con **Ctrl + X**.
+Guarda en nano con **Ctrl + O**, Enter y sal con **Ctrl + X**.
 
 ### 5. Inicia el bot
 
@@ -71,17 +194,13 @@ Completa los valores que necesites. Guarda en nano con **Ctrl + O**, Enter y sal
 npm start
 ```
 
-En el primer inicio, el programa solicitará tu número de WhatsApp con código de país, sin espacios ni el signo `+`. Ejemplo de formato: `519XXXXXXXX`.
+En el primer inicio te pedirá tu número con código de país, solo dígitos (ej: `519XXXXXXXX`). Si ya pusiste `BOT_NUMBER` en `.env`, no lo pregunta.
 
-A continuación aparecerá un código de vinculación. En WhatsApp, abre **Dispositivos vinculados → Vincular un dispositivo → Vincular con número de teléfono** e introduce el código.
+Aparecerá un **código de vinculación**: en WhatsApp ve a **Dispositivos vinculados → Vincular un dispositivo → Vincular con número de teléfono** e introdúcelo. Cuando conecte, escribe `.menu`. 🎄
 
-Cuando la conexión se complete, el bot estará activo. Envía `.menu` desde otra cuenta o desde un chat permitido para ver los comandos.
-
-**Importante:** no borres la carpeta `session/` después de vincularlo. Contiene la sesión para que el bot pueda volver a conectarse sin pedir un nuevo código.
+> ⚠️ No borres la carpeta `session/` después de vincular: guarda tu sesión.
 
 ## 💻 Instalación en PC
-
-Instala Node.js 20 LTS o superior y Git. Luego abre una terminal (PowerShell, CMD, Terminal de macOS o Linux) y ejecuta:
 
 ```bash
 git clone https://github.com/AmilcarGit/GOKUBOT-MD-.git
@@ -95,39 +214,49 @@ Crea el archivo de configuración:
 - **PowerShell:** `Copy-Item .env.example .env`
 - **CMD:** `copy .env.example .env`
 
-Edita `.env` con un editor de texto y arranca:
+Edítalo y arranca con `npm start`.
 
-```bash
-npm start
-```
+## ☁️ Despliegue en Railway
 
-Completa la vinculación de WhatsApp con el código que aparece en la terminal.
+Guía paso a paso en [`docs/railway.md`](docs/railway.md). Resumen:
+
+1. **New Project → Deploy from GitHub repo**.
+2. Crea un **Volume** montado en `/data`.
+3. Variables: `BOT_NUMBER`, `SESSION_DIR=/data/session`, `DATA_DIR=/data/datos` y tus claves.
+4. Abre los **Deploy Logs**, copia el código de vinculación y escríbelo en WhatsApp.
+
+---
 
 ## ⚙️ Configura tu propio bot
 
-El archivo `.env` es privado y no se sube a GitHub. Estas son las variables disponibles:
+El archivo `.env` es privado y no se sube a GitHub. En Railway estas variables van en el panel **Variables**.
 
-| Variable | Para qué sirve | Valor de ejemplo |
+| Variable | Para qué sirve | Ejemplo |
 |---|---|---|
 | `BOT_NAME` | Nombre que muestra el bot | `MiGokuBot` |
 | `BOT_CREATOR` | Nombre del creador | `TuNombre` |
-| `BOT_OWNER` | Tu número con código de país, solo dígitos | `519XXXXXXXX` |
+| `BOT_OWNER` | Tu número (solo dígitos) | `519XXXXXXXX` |
+| `BOT_NUMBER` | Número del bot para generar el código de vinculación | `519XXXXXXXX` |
 | `BOT_PREFIX` | Prefijo de comandos | `.` o `!` |
-| `MENU_VIDEO` | Video que acompaña al menú | `https://files.catbox.moe/nc2k5n.mp4` |
-| `MEDIA_API_URL` | Servicio multimedia usado por los comandos principales | URL base del proveedor |
-| `MEDIA_API_KEY` | Clave del servicio multimedia, si el proveedor la requiere | Tu clave privada |
-| `YUI_API_URL` | URL base de YuiAPI | `https://yuiapi.vercel.app` |
-| `YUI_API_KEY` | Clave necesaria para los comandos de YuiAPI | Tu clave privada |
+| `BOT_THEME` | Tema visual (`navidad`, `clasico`) | `navidad` |
+| `MENU_VIDEO` | Video que acompaña al menú | URL directa a un MP4 |
+| `MEDIA_API_URL` · `MEDIA_API_KEY` | API multimedia (respaldo de YouTube) | URL y clave |
+| `YUI_API_URL` · `YUI_API_KEY` | YuiAPI (YouTube, stickers, utilidades) | URL y clave |
+| `SEASONS_ENABLED` | Activa o desactiva las temporadas | `true` |
+| `SEASON_MODE` | `theme`, `auto` o `manual` | `theme` |
+| `ACTIVE_SEASON` | Temporada fija si `SEASON_MODE=manual` | `navidad` |
+| `SEASON_TIMEZONE` | Zona horaria del calendario | `America/Lima` |
+| `SESSION_DIR` · `DATA_DIR` | Dónde se guardan sesión y datos (volumen en Railway) | `/data/session` |
 
-
-### Ejemplo de archivo .env
+### Ejemplo de `.env`
 
 ```env
 BOT_NAME=GokuBot-MD
 BOT_CREATOR=TuNombre
 BOT_OWNER=519XXXXXXXX
+BOT_NUMBER=519XXXXXXXX
 BOT_PREFIX=.
-MENU_VIDEO=https://files.catbox.moe/nc2k5n.mp4
+BOT_THEME=navidad
 
 MEDIA_API_URL=https://api-yosoyyo-api-ofc.onrender.com
 MEDIA_API_KEY=
@@ -135,89 +264,56 @@ MEDIA_API_KEY=
 YUI_API_URL=https://yuiapi.vercel.app
 YUI_API_KEY=
 
-SEASONS_ENABLED=true\nSEASON_MODE=auto\nACTIVE_SEASON=navidad\nSEASON_TIMEZONE=America/Lima
+SEASON_MODE=theme
+SEASON_TIMEZONE=America/Lima
 ```
 
-Reemplaza el número y las claves por tus propios datos. No copies claves privadas de otras personas. Si no configuras una clave, los comandos que dependan de ese servicio pueden responder con un aviso de configuración pendiente.
+Reemplaza el número y las claves por tus propios datos. Si no configuras una clave, los comandos que dependan de ese servicio avisarán que falta.
 
-## 🎮 Comandos
+### 📅 Temporadas
 
-Usa el prefijo que hayas configurado. Con el valor predeterminado, todos los ejemplos comienzan con punto.
+- `SEASON_MODE=theme` (predeterminado): la temporada la define el tema. Con `navidad`, los comandos festivos siempre están activos.
+- `SEASON_MODE=auto`: se detecta por fecha (Navidad 1–25 dic., Año Nuevo 26 dic.–5 ene., San Valentín 1–14 feb., Pascua y Halloween en octubre).
+- `SEASON_MODE=manual`: fuerza la temporada de `ACTIVE_SEASON`.
 
-### 🐉 Goku / Saiyajin
+---
 
-| Comando | Función |
+## 🎨 Crea tu propio tema
+
+Los temas están en la carpeta [`themes/`](themes/). Cada uno es un archivo que decide **cómo se ve** todo el bot.
+
+1. Copia `themes/clasico.js` (plantilla simple) o `themes/navidad.js` (completo) con otro nombre, por ejemplo `themes/halloween.js`.
+2. Cambia emojis, marcos (`title`, `section`, `card`), letras (`font`) y pies (`footer`).
+3. Pon `season: 'halloween'` si quieres activar esa temporada junto con el tema.
+4. Actívalo con `BOT_THEME=halloween` y reinicia.
+
+Un tema exporta estas piezas:
+
+| Pieza | Qué controla |
 |---|---|
-| `.goku` | Saludo temático de Goku |
-| `.ki` | Lectura de ki ficticia y recreativa |
-| `.transformacion` | Muestra transformaciones Saiyajin |
-| `.perfil` | Genera una tarjeta de perfil PNG |
-| `.nivel` | Consulta nivel, XP y poder |
-| `.entrenar` | Gana XP y Zenis |
-| `.transformar` | Consulta transformaciones desbloqueadas |
-| `.duelo @usuario` | Reta a otro jugador |
-| `.ranking` | Top 10 guerreros |
-| `.misiones` / `.reclamar` | Misiones y recompensas diarias |
-| `.tienda` / `.comprar <id>` | Tienda de objetos |
-| `.inventario` | Objetos y esferas reunidas |
-| `.shenlong` | Canjea las siete esferas |
+| `emoji`, `deco`, `kinds` | Emojis generales y prefijos de éxito, error, aviso y espera |
+| `font(texto)` | Tipo de letra de los títulos |
+| `title(texto)` | Encabezado de cada mensaje |
+| `section(nombre, líneas)` | Bloques del menú |
+| `card(nombre, líneas)` | Tarjetas con título, contenido y cierre |
+| `msg(tipo, texto)` | Mensajes cortos de estado |
+| `footer()` | Pie de los mensajes |
+| `menuBanner`, `menuFooter` | Cabecera y cierre del menú |
+| `season` | Temporada que activa (o `null`) |
 
-### 🎄 Navidad
+---
 
-| Comando | Función |
-|---|---|
-| `.evento` / `.navidad` | Muestra el evento de la temporada activa |
-| `.frase` | Frase aleatoria |
-| `.regalo` | Regalo sorpresa |
-| `.arbol` | Árbol navideño en texto |
-| `.felicitar <nombre>` | Felicitación personalizada |
-| `.sorteo` | Elige un participante al azar en un grupo |
+## 🛠️ Personalización rápida
 
-Las temporadas se detectan automáticamente según el calendario de Perú: Navidad (1–25 dic.), Año Nuevo (26 dic.–5 ene.), San Valentín (1–14 feb.), Pascua (desde 3 días antes hasta 1 día después del domingo de Pascua) y Halloween (octubre). En modo automático, fuera de esas fechas no se muestra un evento. Para elegir manualmente, abre `config.js` y cambia `SEASON_CONFIG.mode` a `'manual'` y `SEASON_CONFIG.manual` al evento deseado. Para desactivar todas las temporadas, usa `enabled: false`. El menú, los textos festivos y las respuestas del RPG usan el tema activo.
-
-### 🎬 YouTube y multimedia
-
-| Comando | Función |
-|---|---|
-| `.yts <texto>` | Busca videos en YouTube |
-| `.play <texto>` | Alias de búsqueda |
-| `.ytmp3 <texto o URL>` | Solicita audio |
-| `.ytmp4 <texto o URL>` | Solicita video |
-
-### 🌐 Herramientas YuiAPI
-
-Consulta `.menuapi` en WhatsApp para ver la lista integrada. Entre los comandos disponibles están:
-
-- Búsqueda: `.wiki`, `.anime`, `.libro`, `.serie`, `.pais`, `.paper`, `.ebook`, `.musica`.
-- Imágenes: `.imagen`, `.pinterest`.
-- Stickers: `.sticker`, `.stickertxt`, `.rmbg`.
-- Herramientas: `.qr`, `.clima`, `.cambio`, `.traducir`, `.hash`, `.uuid`, `.password`.
-- Descargas: `.pindl <URL>`.
-- Administración: `.plan` (solo propietario).
-
-Los comandos de YuiAPI requieren una clave válida en `YUI_API_KEY`. Las funciones multimedia principales también pueden requerir que configures el proveedor y la clave correspondientes.
-
-### 🧰 Comandos generales
-
-- `.menu` — muestra el menú.
-- `.ping` — comprueba la respuesta del bot.
-- `.owner` — muestra el contacto configurado como propietario.
-
-## 🛠️ Personalización básica
-
-1. Cambia `BOT_NAME`, `BOT_CREATOR` y `BOT_PREFIX` en `.env`.
-2. Cambia `MENU_VIDEO` por una URL directa a tu propio video MP4 o conserva el video predeterminado.
-3. Configura `BOT_OWNER` para que el comando `.owner` muestre tu contacto.
-4. Personaliza las frases y regalos en `commands/goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `commands/goku/rpg.js`; las guías están en `docs/` (comandos, temporadas y RPG).
-5. Reinicia el proceso con `npm start` para aplicar los cambios.
-
-## ☁️ Despliegue en Railway
-
-Consulta la guía paso a paso en [`docs/railway.md`](docs/railway.md): necesitas un Volume para conservar la sesión y la variable `BOT_NUMBER` para generar el código de vinculación.
+1. Cambia `BOT_NAME`, `BOT_CREATOR` y `BOT_PREFIX`.
+2. Cambia `MENU_VIDEO` por tu propio MP4 o conserva el predeterminado.
+3. Configura `BOT_OWNER` para que `.owner` muestre tu contacto.
+4. Edita frases y regalos en `commands/goku/temporadas.js`.
+5. Agrega comandos nuevos siguiendo [`docs/comandos.md`](docs/comandos.md#agregar-un-comando-nuevo).
 
 ## 🔄 Actualizar el bot
 
-Antes de actualizar, conserva una copia privada de tu archivo `.env` y de la carpeta `session/`. Después:
+Antes de actualizar, conserva una copia privada de `.env` y de `session/`:
 
 ```bash
 git pull origin main
@@ -225,15 +321,13 @@ npm install
 npm start
 ```
 
-No compartas ni subas la copia de seguridad de tu sesión.
-
 ## 🔒 Seguridad y uso responsable
 
 - Nunca subas `.env`, `session/`, códigos de vinculación ni credenciales.
-- No compartas tu carpeta de sesión: permite acceder a tu cuenta de WhatsApp.
+- Tu carpeta de sesión da acceso a tu cuenta de WhatsApp: no la compartas.
 - Si una API key se expone, revócala en el proveedor y crea otra.
 - Usa el bot respetando las condiciones de WhatsApp, Baileys, YuiAPI y los proveedores multimedia.
-- Evita automatizaciones masivas o mensajes no solicitados que puedan provocar restricciones en tu cuenta.
+- Evita automatizaciones masivas o mensajes no solicitados que puedan restringir tu cuenta.
 - Este proyecto no está afiliado oficialmente con WhatsApp ni con Dragon Ball.
 
 ## 📁 Estructura del proyecto
@@ -242,28 +336,29 @@ No compartas ni subas la copia de seguridad de tu sesión.
 GOKUBOT-MD-
 ├── index.js            # Conexión WhatsApp
 ├── config.js           # Configuración y variables de entorno
+├── themes/
+│   ├── navidad.js      # 🎄 Tema navideño (emojis, marcos, letras)
+│   └── clasico.js      # ⚡ Tema simple / plantilla
 ├── commands/
-│   ├── index.js        # Router: orden y registro de comandos
+│   ├── index.js        # Router: orden de comandos y tema
+│   ├── menu.js         # Menú principal
 │   ├── general.js      # ping, owner
-│   ├── youtube.js      # Búsqueda y descarga de YouTube
-│   ├── yui.js          # Integración de YuiAPI
+│   ├── youtube.js      # yts, play, ytmp3, ytmp4
+│   ├── yui.js          # Herramientas de YuiAPI
 │   └── goku/
-│       ├── index.js        # Menú, Goku y temporadas
-│       ├── temporadas.js   # Textos festivos editables
+│       ├── index.js        # Goku y comandos de temporada
+│       ├── temporadas.js   # Frases y regalos festivos
 │       ├── rpg.js          # Motor RPG y tarjetas PNG
 │       └── personajes.js   # Colección de personajes
 ├── lib/
+│   ├── theme.js        # Carga y aplica el tema activo
+│   ├── youtube.js      # Búsqueda y descarga con respaldo entre APIs
+│   ├── yuiapi.js       # Cliente de YuiAPI
 │   ├── message.js      # Lectura de mensajes entrantes
-│   └── paths.js        # Rutas compartidas y carpeta de datos
-├── scripts/
-│   └── check.js        # Validación de sintaxis (npm test)
-├── docs/
-│   ├── comandos.md     # Lista de comandos por categoría
-│   ├── railway.md      # Guía de despliegue en Railway
-│   ├── temporadas.md   # Guía de temporadas
-│   └── rpg.md          # Guía del sistema RPG
-├── data/               # Perfiles locales (se crea al jugar, no se sube)
-├── package.json
+│   └── paths.js        # Rutas y carpeta de datos
+├── scripts/check.js    # Validación de sintaxis (npm test)
+├── docs/               # Guías: comandos, railway, temporadas, rpg
+├── data/               # Perfiles locales (no se sube)
 ├── .env.example
 └── session/            # Sesión privada, no subir
 ```
@@ -271,23 +366,35 @@ GOKUBOT-MD-
 ## ❓ Problemas frecuentes
 
 **No aparece el código de vinculación**
-- Comprueba que el número tenga el código de país y solo contenga dígitos.
-- Verifica que WhatsApp permita vincular otro dispositivo.
-- Cierra el proceso y vuelve a ejecutar `npm start`.
+- Revisa que el número tenga código de país y solo dígitos.
+- En Railway, comprueba que exista la variable `BOT_NUMBER` y mira los *Deploy Logs*.
+- Reinicia o redespliega para generar un código nuevo.
 
-**El bot no encuentra un comando de YuiAPI**
-- Revisa que `YUI_API_KEY` esté configurada correctamente.
-- Comprueba que la clave siga activa y que el proveedor esté disponible.
-- Ejecuta `.menuapi` para consultar los comandos integrados.
+**`.yts` o las descargas no funcionan**
+- Revisa `YUI_API_KEY` (y `MEDIA_API_KEY` si usas ese servicio).
+- El bot prueba una API y luego la otra; los errores quedan en los logs con el prefijo `[youtube]`.
+- Si el archivo supera 90 MB, WhatsApp no lo admite.
 
 **El menú no muestra el video**
-- Comprueba que `MENU_VIDEO` apunte a un archivo MP4 accesible directamente.
-- Si el video no se puede descargar, el bot debe mostrar el menú como texto.
+- Comprueba que `MENU_VIDEO` sea un MP4 accesible. Si no se puede descargar, el menú sale como texto.
+
+**Quiero cambiar el estilo**
+- Cambia `BOT_THEME` o edita `themes/navidad.js`. Ver [Crea tu propio tema](#-crea-tu-propio-tema).
 
 **Quiero vincular otra cuenta**
-- Detén el bot y guarda la sesión actual en un lugar privado.
-- Elimina o mueve `session/` solo si deseas desvincular esa instancia.
-- Inicia de nuevo y vincula el nuevo número.
+- Detén el bot, guarda o elimina la carpeta de sesión y vuelve a iniciar con el nuevo número.
+
+---
+
+<div align="center">
+
+**🎄 ❄️ ⭐ 🎁 ¡Felices fiestas, Guerrero Z! 🎁 ⭐ ❄️ 🎄**
+
+Hecho con ❤️ por [AmilcarGit](https://github.com/AmilcarGit)
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b3d2e,50:c0392b,100:0b3d2e&height=120&section=footer" alt="" />
+
+</div>
 
 ## 📜 Licencia
 
