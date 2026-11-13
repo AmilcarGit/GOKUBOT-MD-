@@ -19,6 +19,6 @@ module.exports = {
   msg: (kind, text) => `${kinds[kind] || kinds.info} ${text}`,
   footer: () => '_🔥 GokuBot-MD • Poder Saiyajin_',
   tree: () => '🌲',
-  menuBanner: botName => `${title('GOKUBOT-MD')}\n\n      *${botName}*\n   🔥 PODER SAIYAJIN 🔥`,
+  menuBanner: botName => `${title(botName)}\n\n      *AmilcarGit Edition Plus*\n   🔥 PODER SAIYAJIN 🔥`,
   menuFooter: (creator, prefix) => `${garland}\n👑 ${creator}  •  🔰 Prefijo: ${prefix}`
 };

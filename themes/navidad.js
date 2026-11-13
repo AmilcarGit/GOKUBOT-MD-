@@ -77,6 +77,6 @@ module.exports = {
   season: 'navidad', // temporada que activa este tema (ver commands/goku/temporadas.js)
   emoji, deco, kinds, garland,
   font, title, section, card, msg, footer, tree,
-  menuBanner: botName => `${title('GOKUBOT-MD • SAIYAN XMAS')}\n\n      ❄️  ⭐  🎄  ⭐  ❄️\n      *${font(botName)}*\n  🔥 PODER SAIYAJIN • ESPÍRITU NAVIDEÑO 🔥`,
+  menuBanner: botName => `${title(botName)}\n\n      ❄️  ⭐  🎄  ⭐  ❄️\n      *${font('AmilcarGit Edition Plus')}*\n  🔥 PODER SAIYAJIN • ESPÍRITU NAVIDEÑO 🔥`,
   menuFooter: (creator, prefix) => `${garland}\n🎅 *${font('Felices fiestas, Guerrero Z')}* 🎅\n👑 ${creator}  •  🔰 Prefijo: ${prefix}`
 };

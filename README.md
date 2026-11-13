@@ -1,9 +1,9 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b3d2e,50:c0392b,100:0b3d2e&height=230&section=header&text=GokuBot-MD&fontSize=68&fontColor=ffffff&animation=twinkling&fontAlignY=36&desc=🎄%20Saiyan%20Xmas%20Edition%20🎄&descSize=24&descAlignY=58" alt="GokuBot-MD Saiyan Xmas" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0b3d2e,50:c0392b,100:0b3d2e&height=230&section=header&text=GokuBot-MD&fontSize=68&fontColor=ffffff&animation=twinkling&fontAlignY=36&desc=🎄%20AmilcarGit%20Edition%20Plus%20🎄&descSize=24&descAlignY=58" alt="GokuBot-MD AmilcarGit Edition Plus" />
 
 <a href="https://github.com/AmilcarGit/GOKUBOT-MD-">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3200&pause=900&color=FF4D4D&center=true&vCenter=true&width=640&lines=🎅+Feliz+Navidad,+Guerrero+Z!;🐉+Bot+de+WhatsApp+con+poder+Saiyajin;❄️+RPG,+YouTube,+stickers+y+mucho+más;🎁+Cambia+todo+el+estilo+con+un+solo+archivo" alt="Animación de texto" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3200&pause=900&color=FF4D4D&center=true&vCenter=true&width=640&lines=Feliz+Navidad+Guerrero+Z;Bot+de+WhatsApp+con+poder+Saiyajin;RPG+YouTube+stickers+y+mucho+mas;AmilcarGit+Edition+Plus" alt="Animación de texto" />
 </a>
 
 <br/>
