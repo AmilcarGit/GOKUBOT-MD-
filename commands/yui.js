@@ -1,4 +1,4 @@
-const cfg = require('./config')
+const cfg = require('../config')
 const BASE = (cfg.yuiApi || 'https://yuiapi.vercel.app').replace(/\/$/, '')
 const hasKey = () => !!cfg.yuiKey
 

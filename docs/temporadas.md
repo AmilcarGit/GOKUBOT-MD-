@@ -9,7 +9,7 @@ Los comandos de GokuBot están organizados aquí para que puedas editar sus text
 
 ## Cambiar la temporada
 
-Abre `goku/temporadas.js` y modifica:
+Abre `commands/goku/temporadas.js` y modifica:
 
 ```js
 ACTIVE_SEASON: 'navidad',
@@ -30,7 +30,7 @@ Guarda el archivo y reinicia el bot con `npm start`.
 
 En `seasons`, edita el nombre, emoji, saludo, fecha de cuenta regresiva, frases y regalos de cada temporada. En `goku`, edita los saludos, mensajes de ki y transformaciones.
 
-Los comandos festivos conservan los mismos nombres para facilitar el cambio de temporada. El comando `.navidad` funciona como comando general del evento activo; puedes renombrarlo en `goku/index.js` si quieres un comando distinto.
+Los comandos festivos conservan los mismos nombres para facilitar el cambio de temporada. El comando `.navidad` funciona como comando general del evento activo; puedes renombrarlo en `commands/goku/index.js` si quieres un comando distinto.
 
 ## Agregar otra temporada
 

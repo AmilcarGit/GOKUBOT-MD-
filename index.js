@@ -170,10 +170,10 @@ async function main() {
     const cmd = cmdRaw.toLowerCase()
     const text = rest.join(' ')
     try {
-      if (await require('./goku/rpg')(sock, m, jid, cmd, text, p)) return
+      if (await require('./commands/goku/rpg')(sock, m, jid, cmd, text, p)) return
       if (await require('./commands/goku/personajes')(sock, m, jid, cmd, text, p)) return
-      if (await require('./navidad')(sock, m, jid, cmd, text, p)) return
-      if (await require('./yui')(sock, m, jid, cmd, text, p)) return
+      if (await require('./commands/goku')(sock, m, jid, cmd, text, p)) return
+      if (await require('./commands/yui')(sock, m, jid, cmd, text, p)) return
       switch (cmd) {
         case 'menu': case 'help': case 'menú':
           try {

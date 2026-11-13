@@ -3,7 +3,7 @@ const path = require('path');
 const zlib = require('zlib');
 const seasonal = require('./temporadas');
 
-const DATA_DIR = path.join(__dirname, 'data');
+const { DATA_DIR } = require('../../lib/paths');
 const DATA_FILE = path.join(DATA_DIR, 'players.json');
 const TRAIN_COOLDOWN = 30 * 1000;
 const DUEL_COOLDOWN = 60 * 1000;

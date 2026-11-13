@@ -208,7 +208,7 @@ Los comandos de YuiAPI requieren una clave válida en `YUI_API_KEY`. Las funcion
 1. Cambia `BOT_NAME`, `BOT_CREATOR` y `BOT_PREFIX` en `.env`.
 2. Cambia `MENU_VIDEO` por una URL directa a tu propio video MP4 o conserva el video predeterminado.
 3. Configura `BOT_OWNER` para que el comando `.owner` muestre tu contacto.
-4. Personaliza las frases y regalos en `goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `goku/rpg.js` y su guía en `goku/RPG-README.md`.
+4. Personaliza las frases y regalos en `commands/goku/temporadas.js`; controla el calendario desde `config.js`. El RPG está en `commands/goku/rpg.js`; las guías están en `docs/temporadas.md` y `docs/rpg.md`.
 5. Reinicia el proceso con `npm start` para aplicar los cambios.
 
 ## 🔄 Actualizar el bot
@@ -236,19 +236,26 @@ No compartas ni subas la copia de seguridad de tu sesión.
 
 ```text
 GOKUBOT-MD-
-├── config.js       # Configuración y variables de entorno
-├── index.js        # Conexión WhatsApp y router de comandos
-├── goku/
-│   ├── index.js    # Comandos Goku y temporadas
-│   ├── temporadas.js # Textos festivos editables
-│   ├── rpg.js      # Motor RPG y generador de tarjetas PNG
-│   ├── RPG-README.md # Guía del sistema RPG
-│   └── data/       # Perfiles locales (se crea al jugar)
-├── navidad.js      # Compatibilidad con la ruta anterior
-├── yui.js          # Integración de YuiAPI
+├── index.js            # Conexión WhatsApp y router de comandos
+├── config.js           # Configuración y variables de entorno
+├── commands/
+│   ├── yui.js          # Integración de YuiAPI
+│   └── goku/
+│       ├── index.js        # Comandos Goku y temporadas
+│       ├── temporadas.js   # Textos festivos editables
+│       ├── rpg.js          # Motor RPG y generador de tarjetas PNG
+│       └── personajes.js   # Colección de personajes
+├── lib/
+│   └── paths.js        # Rutas compartidas y carpeta de datos
+├── scripts/
+│   └── check.js        # Validación de sintaxis (npm test)
+├── docs/
+│   ├── temporadas.md   # Guía de temporadas
+│   └── rpg.md          # Guía del sistema RPG
+├── data/               # Perfiles locales (se crea al jugar, no se sube)
 ├── package.json
 ├── .env.example
-└── session/        # Sesión privada, no subir
+└── session/            # Sesión privada, no subir
 ```
 
 ## ❓ Problemas frecuentes

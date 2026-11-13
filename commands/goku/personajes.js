@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const DATA_DIR = path.join(__dirname, '../../goku/data');
+const { DATA_DIR } = require('../../lib/paths');
 const DATA_FILE = path.join(DATA_DIR, 'characters.json');
 const COST = 250;
 const MAX_LEVEL = 5;
@@ -104,7 +104,7 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
   }
 
   if (cmd === 'invocar') {
-    const rpg = require('../../goku/rpg');
+    const rpg = require('./rpg');
     const player = rpg.getPlayer(senderId, m.pushName || senderId.split('@')[0]);
     if ((Number(player.coins) || 0) < COST) {
       await send(sock, jid, { text: 'Necesitas ' + COST + ' Zenis para invocar. Tu saldo: ' + (player.coins || 0) + '. Entrena con ' + prefix + 'entrenar.' }, m);

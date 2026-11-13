@@ -1,4 +1,4 @@
-const cfg = require('../config');
+const cfg = require('../../config');
 const seasonal = require('./temporadas');
 
 const pick = items => items[Math.floor(Math.random() * items.length)];

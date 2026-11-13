@@ -18,7 +18,7 @@ El RPG funciona localmente y no necesita APIs externas ni servicios de base de d
 
 ## Datos y privacidad
 
-Los perfiles se guardan en `goku/data/players.json`. El archivo se crea automáticamente al usar el sistema y queda excluido de Git. Cada usuario se identifica por su JID de WhatsApp; el nombre visible solo se utiliza como etiqueta.
+Los perfiles se guardan en `data/players.json`. El archivo se crea automáticamente al usar el sistema y queda excluido de Git. Cada usuario se identifica por su JID de WhatsApp; el nombre visible solo se utiliza como etiqueta.
 
 La tarjeta se dibuja como PNG con módulos nativos de Node.js (`zlib` y `fs`). No usa una API de imágenes ni añade dependencias externas.
 

@@ -1,4 +1,4 @@
-const cfg = require('../config');
+const cfg = require('../../config');
 
 function dateParts() {
   const parts = new Intl.DateTimeFormat('en-CA', {
