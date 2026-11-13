@@ -33,7 +33,7 @@ module.exports = {
   api: read('MEDIA_API_URL', 'https://api-yosoyyo-api-ofc.onrender.com'),
   apiKey: read('MEDIA_API_KEY'),
   yuiApi: read('YUI_API_URL', 'https://yuiapi.vercel.app'),
-  yuiKey: read('YUI_API_KEY'),
+  yuiKey: read('amk_DceasDeCdC5kILhIra97M-E3IsxblGcB'),
   navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false',
   seasons: {
     ...SEASON_CONFIG
