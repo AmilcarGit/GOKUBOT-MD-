@@ -12,7 +12,7 @@ const CATEGORIES = p => [
   ]],
   ['Personajes', [`${p}personajes`, `${p}invocar`, `${p}misguerreros`, `${p}mejorar <id>`]],
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
-  ['Utilidades', [`${p}menuapi`, `${p}ping`, `${p}owner`]]
+  ['Utilidades', [`${p}estado`, `${p}menuapi`, `${p}ping`, `${p}owner`]]
 ]
 
 function buildMenu(p) {

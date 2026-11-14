@@ -3,6 +3,7 @@ const pino = require('pino')
 const cfg = require('./config')
 const runCommand = require('./commands')
 const { getBody } = require('./lib/message')
+const status = require('./lib/status')
 
 const ask = q => new Promise(r => {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -45,6 +46,7 @@ async function main() {
 
   sock.ev.on('creds.update', saveCreds)
   sock.ev.on('connection.update', ({ connection, lastDisconnect }) => {
+    if (connection) status.onConnection(connection)
     if (connection === 'open') console.log(`✅ ${cfg.botName} conectado`)
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode
@@ -63,6 +65,7 @@ async function main() {
     const m = messages[0]
     console.log('MSG', type, m?.key?.fromMe, m?.key?.remoteJid, getBody(m || {}).slice(0, 40))
     if (!m?.message || m.key.remoteJid === 'status@broadcast') return
+    status.countMessage()
     const jid = m.key.remoteJid
     const body = getBody(m).trim()
     if (!body.startsWith(p)) return
@@ -72,6 +75,7 @@ async function main() {
     try {
       await runCommand(sock, m, jid, cmd, text, p)
     } catch (e) {
+      status.countError(e)
       console.error(e)
       await sock.sendMessage(jid, { text: '⚠️ Ocurrió un error, intenta de nuevo.' }, { quoted: m }).catch(() => {})
     }

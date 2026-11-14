@@ -49,6 +49,7 @@ Bot de WhatsApp construido con **Node.js** y **Baileys**. Combina comandos de Go
 | 🖼️ **Tarjetas PNG** | Perfil generado localmente, sin API de imágenes |
 | 🎬 **YouTube** | `.yts`, `.play`, `.ytmp3` y `.ytmp4` con respaldo automático entre varias APIs |
 | 🌐 **YuiAPI** | Stickers, QR, clima, traducción, búsquedas y más |
+| 📊 **Estado en vivo** | `.estado` muestra CPU, RAM, ping y más, y se actualiza solo |
 | 🎅 **Modo Navidad** | Cuenta regresiva, frases, regalos, árbol y sorteos |
 | ☁️ **Listo para Railway** | Sesión en volumen y vinculación sin terminal |
 | 📱 **Termux y PC** | Funciona en Android y en computadora |
@@ -144,6 +145,12 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 - 🏷️ **Stickers:** `.sticker` `.stickertxt` `.rmbg`
 - 🧰 **Herramientas:** `.qr` `.clima` `.cambio` `.traducir` `.hash` `.uuid` `.password`
 - 👑 **Propietario:** `.plan`
+
+### 📊 Estado en tiempo real
+
+| Comando | Función |
+|---|---|
+| `.estado` | Tarjeta que se actualiza sola: ping, CPU, RAM, disco, tiempo activo, mensajes, errores, jugadores, sesión y versión desplegada |
 
 ### 🧰 Generales
 
@@ -342,6 +349,7 @@ GOKUBOT-MD-
 ├── commands/
 │   ├── index.js        # Router: orden de comandos y tema
 │   ├── menu.js         # Menú principal
+│   ├── estado.js       # Estado del bot en vivo
 │   ├── general.js      # ping, owner
 │   ├── youtube.js      # yts, play, ytmp3, ytmp4
 │   ├── yui.js          # Herramientas de YuiAPI
@@ -352,6 +360,7 @@ GOKUBOT-MD-
 │       └── personajes.js   # Colección de personajes
 ├── lib/
 │   ├── theme.js        # Carga y aplica el tema activo
+│   ├── status.js       # Métricas del bot (CPU, RAM, contadores)
 │   ├── youtube.js      # Búsqueda y descarga con respaldo entre APIs
 │   ├── yuiapi.js       # Cliente de YuiAPI
 │   ├── message.js      # Lectura de mensajes entrantes

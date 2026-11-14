@@ -47,6 +47,9 @@ Requieren `YUI_API_KEY`.
 
 Tras `.yts`, el número elige un resultado: `.ytmp3 2`. Se prueba YuiAPI primero y luego `MEDIA_API_URL` como respaldo (`lib/youtube.js`). Límite: 90 MB.
 
+## 📊 Estado del bot — `commands/estado.js`
+`.estado` (`.status`, `.botstatus`): tarjeta que se **actualiza sola 6 veces** (cada 4 s) editando el mismo mensaje. Muestra conexión, ping, tiempo activo, CPU, RAM, disco, mensajes y comandos atendidos, reconexiones, errores, jugadores del RPG, sesión, claves configuradas (solo ✅/❌, nunca el valor), servidor, versión desplegada y tema. Los datos vienen de `lib/status.js`.
+
 ## ⚙️ Generales — `commands/general.js`
 `.ping` · `.owner`
 
