@@ -371,10 +371,13 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
     progressMission(player, 'social');
     progressMission(target, 'social');
     await saveDB();
-    await sock.sendMessage(jid, {
-      text: seasonal.decorate(`⚔️ *DUELO SAIYAJIN*\n\n🥊 ${player.name}: ${Math.floor(a).toLocaleString('es-PE')} poder\n🥊 ${target.name}: ${Math.floor(b).toLocaleString('es-PE')} poder\n\n🏆 ¡Ganador: @${winner.id.split('@')[0]}!\n💰 +80 Zenis y +45 XP\n${levels ? '⭐ ¡Subió de nivel!' : ''}`),
-      mentions: [player.id, target.id]
-    }, { quoted: m });
+    const duelText = seasonal.decorate(`⚔️ *DUELO SAIYAJIN*\n\n🥊 ${player.name}: ${Math.floor(a).toLocaleString('es-PE')} poder\n🥊 ${target.name}: ${Math.floor(b).toLocaleString('es-PE')} poder\n\n🏆 ¡Ganador: @${winner.id.split('@')[0]}!\n💰 +80 Zenis y +45 XP\n${levels ? '⭐ ¡Subió de nivel!' : ''}`);
+    const animated = await require('../visual').sendDuel(sock, jid, m, {
+      a: { name: player.name, power: a, hue: 200 },
+      b: { name: target.name, power: b, hue: 20 },
+      winner: winner === player ? 0 : 1
+    }, duelText, [player.id, target.id]);
+    if (!animated) await sock.sendMessage(jid, { text: duelText, mentions: [player.id, target.id] }, { quoted: m });
     return true;
   }
 
@@ -454,3 +457,4 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
 module.exports.makeCard = makeCard;
 module.exports.getPlayer = getPlayer;
 module.exports.saveDB = saveDB;
+module.exports.topPlayers = (n = 10) => Object.values(db.players).map(p => ({ name: p.name, level: p.level, power: powerFor(p) })).sort((x, y) => y.power - x.power).slice(0, n);

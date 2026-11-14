@@ -56,3 +56,19 @@ Tras `.yts`, el número elige un resultado: `.ytmp3 2`. Se prueba YuiAPI primero
 ## Agregar un comando nuevo
 1. Crea `commands/<categoria>.js` que exporte `async (sock, m, jid, cmd, text, prefix)` y devuelva `true` si atendió el comando.
 2. Regístralo en la lista de `commands/index.js`.
+
+## 🎨 Imágenes y animaciones — `commands/visual.js`
+Todo se dibuja dentro del bot (`lib/canvas.js`, `lib/scenes.js`), sin APIs externas. Los videos y stickers usan **ffmpeg** (`lib/video.js`); si no está instalado, se envía una imagen fija.
+
+| Comando | Qué hace |
+|---|---|
+| `.tarjeta [nombre]` | Tarjeta navideña en imagen con tu nombre |
+| `.top` | Ranking Top 10 del RPG como imagen |
+| `.nevada` | Video en bucle: noche con árboles y nieve |
+| `.fuegos` | Video en bucle: fuegos artificiales |
+| `.dragon` | Video en bucle: Shenlong y las 7 esferas |
+| `.stickeranim <texto>` | Sticker animado con letras de colores |
+| `.stickeranim` (respondiendo a un video/GIF) | Convierte el video en sticker animado (máx. 6 s) |
+| `.duelo @usuario` | Ahora envía el combate como video animado |
+
+En Railway define `RAILPACK_DEPLOY_APT_PACKAGES=ffmpeg` para tener ffmpeg.

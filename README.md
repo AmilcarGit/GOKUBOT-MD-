@@ -49,6 +49,7 @@ Bot de WhatsApp construido con **Node.js** y **Baileys**. Combina comandos de Go
 | 🖼️ **Tarjetas PNG** | Perfil generado localmente, sin API de imágenes |
 | 🎬 **YouTube** | `.yts`, `.play`, `.ytmp3` y `.ytmp4` con respaldo automático entre varias APIs |
 | 🌐 **YuiAPI** | Stickers, QR, clima, traducción, búsquedas y más |
+| 🎨 **Imágenes y animaciones** | `.tarjeta`, `.top`, `.nevada`, `.fuegos`, `.dragon`, `.stickeranim` y duelos RPG en video |
 | 📊 **Estado en vivo** | `.estado` muestra CPU, RAM, ping y más, y se actualiza solo |
 | 🎅 **Modo Navidad** | Cuenta regresiva, frases, regalos, árbol y sorteos |
 | ☁️ **Listo para Railway** | Sesión en volumen y vinculación sin terminal |
@@ -150,6 +151,9 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 
 | Comando | Función |
 |---|---|
+| `.tarjeta [nombre]` · `.top` | Tarjeta navideña y ranking como imagen |
+| `.nevada` · `.fuegos` · `.dragon` | Videos animados en bucle |
+| `.stickeranim <texto>` | Sticker animado (o responde a un video/GIF) |
 | `.estado` | Tarjeta que se actualiza sola: ping, CPU, RAM, disco, tiempo activo, mensajes, errores, jugadores, sesión y versión desplegada |
 
 ### 🧰 Generales
@@ -350,6 +354,7 @@ GOKUBOT-MD-
 │   ├── index.js        # Router: orden de comandos y tema
 │   ├── menu.js         # Menú principal
 │   ├── estado.js       # Estado del bot en vivo
+│   ├── visual.js       # Imágenes, videos y stickers animados
 │   ├── general.js      # ping, owner
 │   ├── youtube.js      # yts, play, ytmp3, ytmp4
 │   ├── yui.js          # Herramientas de YuiAPI

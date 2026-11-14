@@ -12,6 +12,7 @@ const CATEGORIES = p => [
   ]],
   ['Personajes', [`${p}personajes`, `${p}invocar`, `${p}misguerreros`, `${p}mejorar <id>`]],
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
+  ['Imagen y animación', [`${p}tarjeta`, `${p}top`, `${p}nevada`, `${p}fuegos`, `${p}dragon`, `${p}stickeranim`]],
   ['Utilidades', [`${p}estado`, `${p}menuapi`, `${p}ping`, `${p}owner`]]
 ]
 

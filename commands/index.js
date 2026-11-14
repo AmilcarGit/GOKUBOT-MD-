@@ -7,6 +7,7 @@ const handlers = [
   require('./goku'),             // Goku y temporadas
   require('./yui'),              // Utilidades de YuiAPI
   require('./estado'),           // estado del bot en vivo
+  require('./visual'),           // imágenes, animaciones y stickers animados
   require('./general'),          // ping, owner
   require('./youtube')           // YouTube: yts, play, ytmp3, ytmp4
 ]
