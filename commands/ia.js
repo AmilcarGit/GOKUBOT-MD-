@@ -63,10 +63,30 @@ async function handler(sock, m, jid, cmd, text, prefix) {
 
 // Mensaje normal (sin prefijo) en un chat privado.
 const isPrivate = jid => jid.endsWith('@s.whatsapp.net') || jid.endsWith('@lid')
+const digits = id => String(id || '').split('@')[0].split(':')[0]
+
+// En grupos solo contesta si lo mencionan o si responden a un mensaje suyo.
+function addressedToBot(sock, m) {
+  const ctx = m.message?.extendedTextMessage?.contextInfo
+  if (!ctx) return false
+  const mine = [digits(sock.user?.id), digits(sock.user?.lid)].filter(Boolean)
+  return (ctx.mentionedJid || []).some(id => mine.includes(digits(id))) || mine.includes(digits(ctx.participant))
+}
+
 async function autoReply(sock, m, jid, body) {
-  if (!cfg.ai.private || m.key.fromMe || !isPrivate(jid) || !body.trim()) return false
-  await answer(sock, m, jid, body.trim())
-  return true
+  if (m.key.fromMe || !body.trim()) return false
+  if (isPrivate(jid)) {
+    if (!cfg.ai.private) return false
+    await answer(sock, m, jid, body.trim())
+    return true
+  }
+  if (jid.endsWith('@g.us') && cfg.ai.groups && addressedToBot(sock, m)) {
+    const question = body.replace(/@\d+/g, '').trim()
+    if (!question) return false
+    await answer(sock, m, jid, question)
+    return true
+  }
+  return false
 }
 
 module.exports = handler

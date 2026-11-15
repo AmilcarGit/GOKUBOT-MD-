@@ -115,7 +115,9 @@ function xpNeeded(level) {
 function powerFor(player) {
   const rank = rankFor(player.level);
   const transform = transformFor(player.level);
-  return Math.floor((player.power + player.level * 35) * rank.power * transform.multiplier / Math.max(1, rank.power));
+  const base = Math.floor((player.power + player.level * 35) * rank.power * transform.multiplier / Math.max(1, rank.power));
+  // Los guerreros de la colección suman poder (ver commands/guerreros.js).
+  return base + require('../guerreros').bonusFor(player.id);
 }
 
 function progressMission(player, key, amount = 1) {
@@ -495,6 +497,19 @@ module.exports.makeCard = makeCard;
 module.exports.getPlayer = getPlayer;
 module.exports.saveDB = saveDB;
 module.exports.topPlayers = (n = 10) => Object.values(db.players).map(p => ({ name: p.name, level: p.level, power: powerFor(p) })).sort((x, y) => y.power - x.power).slice(0, n);
+module.exports.richest = (n = 10) => Object.values(db.players).map(p => ({ name: p.name, level: p.level, power: p.coins })).sort((x, y) => y.power - x.power).slice(0, n);
+// Transferencia entre jugadores con comisión. Devuelve { sent, received, fee } o un texto de error.
+module.exports.transfer = async (fromId, toId, toName, amount) => {
+  const from = getPlayer(fromId);
+  if (fromId === toId) return 'No puedes regalarte Zenis a ti mismo.';
+  if (from.coins < amount) return `No te alcanzan los Zenis (tienes ${from.coins}).`;
+  const to = getPlayer(toId, db.players[toId] ? undefined : toName);
+  const fee = Math.floor(amount * 0.05);
+  from.coins -= amount;
+  to.coins += amount - fee;
+  await saveDB();
+  return { sent: amount, received: amount - fee, fee, balance: from.coins };
+};
 module.exports.statsFor = (id, name) => {
   const p = getPlayer(id, name);
   return { name: p.name, coins: p.coins, level: p.level, power: powerFor(p), balls: [...p.balls], transform: transformFor(p.level).name, rank: rankFor(p.level).name };

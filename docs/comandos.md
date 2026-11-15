@@ -84,7 +84,7 @@ Usa la API de EvoGB (`lib/evogb.js`, clave en la variable `EVOGB_KEY`).
 - **Cualquier chat:** `.ia <pregunta>`; `.ia reset` borra la conversación.
 - Personalidad editable en `config.js` (`ai.persona`, o variable `AI_PERSONA`); el modelo con `AI_MODEL` (por defecto `pro`).
 - La etiqueta de IA de WhatsApp (`ai: true`) es experimental y viene apagada: en algunas cuentas el mensaje no se entrega. Actívala con `AI_BADGE=true`.
-- En grupos nunca responde sola, solo con `.ia`.
+- En grupos responde si lo mencionas (`@bot pregunta`) o si respondes a un mensaje suyo; también con `.ia`. Se apaga con `AI_GROUPS=false`.
 
 ## 🎰 Juegos Z — `commands/juegos.js`
 Se juega con los Zenis del RPG (apuesta mínima 10, máxima 5000, espera de 8 s). Cada tirada llega como video animado.
@@ -153,3 +153,8 @@ El destinatario es la persona mencionada, el mensaje al que respondes, un númer
 | `.darguerrero <nombre\|nº> [@usuario]` | Regala un guerrero a su colección |
 | `.jugador [@usuario]` | Ve nivel, poder, Zenis, esferas y récord |
 | `.resetjugador @usuario confirmar` | Borra el progreso RPG de un jugador |
+
+## ⚡ Bonus de guerreros y economía
+- **Bonus de equipo:** tus 3 mejores guerreros suman el 20% de su poder a tu poder en el RPG (duelos, jefes, ranking). Lo ves en `.coleccion`.
+- `.regalar @usuario <zenis>`: regala Zenis a otro jugador (mínimo 10, comisión del 5%). También respondiendo a su mensaje.
+- `.ricos`: imagen con los 10 jugadores con más Zenis.

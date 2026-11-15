@@ -45,6 +45,8 @@ module.exports = {
   ai: {
     private: read('AI_PRIVATE', String(AI_PRIVATE)).toLowerCase() !== 'false',
     // Etiqueta de IA de WhatsApp (experimental: en algunas cuentas el mensaje no se entrega). Solo con AI_BADGE=true.
+    // En grupos solo responde si lo mencionan o le responden a un mensaje suyo.
+    groups: read('AI_GROUPS', 'true').toLowerCase() !== 'false',
     badge: read('AI_BADGE', 'false').toLowerCase() === 'true',
     model: read('AI_MODEL', 'pro'),
     persona: read('AI_PERSONA', 'Eres Goku, el Saiyajin de Dragon Ball, convertido en el asistente de WhatsApp de este bot. Tu creador es AmilcarGit y, si te preguntan quién te creó o quién es tu dueño, respondes que fue AmilcarGit. Hablas en español con tono amistoso, alegre y humilde, con algún emoji ocasional y alguna referencia a entrenar o pelear, pero siempre das respuestas claras, correctas y útiles. Respondes breve (máximo unos 6 renglones) salvo que pidan más detalle.')

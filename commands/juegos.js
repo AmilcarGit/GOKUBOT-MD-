@@ -4,7 +4,7 @@ const T = require('../lib/theme')
 const scenes = require('../lib/scenes')
 const video = require('../lib/video')
 
-const COMMANDS = new Set(['slot', 'tragamonedas', 'ruleta'])
+const COMMANDS = new Set(['slot', 'tragamonedas', 'ruleta', 'regalar', 'ricos'])
 const MIN_BET = 10, MAX_BET = 5000, COOLDOWN = 8000
 const last = new Map()
 const say = (sock, jid, m, kind, text) => sock.sendMessage(jid, { text: T.msg(kind, text) }, { quoted: m })
@@ -34,6 +34,25 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
   const { sendClip } = require('./visual')
   const id = m.key.participant || m.key.remoteJid
   const name = m.pushName || id.split('@')[0]
+
+  if (cmd === 'ricos') {
+    const rows = rpg.richest(10)
+    if (!rows.length) { await say(sock, jid, m, 'info', 'Todavía no hay jugadores.'); return true }
+    const png = scenes.ranking(rows, { title: 'LOS MAS RICOS', subtitle: 'ZENIS ACUMULADOS', tag: p => `NV.${p.level}` }).toPNG()
+    await sock.sendMessage(jid, { image: png, caption: '💰 Los guerreros con más Zenis' }, { quoted: m })
+    return true
+  }
+
+  if (cmd === 'regalar') {
+    const ctx = m.message?.extendedTextMessage?.contextInfo
+    const target = ctx?.mentionedJid?.[0] || ctx?.participant
+    const amount = Math.floor(Number(text.replace(/@\d+/g, ' ').trim().split(/\s+/).find(x => /^\d+$/.test(x))))
+    if (!target || !(amount >= 10)) { await say(sock, jid, m, 'info', `Uso: ${prefix}regalar @usuario <zenis> (mínimo 10, comisión del 5%)\nTambién puedes responder a su mensaje con ${prefix}regalar <zenis>.`); return true }
+    const r = await rpg.transfer(id, target, target.split('@')[0], amount)
+    if (typeof r === 'string') { await say(sock, jid, m, 'warn', r); return true }
+    await sock.sendMessage(jid, { text: T.msg('ok', `Enviaste ${r.sent} Zenis a @${target.split('@')[0]} (recibe ${r.received}, comisión ${r.fee}).\n💰 Tu saldo: ${r.balance}`), mentions: [target] }, { quoted: m })
+    return true
+  }
   const isRoulette = cmd === 'ruleta'
   const args = text.trim().split(/\s+/).filter(Boolean)
 

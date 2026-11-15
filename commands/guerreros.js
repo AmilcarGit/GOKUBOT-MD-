@@ -35,7 +35,7 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
 
   if (cmd === 'coleccion') {
     const have = W.ROSTER.filter(w => user.owned[w.id]).length
-    await sock.sendMessage(jid, { image: W.drawCollection(user.owned, name).toPNG(), caption: `🃏 Tienes ${have} de ${W.ROSTER.length} guerreros.\nInvoca más con ${prefix}invocar` }, { quoted: m })
+    await sock.sendMessage(jid, { image: W.drawCollection(user.owned, name).toPNG(), caption: `🃏 Tienes ${have} de ${W.ROSTER.length} guerreros.\n⚡ Bonus de equipo: +${W.teamBonus(user.owned)} de poder (20% de tus 3 mejores).\nInvoca más con ${prefix}invocar` }, { quoted: m })
     return true
   }
 
@@ -92,3 +92,6 @@ module.exports.grant = (id, query) => {
   save()
   return { warrior: w, count: u.owned[w.id] }
 }
+
+// Poder extra que aporta la colección al RPG.
+module.exports.bonusFor = id => W.teamBonus(db.users[id]?.owned)
