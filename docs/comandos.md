@@ -140,3 +140,16 @@ Todo se procesa dentro del bot con ffmpeg. Envía el archivo con el comando o re
 | `.guerreros` | Lista de todos los guerreros |
 
 Probabilidades: común 55%, raro 28%, épico 13%, legendario 4%.
+
+## 🎁 Regalos y control de jugadores (solo dueño)
+El destinatario es la persona mencionada, el mensaje al que respondes, un número completo (con código de país) o, si no pones ninguno, tú mismo.
+
+| Comando | Qué hace |
+|---|---|
+| `.dar <zenis> [@usuario]` | Regala Zenis (hasta 10.000.000) |
+| `.quitar <zenis> [@usuario]` | Quita Zenis (no baja de 0) |
+| `.darxp <cantidad> [@usuario]` | Regala XP; puede subir de nivel |
+| `.daresfera <1-7\|todas> [@usuario]` | Regala esferas del dragón |
+| `.darguerrero <nombre\|nº> [@usuario]` | Regala un guerrero a su colección |
+| `.jugador [@usuario]` | Ve nivel, poder, Zenis, esferas y récord |
+| `.resetjugador @usuario confirmar` | Borra el progreso RPG de un jugador |

@@ -17,7 +17,7 @@ let db = { users: {} }
 try { db = { users: {}, ...JSON.parse(fs.readFileSync(FILE, 'utf8')) } } catch { /* primera vez */ }
 let saving = Promise.resolve()
 const save = () => { saving = saving.then(() => { fs.mkdirSync(DATA_DIR, { recursive: true }); fs.writeFileSync(FILE + '.tmp', JSON.stringify(db)); fs.renameSync(FILE + '.tmp', FILE) }).catch(e => console.error('[guerreros]', e.message)) }
-const userOf = (id, name) => { const u = db.users[id] || (db.users[id] = { name, owned: {} }); u.name = name; return u }
+const userOf = (id, name) => { const u = db.users[id] || (db.users[id] = { name: name || id.split('@')[0], owned: {} }); if (name) u.name = name; return u }
 
 const say = (sock, jid, m, kind, text) => sock.sendMessage(jid, { text: T.msg(kind, text) }, { quoted: m })
 
@@ -81,4 +81,14 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
     await say(sock, jid, m, busy ? 'wait' : 'err', busy ? 'Hay otra animación en curso, intenta en unos segundos.' : 'No pude invocar, inténtalo de nuevo.')
   }
   return true
+}
+
+// Regalo del dueño: entrega un guerrero (o suma una repetición).
+module.exports.grant = (id, query) => {
+  const w = W.find(query)
+  if (!w) return null
+  const u = userOf(id)
+  u.owned[w.id] = (u.owned[w.id] || 0) + 1
+  save()
+  return { warrior: w, count: u.owned[w.id] }
 }

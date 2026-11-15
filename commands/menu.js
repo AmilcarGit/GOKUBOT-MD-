@@ -15,7 +15,7 @@ const CATEGORIES = p => [
   ['Guerreros originales', [`${p}invocar (250 Zenis)`, `${p}coleccion`, `${p}guerrero <nombre|nº>`, `${p}guerreros`]],
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`]],
   ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
-  ['Dueño', [`${p}panel`, `${p}ia on/off`, `${p}anuncio <texto>`, `${p}ban / ${p}unban`, `${p}reiniciar`, `${p}miid`]],
+  ['Dueño', [`${p}panel`, `${p}ia on/off`, `${p}anuncio <texto>`, `${p}ban / ${p}unban`, `${p}dar / ${p}quitar <zenis>`, `${p}darxp`, `${p}daresfera`, `${p}darguerrero`, `${p}jugador`, `${p}resetjugador`, `${p}reiniciar`, `${p}miid`]],
   ['Grupos', [`${p}bienvenida on/off`, `${p}antilink on/off`, `${p}todos <mensaje>`, `${p}actividad`]],
   ['IA Goku', [`${p}ia <pregunta>`, `${p}ia reset`, '(en privado responde solo)']],
   ['Imagen y animación', [`${p}tarjeta`, `${p}top`, `${p}nevada`, `${p}fuegos`, `${p}dragon`, `${p}stickeranim`, `${p}aura`, `${p}onda`, `${p}poder`, `${p}esferas`]],

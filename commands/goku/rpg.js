@@ -507,3 +507,24 @@ module.exports.adjustCoins = async (id, name, delta) => {
   await saveDB();
   return p.coins;
 };
+
+// Herramientas del dueño (las usa commands/dueno.js).
+const digitsOf = id => String(id).split('@')[0].split(':')[0];
+module.exports.admin = {
+  find: digits => Object.keys(db.players).find(id => digitsOf(id) === digits),
+  get(id) { return getPlayer(id, db.players[id] ? undefined : digitsOf(id)); },
+  async coins(id, delta) { const p = this.get(id); p.coins = Math.max(0, p.coins + delta); await saveDB(); return p.coins; },
+  async xp(id, amount) { const p = this.get(id); const levels = applyXP(p, amount); await saveDB(); return { level: p.level, levels }; },
+  async ball(id, which) {
+    const p = this.get(id);
+    const add = which === 'todas' ? [1, 2, 3, 4, 5, 6, 7] : [which];
+    for (const n of add) if (!p.balls.includes(n)) p.balls.push(n);
+    await saveDB();
+    return p.balls.length;
+  },
+  async reset(id) { delete db.players[id]; await saveDB(); },
+  view(id) {
+    const p = this.get(id);
+    return { name: p.name, coins: p.coins, level: p.level, power: powerFor(p), balls: p.balls.length, wins: p.wins || 0, losses: p.losses || 0, rank: rankFor(p.level).name };
+  }
+};
