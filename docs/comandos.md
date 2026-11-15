@@ -158,3 +158,12 @@ El destinatario es la persona mencionada, el mensaje al que respondes, un númer
 - **Bonus de equipo:** tus 3 mejores guerreros suman el 20% de su poder a tu poder en el RPG (duelos, jefes, ranking). Lo ves en `.coleccion`.
 - `.regalar @usuario <zenis>`: regala Zenis a otro jugador (mínimo 10, comisión del 5%). También respondiendo a su mensaje.
 - `.ricos`: imagen con los 10 jugadores con más Zenis.
+
+## 🔊 Voz de Goku — `lib/voice.js`
+Texto a voz en español (Google Translate TTS) con un efecto que la hace más grave y enérgica. Es una voz sintética, no la voz real del personaje.
+
+- **En privado**, la IA responde con nota de voz si la respuesta mide hasta 450 caracteres; si es más larga, o si falla la voz, manda texto.
+- `.voz on/off`: cada chat elige si quiere audio o texto.
+- `.hablar <texto>`: Goku dice lo que escribas (máx. 300 caracteres), en cualquier chat.
+- Variables: `AI_VOICE=false` apaga la voz para todos, `AI_VOICE_PITCH` (0.6–1.2, por defecto 0.82; más bajo = más grave) y `AI_VOICE_MAX`.
+- Requiere ffmpeg y que el servidor pueda llegar a `translate.google.com`.

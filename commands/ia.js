@@ -3,6 +3,9 @@
 const cfg = require('../config')
 const T = require('../lib/theme')
 const evogb = require('../lib/evogb')
+const settings = require('../lib/settings')
+const voice = require('../lib/voice')
+const video = require('../lib/video')
 
 const COOLDOWN = 3000
 const MAX_INPUT = 600
@@ -20,6 +23,20 @@ function buildPrompt(jid, question) {
   return `Conversación anterior:\n${context}\n\nNuevo mensaje del usuario: ${question}`
 }
 
+// En privado, si está activado, responde con nota de voz. Devuelve false si hay que mandar texto.
+async function sendVoice(sock, m, jid, reply) {
+  if (!cfg.ai.voice || !isPrivate(jid) || !settings.voiceOn(jid) || reply.length > cfg.ai.voiceMax || !video.hasFfmpeg()) return false
+  try {
+    sock.sendPresenceUpdate('recording', jid).catch(() => {})
+    const audio = await voice.speak(reply)
+    await sock.sendMessage(jid, { audio, mimetype: 'audio/ogg; codecs=opus', ptt: true }, { quoted: m })
+    return true
+  } catch (error) {
+    console.error('[voz]', error.message)
+    return false
+  }
+}
+
 async function answer(sock, m, jid, question) {
   if (!evogb.hasKey()) {
     await sock.sendMessage(jid, { text: T.msg('warn', 'La IA no está configurada todavía (falta EVOGB_KEY).') }, { quoted: m })
@@ -35,6 +52,7 @@ async function answer(sock, m, jid, question) {
     const turns = history.get(jid) || []
     turns.push({ q: question, a: reply })
     history.set(jid, turns.slice(-HISTORY_TURNS))
+    if (await sendVoice(sock, m, jid, reply)) return
     await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
   } catch (error) {
     console.error('[ia]', error.message)
@@ -47,6 +65,30 @@ async function answer(sock, m, jid, question) {
 
 // Comando .ia / .goku-ia / .ask
 async function handler(sock, m, jid, cmd, text, prefix) {
+  if (cmd === 'voz') {
+    const arg = text.trim().toLowerCase()
+    if (!['on', 'off'].includes(arg)) {
+      await sock.sendMessage(jid, { text: T.msg('info', `Voz de Goku: ${settings.voiceOn(jid) ? 'activada 🔊' : 'desactivada 🔇'}\nUso: ${prefix}voz on | off\n${prefix}hablar <texto> hace que Goku lo diga.`) }, { quoted: m })
+      return true
+    }
+    settings.setVoice(jid, arg === 'on')
+    await sock.sendMessage(jid, { text: T.msg('ok', `Voz de Goku ${arg === 'on' ? 'activada' : 'desactivada'} para este chat.`) }, { quoted: m })
+    return true
+  }
+  if (cmd === 'hablar') {
+    if (!text.trim()) { await sock.sendMessage(jid, { text: T.msg('info', `Uso: ${prefix}hablar <texto>`) }, { quoted: m }); return true }
+    if (!video.hasFfmpeg()) { await sock.sendMessage(jid, { text: T.msg('err', 'Este servidor no tiene ffmpeg.') }, { quoted: m }); return true }
+    if (Date.now() - (lastUse.get('v' + jid) || 0) < 5000) return true
+    lastUse.set('v' + jid, Date.now())
+    try {
+      const audio = await voice.speak(text.trim().slice(0, 300))
+      await sock.sendMessage(jid, { audio, mimetype: 'audio/ogg; codecs=opus', ptt: true }, { quoted: m })
+    } catch (error) {
+      console.error('[voz]', error.message)
+      await sock.sendMessage(jid, { text: T.msg('err', 'No pude generar la voz ahora. Intenta de nuevo.') }, { quoted: m })
+    }
+    return true
+  }
   if (!['ia', 'ai', 'ask', 'goku-ia'].includes(cmd)) return false
   if (cmd === 'ia' && /^(reset|borrar|olvidar)$/i.test(text.trim())) {
     history.delete(jid)
