@@ -9,6 +9,7 @@ const handlers = [
   require('./estado'),           // estado del bot en vivo
   require('./dueno'),            // Panel del dueño (.panel, .ia on/off, .ban...)
   require('./ia'),               // IA de Goku (.ia)
+  require('./guerreros'),        // Guerreros originales: invocar, coleccion
   require('./juegos'),           // Juegos: slot y ruleta con Zenis
   require('./grupos'),           // Grupos: bienvenida, antilink, todos, actividad
   require('./herramientas'),     // Filtros de imagen, memes y audio

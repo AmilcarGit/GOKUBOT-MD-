@@ -128,3 +128,15 @@ Todo se procesa dentro del bot con ffmpeg. Envía el archivo con el comando o re
 | `.bn` · `.negativo` · `.espejo` · `.blur` · `.pixelar` | Filtros de imagen |
 | `.mp3` | Convierte un video o audio a MP3 |
 | `.rapido` · `.lento` · `.ardilla` · `.grave` · `.eco` | Efectos de voz; vuelve como nota de voz |
+
+## 🃏 Guerreros originales — `commands/guerreros.js`
+13 guerreros de diseño propio (comunes, raros, épicos y legendarios), con retratos dibujados por el bot en `lib/warriors.js`. Se guardan en `data/warriors.json`.
+
+| Comando | Qué hace |
+|---|---|
+| `.invocar` | Cuesta 250 Zenis. Animación de invocación y carta nueva (repetidas suben +10% de poder) |
+| `.coleccion` | Imagen con tu colección; los que no tienes salen como sombra |
+| `.guerrero <nombre\|nº>` | Carta grande de un guerrero que ya tienes |
+| `.guerreros` | Lista de todos los guerreros |
+
+Probabilidades: común 55%, raro 28%, épico 13%, legendario 4%.
