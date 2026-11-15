@@ -11,6 +11,7 @@ const handlers = [
   require('./ia'),               // IA de Goku (.ia)
   require('./juegos'),           // Juegos: slot y ruleta con Zenis
   require('./grupos'),           // Grupos: bienvenida, antilink, todos, actividad
+  require('./herramientas'),     // Filtros de imagen, memes y audio
   require('./visual'),           // imágenes, animaciones y stickers animados
   require('./general'),          // ping, owner
   require('./youtube')           // YouTube: yts, play, ytmp3, ytmp4

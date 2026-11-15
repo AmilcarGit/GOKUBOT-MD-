@@ -118,3 +118,13 @@ Solo responde al dueño: los números o IDs de la variable `BOT_OWNER` (separado
 | `.ban` / `.unban` | Mención, respuesta a un mensaje o número: el bot deja de responderle |
 | `.reiniciar` | Reinicia el bot (Railway lo levanta solo) |
 | `.miid` | Cualquiera: muestra su número e ID interno para ponerlos en `BOT_OWNER` |
+
+## 🛠️ Imagen y audio — `commands/herramientas.js`
+Todo se procesa dentro del bot con ffmpeg. Envía el archivo con el comando o responde al archivo. Máximo 25 MB y 6 s de espera por chat.
+
+| Comando | Qué hace |
+|---|---|
+| `.meme arriba \| abajo` | Meme con texto blanco y borde negro sobre tu foto |
+| `.bn` · `.negativo` · `.espejo` · `.blur` · `.pixelar` | Filtros de imagen |
+| `.mp3` | Convierte un video o audio a MP3 |
+| `.rapido` · `.lento` · `.ardilla` · `.grave` · `.eco` | Efectos de voz; vuelve como nota de voz |
