@@ -13,7 +13,7 @@ const CATEGORIES = p => [
   ['Personajes', [`${p}personajes`, `${p}invocar`, `${p}misguerreros`, `${p}mejorar <id>`]],
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
   ['IA Goku', [`${p}ia <pregunta>`, `${p}ia reset`, '(en privado responde solo)']],
-  ['Imagen y animación', [`${p}tarjeta`, `${p}top`, `${p}nevada`, `${p}fuegos`, `${p}dragon`, `${p}stickeranim`]],
+  ['Imagen y animación', [`${p}tarjeta`, `${p}top`, `${p}nevada`, `${p}fuegos`, `${p}dragon`, `${p}stickeranim`, `${p}aura`, `${p}onda`, `${p}poder`, `${p}esferas`]],
   ['Utilidades', [`${p}estado`, `${p}menuapi`, `${p}ping`, `${p}owner`]]
 ]
 

@@ -69,6 +69,10 @@ Todo se dibuja dentro del bot (`lib/canvas.js`, `lib/scenes.js`), sin APIs exter
 | `.dragon` | Video en bucle: Shenlong y las 7 esferas |
 | `.stickeranim <texto>` | Sticker animado con letras de colores |
 | `.stickeranim` (respondiendo a un video/GIF) | Convierte el video en sticker animado (máx. 6 s) |
+| `.aura` (con una foto o respondiendo a una) | Tu foto con aura de energía y rayos, en video |
+| `.onda [texto]` | Onda de energía que se carga, se dispara y explota |
+| `.poder` | Escáner verde que cuenta tu poder del RPG (>9000 activa la alerta) |
+| `.esferas` | Tus esferas del dragón; con las 7 aparece el rayo de invocación |
 | `.duelo @usuario` | Ahora envía el combate como video animado |
 
 En Railway define `RAILPACK_DEPLOY_APT_PACKAGES=ffmpeg` para tener ffmpeg.

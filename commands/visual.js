@@ -7,7 +7,7 @@ const scenes = require('../lib/scenes')
 const video = require('../lib/video')
 
 const W = 480, H = 270
-const COMMANDS = new Set(['tarjeta', 'top', 'nevada', 'fuegos', 'dragon', 'shenlong', 'stickeranim', 'sanim'])
+const COMMANDS = new Set(['tarjeta', 'top', 'nevada', 'fuegos', 'dragon', 'shenlong', 'stickeranim', 'sanim', 'aura', 'onda', 'poder', 'esferas'])
 const COOLDOWN = 15000
 const last = new Map() // chat -> última vez que se pidió un render
 
@@ -88,6 +88,26 @@ async function handler(sock, m, jid, cmd, text, prefix) {
         await sendClip(sock, jid, m, { draw: scenes.fireworks, count: 48, caption: '🎆 ¡Feliz Año Nuevo!' })
       } else if (cmd === 'dragon' || cmd === 'shenlong') {
         await sendClip(sock, jid, m, { draw: scenes.dragon, count: 48, caption: '🐉 ¡Shenlong ha sido invocado!' })
+      } else if (cmd === 'aura') {
+        const media = await getMedia(sock, m)
+        if (!media || media.isVideo) {
+          await sock.sendMessage(jid, { text: note('info', `Envía una foto con ${prefix}aura o responde a una foto con ${prefix}aura.`) }, { quoted: m })
+          return
+        }
+        if (!video.hasFfmpeg()) { await sock.sendMessage(jid, { text: note('err', 'Este servidor no tiene ffmpeg.') }, { quoted: m }); return }
+        const photo = await video.decodeImage(media.buffer, 200)
+        await sendClip(sock, jid, m, { draw: (c, t) => scenes.aura(c, t, photo, 200), count: 36, caption: '⚡ ¡Aura de combate activada!' })
+      } else if (cmd === 'onda') {
+        await sendClip(sock, jid, m, { draw: (c, t) => scenes.wave(c, t, (text || '').trim() || 'ONDA DE KI'), count: 42, caption: '💥 ¡Onda de ki!' })
+      } else if (cmd === 'poder' || cmd === 'esferas') {
+        const rpg = require('./goku/rpg')
+        const id = m.key.participant || m.key.remoteJid
+        const st = rpg.statsFor(id, m.pushName || id.split('@')[0])
+        if (cmd === 'poder') {
+          await sendClip(sock, jid, m, { draw: (c, t) => scenes.scouter(c, t, st), count: 40, caption: `🟢 Poder de ${st.name}: ${st.power.toLocaleString('es-PE')}` })
+        } else {
+          await sendClip(sock, jid, m, { draw: (c, t) => scenes.balls(c, t, st), count: 36, caption: `🐉 Esferas de ${st.name}: ${st.balls.length}/7` })
+        }
       } else {
         // stickeranim
         if (!video.hasFfmpeg()) {

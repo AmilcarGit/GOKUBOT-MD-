@@ -153,6 +153,7 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 |---|---|
 | `.tarjeta [nombre]` · `.top` | Tarjeta navideña y ranking como imagen |
 | `.nevada` · `.fuegos` · `.dragon` | Videos animados en bucle |
+| `.aura` · `.onda` · `.poder` · `.esferas` | Aura sobre tu foto, onda de energía, escáner de poder y tus esferas del dragón |
 | `.stickeranim <texto>` | Sticker animado (o responde a un video/GIF) |
 | `.estado` | Tarjeta que se actualiza sola: ping, CPU, RAM, disco, tiempo activo, mensajes, errores, jugadores, sesión y versión desplegada |
 
