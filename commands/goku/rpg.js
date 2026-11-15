@@ -37,6 +37,14 @@ const SHOP = [
   { id: 'radar', name: 'Radar del dragón', price: 600, description: 'Ayuda a encontrar esferas' }
 ];
 
+// Jefes originales: su poder depende del tuyo, así que siempre hay reto.
+const BOSSES = [
+  { id: 'esbirro', name: 'Grunk', title: 'Esbirro del Vacío', factor: 0.7, coins: 60, xp: 40, hue: 120 },
+  { id: 'capitan', name: 'Vexor', title: 'Capitán Estelar', factor: 1.0, coins: 150, xp: 80, hue: 280 },
+  { id: 'senor', name: 'Kragor', title: 'Señor Devorador', factor: 1.4, coins: 400, xp: 160, hue: 0 }
+];
+const BOSS_COOLDOWN = 90 * 1000;
+
 const MISSIONS = [
   { id: 'train', name: 'Entrenamiento', goal: 3, reward: 100, description: 'Entrena 3 veces' },
   { id: 'duel', name: 'Rival Saiyajin', goal: 1, reward: 150, description: 'Participa en un duelo' },
@@ -300,7 +308,7 @@ async function sendCard(sock, jid, player, m) {
 }
 
 module.exports = async function (sock, m, jid, cmd, text, prefix) {
-  const allowed = new Set(['perfil','nivel','entrenar','transformar','duelo','ranking','misiones','reclamar','tienda','comprar','inventario','shenlong']);
+  const allowed = new Set(['perfil','nivel','entrenar','transformar','duelo','ranking','misiones','reclamar','tienda','comprar','inventario','shenlong','jefe']);
   if (!allowed.has(cmd)) return false;
 
   const sender = (m.key.participant || m.key.remoteJid || '').split('@')[0].split(':')[0];
@@ -378,6 +386,35 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
       winner: winner === player ? 0 : 1
     }, duelText, [player.id, target.id]);
     if (!animated) await sock.sendMessage(jid, { text: duelText, mentions: [player.id, target.id] }, { quoted: m });
+    return true;
+  }
+
+  if (cmd === 'jefe') {
+    const boss = BOSSES.find(entry => entry.id === text.trim().toLowerCase());
+    if (!boss) {
+      await reply(`👹 *JEFES DEL UNIVERSO*\n\n${BOSSES.map(b => `• *${b.name}* — ${b.title}\n  ${prefix}jefe ${b.id} | Poder x${b.factor} | 💰 ${b.coins} Zenis`).join('\n\n')}\n\nEl poder del jefe depende del tuyo. Mientras más fuerte, más recompensa.`);
+      return true;
+    }
+    const left = cooldownLeft(player, 'boss', BOSS_COOLDOWN);
+    if (left) { await reply(`⏳ Recupera energía ${fmtTime(left)} antes de otra batalla.`); return true; }
+    player.cooldowns.boss = Date.now();
+    const a = powerFor(player) * (0.9 + Math.random() * 0.2) * (player.inventory.armor ? 1.1 : 1);
+    const b = powerFor(player) * boss.factor * (0.9 + Math.random() * 0.2);
+    const won = a >= b;
+    let levels = 0;
+    if (won) { player.wins++; player.coins += boss.coins; levels = applyXP(player, boss.xp); }
+    else { player.losses++; applyXP(player, 10); }
+    progressMission(player, 'social');
+    await saveDB();
+    const bossText = seasonal.decorate(won
+      ? `👹 *BATALLA CONTRA ${boss.name.toUpperCase()}*\n\n🏆 ¡Derrotaste a ${boss.name}, ${boss.title}!\n💰 +${boss.coins} Zenis y +${boss.xp} XP${levels ? '\n⭐ ¡Subiste de nivel!' : ''}`
+      : `👹 *BATALLA CONTRA ${boss.name.toUpperCase()}*\n\n💀 ${boss.name} fue más fuerte esta vez.\n✨ +10 XP por el esfuerzo. ¡Entrena y vuelve!`);
+    const animated = await require('../visual').sendDuel(sock, jid, m, {
+      a: { name: player.name, power: a, hue: 200 },
+      b: { name: boss.name, power: b, hue: boss.hue },
+      winner: won ? 0 : 1
+    }, bossText, [player.id]);
+    if (!animated) await sock.sendMessage(jid, { text: bossText, mentions: [player.id] }, { quoted: m });
     return true;
   }
 

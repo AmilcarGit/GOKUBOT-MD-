@@ -71,6 +71,10 @@ async function main() {
     console.log('MSG', type, m?.key?.fromMe, m?.key?.remoteJid, getBody(m || {}).slice(0, 40))
     if (!m?.message || m.key.remoteJid === 'status@broadcast') return
     status.countMessage()
+    if (!m.key.fromMe) {
+      const who = await sock.getSender(m).catch(() => null)
+      if (who && [who.number, who.id].some(id => require('./lib/settings').isBannedId(id))) return
+    }
     const jid = m.key.remoteJid
     const body = getBody(m).trim()
     if (jid.endsWith('@g.us')) require('./commands/grupos').onMessage(wrapSock(sock), m, jid).catch(e => console.error('[grupos]', e.message))

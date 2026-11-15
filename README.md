@@ -153,6 +153,7 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 |---|---|
 | `.tarjeta [nombre]` · `.top` | Tarjeta navideña y ranking como imagen |
 | `.nevada` · `.fuegos` · `.dragon` | Videos animados en bucle |
+| `.jefe` · `.panel` · `.anuncio` · `.ban` | Batallas contra jefes y panel exclusivo del dueño |
 | `.slot` · `.ruleta` | Juegos con Zenis y animación estilo Dragon Ball |
 | `.bienvenida` · `.antilink` · `.todos` · `.actividad` | Herramientas de grupo con tarjetas de imagen |
 | `.aura` · `.onda` · `.poder` · `.esferas` | Aura sobre tu foto, onda de energía, escáner de poder y tus esferas del dragón |
@@ -358,6 +359,7 @@ GOKUBOT-MD-
 │   ├── menu.js         # Menú principal
 │   ├── estado.js       # Estado del bot en vivo
 │   ├── visual.js       # Imágenes, videos y stickers animados
+│   ├── dueno.js        # Panel del dueño
 │   ├── juegos.js       # Slot y ruleta con Zenis
 │   ├── grupos.js       # Bienvenida, antilink, todos, actividad
 │   ├── general.js      # ping, owner

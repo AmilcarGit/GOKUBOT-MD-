@@ -7,6 +7,7 @@ const handlers = [
   require('./goku'),             // Goku y temporadas
   require('./yui'),              // Utilidades de YuiAPI
   require('./estado'),           // estado del bot en vivo
+  require('./dueno'),            // Panel del dueño (.panel, .ia on/off, .ban...)
   require('./ia'),               // IA de Goku (.ia)
   require('./juegos'),           // Juegos: slot y ruleta con Zenis
   require('./grupos'),           // Grupos: bienvenida, antilink, todos, actividad

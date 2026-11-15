@@ -103,3 +103,18 @@ Los ajustes y contadores se guardan en `data/groups.json` (el volumen de Railway
 | `.antilink on/off` | Admins | Borra enlaces de quien no sea admin (el bot debe ser admin) |
 | `.todos [mensaje]` | Admins | Menciona a todos los miembros |
 | `.actividad` | Todos | Imagen con los 10 miembros más activos |
+
+## 👹 Jefes — `.jefe`
+`.jefe esbirro|capitan|senor`: batalla animada contra jefes originales (Grunk, Vexor y Kragor). Su poder depende del tuyo (x0.7, x1.0 y x1.4); ganar da Zenis y XP (60/150/400 Zenis). Espera de 90 s.
+
+## 👑 Panel del dueño — `commands/dueno.js`
+Solo responde al dueño: los números o IDs de la variable `BOT_OWNER` (separados por coma) y la cuenta del propio bot.
+
+| Comando | Qué hace |
+|---|---|
+| `.panel` | Estado del bot, grupos y baneados |
+| `.ia on/off` | Enciende o apaga la IA en privado (se recuerda al reiniciar) |
+| `.anuncio <texto>` | Envía un mensaje a todos los grupos (con pausa entre cada uno) |
+| `.ban` / `.unban` | Mención, respuesta a un mensaje o número: el bot deja de responderle |
+| `.reiniciar` | Reinicia el bot (Railway lo levanta solo) |
+| `.miid` | Cualquiera: muestra su número e ID interno para ponerlos en `BOT_OWNER` |

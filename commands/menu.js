@@ -8,11 +8,12 @@ const CATEGORIES = p => [
   ['Universo Goku', [`${p}goku`, `${p}ki`, `${p}transformacion`]],
   ['Saiyajin RPG', [
     `${p}perfil / ${p}nivel`, `${p}entrenar / ${p}transformar`, `${p}duelo @usuario`,
-    `${p}ranking / ${p}misiones`, `${p}reclamar`, `${p}tienda / ${p}comprar <id>`, `${p}inventario / ${p}shenlong`
+    `${p}ranking / ${p}misiones`, `${p}reclamar`, `${p}tienda / ${p}comprar <id>`, `${p}inventario / ${p}shenlong`, `${p}jefe <esbirro|capitan|senor>`
   ]],
   ['Personajes', [`${p}personajes`, `${p}invocar`, `${p}misguerreros`, `${p}mejorar <id>`]],
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`]],
+  ['Dueño', [`${p}panel`, `${p}ia on/off`, `${p}anuncio <texto>`, `${p}ban / ${p}unban`, `${p}reiniciar`, `${p}miid`]],
   ['Grupos', [`${p}bienvenida on/off`, `${p}antilink on/off`, `${p}todos <mensaje>`, `${p}actividad`]],
   ['IA Goku', [`${p}ia <pregunta>`, `${p}ia reset`, '(en privado responde solo)']],
   ['Imagen y animación', [`${p}tarjeta`, `${p}top`, `${p}nevada`, `${p}fuegos`, `${p}dragon`, `${p}stickeranim`, `${p}aura`, `${p}onda`, `${p}poder`, `${p}esferas`]],
