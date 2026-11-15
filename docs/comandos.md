@@ -83,7 +83,7 @@ Usa la API de EvoGB (`lib/evogb.js`, clave en la variable `EVOGB_KEY`).
 - **Chat privado:** responde solo a cualquier mensaje sin prefijo, como Goku, y recuerda los últimos 3 intercambios. Se activa o apaga con `const AI_PRIVATE = true` en `config.js` (o la variable `AI_PRIVATE=false`).
 - **Cualquier chat:** `.ia <pregunta>`; `.ia reset` borra la conversación.
 - Personalidad editable en `config.js` (`ai.persona`, o variable `AI_PERSONA`); el modelo con `AI_MODEL` (por defecto `pro`).
-- Las respuestas llevan la etiqueta de IA de WhatsApp (`ai: true` de Yui-Bails).
+- La etiqueta de IA de WhatsApp (`ai: true`) es experimental y viene apagada: en algunas cuentas el mensaje no se entrega. Actívala con `AI_BADGE=true`.
 - En grupos nunca responde sola, solo con `.ia`.
 
 ## 🎰 Juegos Z — `commands/juegos.js`

@@ -35,7 +35,7 @@ async function answer(sock, m, jid, question) {
     const turns = history.get(jid) || []
     turns.push({ q: question, a: reply })
     history.set(jid, turns.slice(-HISTORY_TURNS))
-    await sock.sendMessage(jid, { text: reply, ai: true }, { quoted: m })
+    await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
   } catch (error) {
     console.error('[ia]', error.message)
     await sock.sendMessage(jid, { text: T.msg('err', 'Goku se quedó sin ki un momento. Intenta de nuevo en unos segundos.') }, { quoted: m })
