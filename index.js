@@ -68,7 +68,11 @@ async function main() {
     status.countMessage()
     const jid = m.key.remoteJid
     const body = getBody(m).trim()
-    if (!body.startsWith(p)) return
+    if (!body.startsWith(p)) {
+      // Chat privado sin prefijo: responde la IA de Goku (config.js -> AI_PRIVATE).
+      if (type === 'notify') require('./commands/ia').autoReply(sock, m, jid, body).catch(e => status.countError(e))
+      return
+    }
     const [cmdRaw, ...rest] = body.slice(p.length).split(/\s+/)
     const cmd = cmdRaw.toLowerCase()
     const text = rest.join(' ')

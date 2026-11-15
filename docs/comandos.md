@@ -72,3 +72,11 @@ Todo se dibuja dentro del bot (`lib/canvas.js`, `lib/scenes.js`), sin APIs exter
 | `.duelo @usuario` | Ahora envía el combate como video animado |
 
 En Railway define `RAILPACK_DEPLOY_APT_PACKAGES=ffmpeg` para tener ffmpeg.
+
+## 🤖 IA de Goku — `commands/ia.js`
+Usa la API de EvoGB (`lib/evogb.js`, clave en la variable `EVOGB_KEY`).
+
+- **Chat privado:** responde solo a cualquier mensaje sin prefijo, como Goku, y recuerda los últimos 3 intercambios. Se activa o apaga con `const AI_PRIVATE = true` en `config.js` (o la variable `AI_PRIVATE=false`).
+- **Cualquier chat:** `.ia <pregunta>`; `.ia reset` borra la conversación.
+- Personalidad editable en `config.js` (`ai.persona`, o variable `AI_PERSONA`); el modelo con `AI_MODEL` (por defecto `pro`).
+- En grupos nunca responde sola, solo con `.ia`.

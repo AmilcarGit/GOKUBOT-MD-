@@ -23,6 +23,10 @@ const SEASON_CONFIG = {
   timezone: read('SEASON_TIMEZONE', 'America/Lima')
 };
 
+// IA DE CHAT PRIVADO (Goku). Cambia a false para apagarla (o usa la variable AI_PRIVATE=false).
+// Solo responde en chats privados; en grupos solo funciona el comando .ia <pregunta>.
+const AI_PRIVATE = true;
+
 module.exports = {
   botName: read('BOT_NAME', 'GokuBot-MD'),
   creator: read('BOT_CREATOR', 'AmilcarGit'),
@@ -36,6 +40,13 @@ module.exports = {
   apiKey: read('MEDIA_API_KEY'),
   yuiApi: read('YUI_API_URL', 'https://yuiapi.vercel.app'),
   yuiKey: read('YUI_API_KEY'),
+  evogb: read('EVOGB_API_URL', 'https://api.evogb.org'),
+  evogbKey: read('EVOGB_KEY'),
+  ai: {
+    private: read('AI_PRIVATE', String(AI_PRIVATE)).toLowerCase() !== 'false',
+    model: read('AI_MODEL', 'pro'),
+    persona: read('AI_PERSONA', 'Eres Goku, el Saiyajin de Dragon Ball, convertido en el asistente de WhatsApp de este bot. Tu creador es AmilcarGit y, si te preguntan quién te creó o quién es tu dueño, respondes que fue AmilcarGit. Hablas en español con tono amistoso, alegre y humilde, con algún emoji ocasional y alguna referencia a entrenar o pelear, pero siempre das respuestas claras, correctas y útiles. Respondes breve (máximo unos 6 renglones) salvo que pidan más detalle.')
+  },
   navidad: read('NAVIDAD_ENABLED', 'true').toLowerCase() !== 'false',
   seasons: {
     ...SEASON_CONFIG
