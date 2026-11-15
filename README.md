@@ -153,6 +153,8 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 |---|---|
 | `.tarjeta [nombre]` · `.top` | Tarjeta navideña y ranking como imagen |
 | `.nevada` · `.fuegos` · `.dragon` | Videos animados en bucle |
+| `.slot` · `.ruleta` | Juegos con Zenis y animación estilo Dragon Ball |
+| `.bienvenida` · `.antilink` · `.todos` · `.actividad` | Herramientas de grupo con tarjetas de imagen |
 | `.aura` · `.onda` · `.poder` · `.esferas` | Aura sobre tu foto, onda de energía, escáner de poder y tus esferas del dragón |
 | `.stickeranim <texto>` | Sticker animado (o responde a un video/GIF) |
 | `.estado` | Tarjeta que se actualiza sola: ping, CPU, RAM, disco, tiempo activo, mensajes, errores, jugadores, sesión y versión desplegada |
@@ -356,6 +358,8 @@ GOKUBOT-MD-
 │   ├── menu.js         # Menú principal
 │   ├── estado.js       # Estado del bot en vivo
 │   ├── visual.js       # Imágenes, videos y stickers animados
+│   ├── juegos.js       # Slot y ruleta con Zenis
+│   ├── grupos.js       # Bienvenida, antilink, todos, actividad
 │   ├── general.js      # ping, owner
 │   ├── youtube.js      # yts, play, ytmp3, ytmp4
 │   ├── yui.js          # Herramientas de YuiAPI

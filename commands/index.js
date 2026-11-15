@@ -8,6 +8,8 @@ const handlers = [
   require('./yui'),              // Utilidades de YuiAPI
   require('./estado'),           // estado del bot en vivo
   require('./ia'),               // IA de Goku (.ia)
+  require('./juegos'),           // Juegos: slot y ruleta con Zenis
+  require('./grupos'),           // Grupos: bienvenida, antilink, todos, actividad
   require('./visual'),           // imágenes, animaciones y stickers animados
   require('./general'),          // ping, owner
   require('./youtube')           // YouTube: yts, play, ytmp3, ytmp4

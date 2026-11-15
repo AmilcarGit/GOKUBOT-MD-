@@ -460,5 +460,13 @@ module.exports.saveDB = saveDB;
 module.exports.topPlayers = (n = 10) => Object.values(db.players).map(p => ({ name: p.name, level: p.level, power: powerFor(p) })).sort((x, y) => y.power - x.power).slice(0, n);
 module.exports.statsFor = (id, name) => {
   const p = getPlayer(id, name);
-  return { name: p.name, level: p.level, power: powerFor(p), balls: [...p.balls], transform: transformFor(p.level).name, rank: rankFor(p.level).name };
+  return { name: p.name, coins: p.coins, level: p.level, power: powerFor(p), balls: [...p.balls], transform: transformFor(p.level).name, rank: rankFor(p.level).name };
+};
+// Suma o resta Zenis (delta). Devuelve el nuevo saldo, o null si no alcanzan.
+module.exports.adjustCoins = async (id, name, delta) => {
+  const p = getPlayer(id, name);
+  if (p.coins + delta < 0) return null;
+  p.coins += delta;
+  await saveDB();
+  return p.coins;
 };

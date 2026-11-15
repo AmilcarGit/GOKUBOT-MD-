@@ -85,3 +85,21 @@ Usa la API de EvoGB (`lib/evogb.js`, clave en la variable `EVOGB_KEY`).
 - Personalidad editable en `config.js` (`ai.persona`, o variable `AI_PERSONA`); el modelo con `AI_MODEL` (por defecto `pro`).
 - Las respuestas llevan la etiqueta de IA de WhatsApp (`ai: true` de Yui-Bails).
 - En grupos nunca responde sola, solo con `.ia`.
+
+## 🎰 Juegos Z — `commands/juegos.js`
+Se juega con los Zenis del RPG (apuesta mínima 10, máxima 5000, espera de 8 s). Cada tirada llega como video animado.
+
+| Comando | Qué hace |
+|---|---|
+| `.slot <apuesta\|todo>` | Tragamonedas de esferas: 2 iguales x2, 3 iguales x10, tres de 7 estrellas x25 |
+| `.ruleta <apuesta> <rojo\|negro\|verde>` | Ruleta del dragón: rojo/negro x2, verde x12 |
+
+## 👥 Grupos — `commands/grupos.js`
+Los ajustes y contadores se guardan en `data/groups.json` (el volumen de Railway).
+
+| Comando | Quién | Qué hace |
+|---|---|---|
+| `.bienvenida on/off` | Admins | Tarjeta con imagen al entrar y salir un miembro |
+| `.antilink on/off` | Admins | Borra enlaces de quien no sea admin (el bot debe ser admin) |
+| `.todos [mensaje]` | Admins | Menciona a todos los miembros |
+| `.actividad` | Todos | Imagen con los 10 miembros más activos |

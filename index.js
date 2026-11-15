@@ -2,6 +2,7 @@ const readline = require('readline')
 const pino = require('pino')
 const cfg = require('./config')
 const runCommand = require('./commands')
+const { wrapSock } = require('./lib/theme')
 const { getBody } = require('./lib/message')
 const status = require('./lib/status')
 
@@ -61,6 +62,10 @@ async function main() {
 
   const p = cfg.prefix
 
+  sock.ev.on('group-participants.update', event => {
+    require('./commands/grupos').onParticipants(wrapSock(sock), event).catch(e => console.error('[bienvenida]', e.message))
+  })
+
   sock.ev.on('messages.upsert', async ({ messages, type }) => {
     const m = messages[0]
     console.log('MSG', type, m?.key?.fromMe, m?.key?.remoteJid, getBody(m || {}).slice(0, 40))
@@ -68,6 +73,7 @@ async function main() {
     status.countMessage()
     const jid = m.key.remoteJid
     const body = getBody(m).trim()
+    if (jid.endsWith('@g.us')) require('./commands/grupos').onMessage(wrapSock(sock), m, jid).catch(e => console.error('[grupos]', e.message))
     if (!body.startsWith(p)) {
       // Chat privado sin prefijo: responde la IA de Goku (config.js -> AI_PRIVATE).
       if (type === 'notify') require('./commands/ia').autoReply(sock, m, jid, body).catch(e => status.countError(e))

@@ -19,9 +19,9 @@ function renderFrames(w, h, count, draw) {
   return { count, frame: i => { c.clear([0, 0, 0], 1); draw(c, i / count); return c.data } }
 }
 
-async function sendClip(sock, jid, m, { draw, count = 36, fps = 12, caption, still }) {
+async function sendClip(sock, jid, m, { draw, count = 36, fps = 12, caption, stillAt = 0.35 }) {
   if (!video.hasFfmpeg()) {
-    const c = new Canvas(W, H); draw(c, 0.35)
+    const c = new Canvas(W, H); draw(c, stillAt)
     await sock.sendMessage(jid, { image: c.toPNG(), caption: caption + '\n\n_(Este servidor no tiene ffmpeg: se envía imagen fija.)_' }, { quoted: m })
     return
   }
@@ -141,3 +141,4 @@ async function handler(sock, m, jid, cmd, text, prefix) {
 
 module.exports = handler
 module.exports.sendDuel = sendDuel
+module.exports.sendClip = sendClip
