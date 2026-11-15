@@ -153,6 +153,7 @@ Usa `.menuapi` para ver la lista. Requieren `YUI_API_KEY`.
 |---|---|
 | `.tarjeta [nombre]` · `.top` | Tarjeta navideña y ranking como imagen |
 | `.nevada` · `.fuegos` · `.dragon` | Videos animados en bucle |
+| `.trivia` · `.menui` · `.encuesta` · `.recordar` | Botones nativos, menú con submenús, encuestas y recordatorios |
 | `.invocar` · `.coleccion` · `.guerrero` | 13 guerreros originales con cartas ilustradas y colección |
 | `.meme` · `.bn` · `.pixelar` · `.mp3` · `.ardilla` · `.eco` | Memes, filtros de imagen y efectos de audio |
 | `.jefe` · `.panel` · `.anuncio` · `.ban` | Batallas contra jefes y panel exclusivo del dueño |
@@ -361,6 +362,7 @@ GOKUBOT-MD-
 │   ├── menu.js         # Menú principal
 │   ├── estado.js       # Estado del bot en vivo
 │   ├── visual.js       # Imágenes, videos y stickers animados
+│   ├── interactivo.js  # Trivia, menú con botones, encuesta, recordar
 │   ├── guerreros.js    # Invocar y colección de guerreros originales
 │   ├── herramientas.js # Filtros, memes y audio
 │   ├── dueno.js        # Panel del dueño

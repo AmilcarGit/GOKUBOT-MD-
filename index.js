@@ -21,13 +21,16 @@ async function main() {
   try { version = (await fetchLatestBaileysVersion()).version } catch {}
   const logger = pino({ level: 'silent' })
 
+  require('fs').mkdirSync(require('./lib/paths').DATA_DIR, { recursive: true })
   const sock = makeWASocket({
     ...(version ? { version } : {}),
     logger,
     printQRInTerminal: false,
     browser: Browsers ? Browsers.ubuntu('Chrome') : ['Ubuntu', 'Chrome', '20.0.04'],
     auth: makeCacheableSignalKeyStore ? { creds: state.creds, keys: makeCacheableSignalKeyStore(state.keys, logger) } : state,
-    markOnlineOnConnect: false
+    markOnlineOnConnect: false,
+    // Recordatorios (.recordar) guardados en el volumen para que sobrevivan reinicios.
+    schedulerFile: require('path').join(require('./lib/paths').DATA_DIR, 'programados.json')
   })
 
   if (!sock.authState.creds.registered) {

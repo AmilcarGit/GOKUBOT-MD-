@@ -82,7 +82,7 @@ async function send(sock, jid, payload, m) {
 }
 
 module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefix) {
-  const commands = new Set(['personajes', 'coleccion', 'colección', 'invocar', 'misguerreros', 'mejorar']);
+  const commands = new Set(['personajes', 'invocarz', 'misguerreros', 'mejorar']);
   if (!commands.has(cmd)) return false;
 
   const senderId = m.key.participant || m.key.remoteJid;
@@ -93,17 +93,17 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
     return sum + (character ? character.power * (Number(entry[1]) || 1) : 0);
   }, 0);
 
-  if (cmd === 'personajes' || cmd === 'coleccion' || cmd === 'colección') {
+  if (cmd === 'personajes') {
     const lines = CHARACTERS.map(item => item.stars + ' *' + item.name + '* — ' + item.rarity + ' — ' + item.power + ' poder').join('\n');
     const message = '🐉 *COLECCIÓN DE GUERREROS*\n\n' + lines + '\n\n🎴 Invocación: ' + COST + ' Zenis\n🧩 Tus fragmentos: ' + user.fragments + '\n👥 Coleccionados: ' + owned.length + '/' + CHARACTERS.length;
     await send(sock, jid, buttonMessage(message, [
-      { id: prefix + 'invocar', label: '🎴 Invocar guerrero' },
+      { id: prefix + 'invocarz', label: '🎴 Invocar guerrero' },
       { id: prefix + 'misguerreros', label: '👥 Mi colección' }
     ], 'GOKUBOT-MD • PERSONAJES'), m);
     return true;
   }
 
-  if (cmd === 'invocar') {
+  if (cmd === 'invocarz') {
     const rpg = require('./rpg');
     const player = rpg.getPlayer(senderId, m.pushName || senderId.split('@')[0]);
     if ((Number(player.coins) || 0) < COST) {
@@ -145,7 +145,7 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
       caption: response,
       footer: 'GOKUBOT-MD • CHARACTER CARD',
       buttons: [
-        { buttonId: prefix + 'invocar', buttonText: { displayText: '🔁 Invocar otra vez' }, type: 1 },
+        { buttonId: prefix + 'invocarz', buttonText: { displayText: '🔁 Invocar otra vez' }, type: 1 },
         { buttonId: prefix + 'misguerreros', buttonText: { displayText: '👥 Ver colección' }, type: 1 }
       ],
       headerType: 4
@@ -160,7 +160,7 @@ module.exports = async function charactersCommand(sock, m, jid, cmd, text, prefi
     }).filter(Boolean) : ['Todavía no tienes guerreros. Usa el botón de invocación para conseguir el primero.'];
     const message = '👥 *TUS GUERREROS*\n\n' + lines.join('\n') + '\n\n🧩 Fragmentos: ' + user.fragments + '\n⚡ Poder de colección: ' + totalPower + '\n🎴 Invocaciones: ' + user.summons;
     await send(sock, jid, buttonMessage(message, [
-      { id: prefix + 'invocar', label: '🎴 Invocar' },
+      { id: prefix + 'invocarz', label: '🎴 Invocar' },
       { id: prefix + 'personajes', label: '📖 Ver personajes' }
     ], 'GOKUBOT-MD • COLECCIÓN'), m);
     return true;

@@ -167,3 +167,13 @@ Texto a voz en español (Google Translate TTS) con un efecto que la hace más gr
 - `.hablar <texto>`: Goku dice lo que escribas (máx. 300 caracteres), en cualquier chat.
 - Variables: `AI_VOICE=false` apaga la voz para todos, `AI_VOICE_PITCH` (0.6–1.2, por defecto 0.82; más bajo = más grave) y `AI_VOICE_MAX`.
 - Requiere ffmpeg y que el servidor pueda llegar a `translate.google.com`.
+
+## 🧩 Interactivo (botones nativos de Yui-Bails) — `commands/interactivo.js`
+| Comando | Qué hace |
+|---|---|
+| `.trivia` | Pregunta de Dragon Ball con 3 botones; solo quien la pidió puede responder. Acertar da 80 Zenis (máx. 10 premios al día) |
+| `.menui` | Menú desplegable con submenús por categoría |
+| `.encuesta pregunta \| a \| b ...` | Encuesta nativa de WhatsApp (2 a 12 opciones) |
+| `.recordar <tiempo> <texto>` | Te menciona pasado el tiempo (30s a 7 días, máx. 5 pendientes). Se guarda en `data/programados.json` |
+
+> Los comandos antiguos de personajes con nombres de la serie pasaron a `.invocarz`; `.invocar` y `.coleccion` ahora son los de los guerreros originales.

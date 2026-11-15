@@ -10,11 +10,12 @@ const CATEGORIES = p => [
     `${p}perfil / ${p}nivel`, `${p}entrenar / ${p}transformar`, `${p}duelo @usuario`,
     `${p}ranking / ${p}misiones`, `${p}reclamar`, `${p}tienda / ${p}comprar <id>`, `${p}inventario / ${p}shenlong`, `${p}jefe <esbirro|capitan|senor>`
   ]],
-  ['Personajes', [`${p}personajes`, `${p}invocar`, `${p}misguerreros`, `${p}mejorar <id>`]],
+  ['Personajes', [`${p}personajes`, `${p}invocarz`, `${p}misguerreros`, `${p}mejorar <id>`]],
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
   ['Guerreros originales', [`${p}invocar (250 Zenis)`, `${p}coleccion`, `${p}guerrero <nombre|nº>`, `${p}guerreros`]],
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`, `${p}regalar @usuario <zenis>`, `${p}ricos`]],
   ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
+  ['Interactivo', [`${p}trivia (gana Zenis)`, `${p}menui (menú con botones)`, `${p}encuesta pregunta | a | b`, `${p}recordar 30m texto`]],
   ['Dueño', [`${p}panel`, `${p}ia on/off`, `${p}anuncio <texto>`, `${p}ban / ${p}unban`, `${p}dar / ${p}quitar <zenis>`, `${p}darxp`, `${p}daresfera`, `${p}darguerrero`, `${p}jugador`, `${p}resetjugador`, `${p}reiniciar`, `${p}miid`]],
   ['Grupos', [`${p}bienvenida on/off`, `${p}antilink on/off`, `${p}todos <mensaje>`, `${p}actividad`]],
   ['IA Goku', [`${p}ia <pregunta>`, `${p}ia reset`, `${p}voz on/off`, `${p}hablar <texto>`, '(en privado responde solo)']],
@@ -49,3 +50,4 @@ module.exports = async function (sock, m, jid, cmd, text, prefix) {
 }
 
 module.exports.buildMenu = buildMenu
+module.exports.CATEGORIES = CATEGORIES
