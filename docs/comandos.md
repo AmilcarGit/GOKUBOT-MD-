@@ -177,3 +177,8 @@ Texto a voz en español (Google Translate TTS) con un efecto que la hace más gr
 | `.recordar <tiempo> <texto>` | Te menciona pasado el tiempo (30s a 7 días, máx. 5 pendientes). Se guarda en `data/programados.json` |
 
 > Los comandos antiguos de personajes con nombres de la serie pasaron a `.invocarz`; `.invocar` y `.coleccion` ahora son los de los guerreros originales.
+
+## 🧠 La IA ahora hace cosas
+- **Recordatorios hablando normal** (en privado, o mencionándolo en un grupo): "recuérdame en 10 minutos sacar la pizza", "en 2 horas avísame que llame a mamá". No usa la IA: se programa directo, de 30 segundos a 7 días.
+- **Acciones:** si le pides algo como "muéstrame mi poder", "hazme una tarjeta con mi nombre" o "ponme una trivia", Goku responde y ejecuta el comando. Acciones permitidas: poder, esferas, perfil, tarjeta, nevada, fuegos, dragon, onda, top, coleccion, trivia, menu, menui. Nunca ejecuta comandos que gasten Zenis (slot, ruleta, invocar, regalar), borren datos o sean del dueño.
+- **Programación:** si le pides código, lo entrega completo en un bloque (las respuestas largas llegan como texto, no como voz).

@@ -37,6 +37,39 @@ async function sendVoice(sock, m, jid, reply) {
   }
 }
 
+// ───── Acciones: la IA puede pedirle cosas al bot ─────
+// Solo comandos inofensivos y gratuitos: nada que gaste Zenis, borre datos o sea del dueño.
+const ACTIONS = {
+  poder: 'poder', esferas: 'esferas', perfil: 'perfil', tarjeta: 'tarjeta', nevada: 'nevada', fuegos: 'fuegos',
+  dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui'
+}
+const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
+const ACTION_TAG = /\[\[\s*accion\s*:\s*([a-z]+)\s*(?:\|([^\]]*))?\]\]/i
+
+// Recordatorios en lenguaje natural: "recuérdame en 10 minutos sacar la pizza".
+const UNITS = { s: 's', seg: 's', segundo: 's', segundos: 's', m: 'm', min: 'm', minuto: 'm', minutos: 'm', h: 'h', hora: 'h', horas: 'h', d: 'd', dia: 'd', dias: 'd', día: 'd', días: 'd' }
+function parseReminder(text) {
+  const time = '(?:en|dentro de)\\s+(\\d+|un|una)\\s*(segundos?|seg|minutos?|min|horas?|h|d[ií]as?|s|m|d)\\b'
+  const verb = '(?:recu[eé]rda(?:me)?|av[ií]sa(?:me)?|recordarme|ponme un recordatorio)'
+  const a = text.match(new RegExp(`^\\s*${verb}\\s+${time}\\s*(?:de|que|para)?\\s*(.+)$`, 'is'))
+  const b = text.match(new RegExp(`^\\s*${time}\\s*,?\\s*${verb}\\s*(?:de|que|para)?\\s*(.+)$`, 'is'))
+  const hit = a || b
+  if (!hit) return null
+  const n = /^un/i.test(hit[1]) ? 1 : Number(hit[1])
+  const unit = UNITS[hit[2].toLowerCase()]
+  return unit && hit[3].trim() ? { n, unit, memo: hit[3].trim() } : null
+}
+
+async function runAction(sock, m, jid, name, args) {
+  const cmd = ACTIONS[String(name).toLowerCase()]
+  if (!cmd) return
+  try {
+    await require('./index')(sock, m, jid, cmd, (args || '').trim(), cfg.prefix)
+  } catch (error) {
+    console.error('[ia] acción', cmd, error.message)
+  }
+}
+
 async function answer(sock, m, jid, question) {
   if (!evogb.hasKey()) {
     await sock.sendMessage(jid, { text: T.msg('warn', 'La IA no está configurada todavía (falta EVOGB_KEY).') }, { quoted: m })
@@ -44,16 +77,25 @@ async function answer(sock, m, jid, question) {
   }
   if (busy.has(jid)) return
   if (Date.now() - (lastUse.get(jid) || 0) < COOLDOWN) return
+  const reminder = parseReminder(question)
+  if (reminder) {
+    await require('./interactivo')(sock, m, jid, 'recordar', `${reminder.n}${reminder.unit} ${reminder.memo}`, cfg.prefix)
+    return
+  }
   busy.add(jid)
   lastUse.set(jid, Date.now())
   try {
     sock.sendPresenceUpdate('composing', jid).catch(() => {})
-    const reply = await evogb.ai(buildPrompt(jid, clip(question, MAX_INPUT)), cfg.ai.persona)
+    let reply = await evogb.ai(buildPrompt(jid, clip(question, MAX_INPUT)), cfg.ai.persona + ACTIONS_PROMPT)
+    const tag = reply.match(ACTION_TAG)
+    reply = reply.replace(new RegExp(ACTION_TAG.source, 'gi'), '').trim() || '¡Claro, va!'
     const turns = history.get(jid) || []
     turns.push({ q: question, a: reply })
     history.set(jid, turns.slice(-HISTORY_TURNS))
-    if (await sendVoice(sock, m, jid, reply)) return
-    await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
+    if (!(await sendVoice(sock, m, jid, reply))) {
+      await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
+    }
+    if (tag) await runAction(sock, m, jid, tag[1], tag[2])
   } catch (error) {
     console.error('[ia]', error.message)
     await sock.sendMessage(jid, { text: T.msg('err', 'Goku se quedó sin ki un momento. Intenta de nuevo en unos segundos.') }, { quoted: m })
