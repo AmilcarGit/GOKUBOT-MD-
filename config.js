@@ -31,6 +31,8 @@ module.exports = {
   botName: read('BOT_NAME', 'GokuBot-MD'),
   creator: read('BOT_CREATOR', 'AmilcarGit'),
   owner: read('BOT_OWNER'),
+  // Reacciona con ⚡ a cada comando (REACTIONS=false lo apaga).
+  reactions: read('REACTIONS', 'true').toLowerCase() !== 'false',
   theme: read('BOT_THEME', 'navidad'),
   botNumber: read('BOT_NUMBER').replace(/\D/g, ''),
   sessionDir: read('SESSION_DIR', path.join(__dirname, 'session')),
@@ -51,6 +53,8 @@ module.exports = {
     voice: read('AI_VOICE', 'true').toLowerCase() !== 'false',
     voicePitch: Math.min(1.2, Math.max(0.6, Number(read('AI_VOICE_PITCH', '0.82')) || 0.82)),
     voiceMax: Number(read('AI_VOICE_MAX', '450')) || 450,
+    // Botón "Copiar código" cuando la respuesta trae bloques de código (AI_COPY_BUTTON=false lo apaga).
+    copyButton: read('AI_COPY_BUTTON', 'true').toLowerCase() !== 'false',
     badge: read('AI_BADGE', 'false').toLowerCase() === 'true',
     model: read('AI_MODEL', 'pro'),
     persona: read('AI_PERSONA', 'Eres Goku, el Saiyajin de Dragon Ball, convertido en el asistente de WhatsApp de este bot. Tu creador es AmilcarGit y, si te preguntan quién te creó o quién es tu dueño, respondes que fue AmilcarGit. Hablas en español con tono amistoso, alegre y humilde, con algún emoji ocasional y alguna referencia a entrenar o pelear, pero siempre das respuestas claras, correctas y útiles. Respondes breve (máximo unos 6 renglones) salvo que pidan más detalle. Si te piden programar, entregas el código completo en un bloque de código y lo explicas en pocas líneas.')

@@ -25,7 +25,7 @@ function buildPrompt(jid, question) {
 
 // En privado, si está activado, responde con nota de voz. Devuelve false si hay que mandar texto.
 async function sendVoice(sock, m, jid, reply) {
-  if (!cfg.ai.voice || !isPrivate(jid) || !settings.voiceOn(jid) || reply.length > cfg.ai.voiceMax || !video.hasFfmpeg()) return false
+  if (!cfg.ai.voice || !isPrivate(jid) || !settings.voiceOn(jid) || reply.length > cfg.ai.voiceMax || reply.includes('```') || !video.hasFfmpeg()) return false
   try {
     sock.sendPresenceUpdate('recording', jid).catch(() => {})
     const audio = await voice.speak(reply)
@@ -35,6 +35,13 @@ async function sendVoice(sock, m, jid, reply) {
     console.error('[voz]', error.message)
     return false
   }
+}
+
+// ───── Código con botón de copiar ─────
+const CODE_BLOCK = /```[\w+#.-]*\n?([\s\S]*?)```/g
+const MAX_COPY = 2000   // WhatsApp limita el texto que puede llevar un botón de copiar
+function codeBlocks(reply) {
+  return [...reply.matchAll(CODE_BLOCK)].map(x => x[1].trim()).filter(code => code && code.length <= MAX_COPY).slice(0, 3)
 }
 
 // ───── Acciones: la IA puede pedirle cosas al bot ─────
@@ -93,7 +100,21 @@ async function answer(sock, m, jid, question) {
     turns.push({ q: question, a: reply })
     history.set(jid, turns.slice(-HISTORY_TURNS))
     if (!(await sendVoice(sock, m, jid, reply))) {
-      await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
+      const blocks = cfg.ai.copyButton ? codeBlocks(reply) : []
+      let sent = false
+      if (blocks.length) {
+        try {
+          await sock.sendMessage(jid, {
+            text: reply,
+            footer: 'Toca el botón para copiar el código',
+            buttons: blocks.map((code, i) => ({ text: blocks.length > 1 ? `📋 Copiar código ${i + 1}` : '📋 Copiar código', copy: code }))
+          }, { quoted: m })
+          sent = true
+        } catch (error) {
+          console.error('[ia] botón de copiar:', error.message)
+        }
+      }
+      if (!sent) await sock.sendMessage(jid, cfg.ai.badge ? { text: reply, ai: true } : { text: reply }, { quoted: m })
     }
     if (tag) await runAction(sock, m, jid, tag[1], tag[2])
   } catch (error) {

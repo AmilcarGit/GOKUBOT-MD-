@@ -89,6 +89,8 @@ async function main() {
     const [cmdRaw, ...rest] = body.slice(p.length).split(/\s+/)
     const cmd = cmdRaw.toLowerCase()
     const text = rest.join(' ')
+    // Reacción ⚡ al recibir un comando (función nativa de WhatsApp).
+    if (cfg.reactions && !m.key.fromMe) sock.sendMessage(jid, { react: { text: '⚡', key: m.key } }).catch(() => {})
     try {
       await runCommand(sock, m, jid, cmd, text, p)
     } catch (e) {

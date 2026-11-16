@@ -10,6 +10,7 @@ const handlers = [
   require('./dueno'),            // Panel del dueño (.panel, .ia on/off, .ban...)
   require('./ia'),               // IA de Goku (.ia)
   require('./interactivo'),      // Trivia, menú con botones, encuesta, recordar
+  require('./whatsapp'),         // Funciones de WhatsApp: copiar, contacto, ubicación, repo, cargar
   require('./guerreros'),        // Guerreros originales: invocar, coleccion
   require('./juegos'),           // Juegos: slot y ruleta con Zenis
   require('./grupos'),           // Grupos: bienvenida, antilink, todos, actividad

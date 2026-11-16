@@ -181,4 +181,17 @@ Texto a voz en español (Google Translate TTS) con un efecto que la hace más gr
 ## 🧠 La IA ahora hace cosas
 - **Recordatorios hablando normal** (en privado, o mencionándolo en un grupo): "recuérdame en 10 minutos sacar la pizza", "en 2 horas avísame que llame a mamá". No usa la IA: se programa directo, de 30 segundos a 7 días.
 - **Acciones:** si le pides algo como "muéstrame mi poder", "hazme una tarjeta con mi nombre" o "ponme una trivia", Goku responde y ejecuta el comando. Acciones permitidas: poder, esferas, perfil, tarjeta, nevada, fuegos, dragon, onda, top, coleccion, trivia, menu, menui. Nunca ejecuta comandos que gasten Zenis (slot, ruleta, invocar, regalar), borren datos o sean del dueño.
-- **Programación:** si le pides código, lo entrega completo en un bloque (las respuestas largas llegan como texto, no como voz).
+- **Programación:** si le pides código, lo entrega completo en un bloque y con un botón **📋 Copiar código** (hasta 3 bloques de máx. 2000 caracteres; con `AI_COPY_BUTTON=false` se apaga). Las respuestas con código llegan siempre como texto, no como voz.
+
+
+## WhatsApp nativo
+
+| Comando | Qué hace |
+|---|---|
+| `.copiar <texto>` | Mensaje con botón **📋 Copiar** (o responde a un mensaje) |
+| `.contacto` / `.creador` | Tarjeta de contacto del creador + botón al repositorio |
+| `.ubicacion` | Envía una ubicación de un lugar del universo Z |
+| `.repo` | Botones: abrir repositorio / copiar enlace |
+| `.cargar` | Barra de ki que se actualiza editando un solo mensaje |
+
+El bot reacciona con ⚡ a cada comando (`REACTIONS=false` lo apaga).

@@ -33,7 +33,7 @@ const say = (sock, jid, m, kind, text) => sock.sendMessage(jid, { text: T.msg(ki
 
 // Agrupa las categorías del menú en 3 submenús (WhatsApp limita las listas a ~10 filas).
 const GROUPS = [
-  ['🎮 Juegos y RPG', ['Universo Goku', 'Saiyajin RPG', 'Personajes', 'Guerreros originales', 'Juegos Z', 'Interactivo']],
+  ['🎮 Juegos y RPG', ['Universo Goku', 'Saiyajin RPG', 'Personajes', 'Guerreros originales', 'Juegos Z', 'Interactivo', 'WhatsApp']],
   ['🛠️ Herramientas', ['YouTube', 'Imagen y audio', 'Imagen y animación', 'IA Goku', 'Utilidades']]
 ]
 
