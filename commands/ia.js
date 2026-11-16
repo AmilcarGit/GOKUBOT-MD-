@@ -48,9 +48,10 @@ function codeBlocks(reply) {
 // Solo comandos inofensivos y gratuitos: nada que gaste Zenis, borre datos o sea del dueño.
 const ACTIONS = {
   poder: 'poder', esferas: 'esferas', perfil: 'perfil', tarjeta: 'tarjeta', nevada: 'nevada', fuegos: 'fuegos',
-  dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui', diario: 'diario', racha: 'racha', mascota: 'mascota'
+  dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui', diario: 'diario', racha: 'racha', mascota: 'mascota',
+  play: 'play', video: 'ytmp4', buscar: 'yts'
 }
-const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su recompensa diaria, su racha, su mascota, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
+const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su recompensa diaria, su racha, su mascota, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. MÚSICA Y VIDEO: si piden una canción, ponerla o escucharla, responde corto y natural ("va, ahí te la pongo 🎶") y añade [[accion:play|artista y canción]]; si piden el video, [[accion:video|nombre]]; si piden buscar o ver opciones, [[accion:buscar|texto]]. Siempre incluye el nombre tras la barra | y no pidas confirmación. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
 const ACTION_TAG = /\[\[\s*accion\s*:\s*([a-z]+)\s*(?:\|([^\]]*))?\]\]/i
 
 // Recordatorios en lenguaje natural: "recuérdame en 10 minutos sacar la pizza".
@@ -71,7 +72,22 @@ async function runAction(sock, m, jid, name, args) {
   const cmd = ACTIONS[String(name).toLowerCase()]
   if (!cmd) return
   try {
-    await require('./index')(sock, m, jid, cmd, (args || '').trim(), cfg.prefix)
+    const query = (args || '').trim()
+    if (['play', 'ytmp4', 'yts'].includes(cmd) && !query) return
+    await require('./index')(sock, m, jid, cmd, query, cfg.prefix)
+    // Tras poner música, ofrece seguir con botones (el id es el comando que se ejecuta al tocarlos).
+    if (cmd === 'play') {
+      const q = query.replace(/\s+/g, ' ').slice(0, 70)
+      await sock.sendMessage(jid, {
+        text: '🎶 ¿Y ahora qué?',
+        footer: 'Toca un botón',
+        buttons: [
+          { id: `${cfg.prefix}ytmp4 ${q}`, text: '🎬 Ver el video' },
+          { id: `${cfg.prefix}yts ${q}`, text: '🔎 Más opciones' },
+          { text: '🔗 Buscar en YouTube', url: 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q) }
+        ]
+      }, { quoted: m }).catch(() => {})
+    }
   } catch (error) {
     console.error('[ia] acción', cmd, error.message)
   }

@@ -212,3 +212,8 @@ El bot reacciona con ⚡ a cada comando (`REACTIONS=false` lo apaga).
 | `.torneo top` | Campeones del grupo |
 
 Una mascota sana (con ánimo) da hasta +20% de Zenis en `.diario`. El campeón del torneo recibe un mensaje animado que el bot intenta fijar en el grupo.
+
+
+## IA más humana y música
+
+La IA ahora escribe como una persona en WhatsApp (frases cortas, natural; si le preguntan en serio, admite que es un bot). Si le pides una canción ("ponme una de Bad Bunny"), usa `.play`, la envía y deja botones **🎬 Ver el video**, **🔎 Más opciones** y **🔗 Buscar en YouTube**. También entiende "mándame el video de…" (`.ytmp4`) y "busca…" (`.yts`). Para cambiar su personalidad usa la variable `AI_PERSONA`.
