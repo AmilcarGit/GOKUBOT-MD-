@@ -195,3 +195,20 @@ Texto a voz en español (Google Translate TTS) con un efecto que la hace más gr
 | `.cargar` | Barra de ki que se actualiza editando un solo mensaje |
 
 El bot reacciona con ⚡ a cada comando (`REACTIONS=false` lo apaga).
+
+## Diario, mascota y torneo
+
+| Comando | Qué hace |
+|---|---|
+| `.diario` | Recompensa diaria animada; cada día seguido paga más y el día 7 regala una esfera |
+| `.racha` | Tu racha actual, mejor racha y próxima recompensa |
+| `.adoptar` | Adopta una mascota original (Draki, Kori o Nimbo) por 300 Zenis |
+| `.mascota` | Tu mascota animada con ánimo y XP; evoluciona en los niveles 2, 5 y 10 |
+| `.alimentar` / `.acariciar` | Cuídala (comer cuesta 40 Zenis); sube XP |
+| `.skins` / `.skin <nombre>` | Fondos animados: cielo, atardecer, nebulosa y dorado |
+| `.nombrarmascota <nombre>` | Ponle nombre |
+| `.torneo` (admin) | Abre inscripciones del Torneo Tenkaichi en el grupo (2 min, máx. 8) |
+| `.unirme` / `.empezar` / `.cancelartorneo` | Inscribirse, iniciar antes o cancelar |
+| `.torneo top` | Campeones del grupo |
+
+Una mascota sana (con ánimo) da hasta +20% de Zenis en `.diario`. El campeón del torneo recibe un mensaje animado que el bot intenta fijar en el grupo.

@@ -16,6 +16,8 @@ const CATEGORIES = p => [
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`, `${p}regalar @usuario <zenis>`, `${p}ricos`]],
   ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
   ['Interactivo', [`${p}trivia (gana Zenis)`, `${p}menui (menú con botones)`, `${p}encuesta pregunta | a | b`, `${p}recordar 30m texto`]],
+  ['Diario y mascota', [`${p}diario (racha de días)`, `${p}racha`, `${p}adoptar`, `${p}mascota`, `${p}alimentar / ${p}acariciar`, `${p}skins / ${p}skin <nombre>`, `${p}nombrarmascota <nombre>`]],
+  ['Torneo', [`${p}torneo (admin abre)`, `${p}unirme`, `${p}empezar (admin)`, `${p}torneo top`, `${p}cancelartorneo`]],
   ['WhatsApp', [`${p}copiar <texto>`, `${p}contacto`, `${p}ubicacion`, `${p}repo`, `${p}cargar`]],
   ['Dueño', [`${p}panel`, `${p}ia on/off`, `${p}anuncio <texto>`, `${p}ban / ${p}unban`, `${p}dar / ${p}quitar <zenis>`, `${p}darxp`, `${p}daresfera`, `${p}darguerrero`, `${p}jugador`, `${p}resetjugador`, `${p}reiniciar`, `${p}miid`]],
   ['Grupos', [`${p}bienvenida on/off`, `${p}antilink on/off`, `${p}todos <mensaje>`, `${p}actividad`]],

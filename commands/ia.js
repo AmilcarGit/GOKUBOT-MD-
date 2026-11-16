@@ -48,9 +48,9 @@ function codeBlocks(reply) {
 // Solo comandos inofensivos y gratuitos: nada que gaste Zenis, borre datos o sea del dueño.
 const ACTIONS = {
   poder: 'poder', esferas: 'esferas', perfil: 'perfil', tarjeta: 'tarjeta', nevada: 'nevada', fuegos: 'fuegos',
-  dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui'
+  dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui', diario: 'diario', racha: 'racha', mascota: 'mascota'
 }
-const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
+const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su recompensa diaria, su racha, su mascota, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
 const ACTION_TAG = /\[\[\s*accion\s*:\s*([a-z]+)\s*(?:\|([^\]]*))?\]\]/i
 
 // Recordatorios en lenguaje natural: "recuérdame en 10 minutos sacar la pizza".
