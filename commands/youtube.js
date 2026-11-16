@@ -73,13 +73,25 @@ module.exports = async function (sock, m, jid, cmd, text, p) {
         `*${i + 1}.* ${v.title}`,
         `   ${[v.channel && '👤 ' + v.channel, v.duration && '⏱️ ' + v.duration, v.views && '👁️ ' + v.views].filter(Boolean).join('  ')}`.trimEnd()
       ].filter(l => l.trim()))
-      lines.push('', `🎵 ${p}ytmp3 1   •   🎬 ${p}ytmp4 1`, `_Cambia el 1 por el número del resultado._`)
+      lines.push('', `🎵 ${p}ytmp3 1   •   🎬 ${p}ytmp4 1`, `_También puedes tocar los botones de abajo._`)
       const caption = T.card('YouTube', lines)
       let sent = false
       if (results[0].thumb) {
         try { await sock.sendMessage(jid, { image: { url: results[0].thumb }, caption }, { quoted: m }); sent = true } catch {}
       }
       if (!sent) await sock.sendMessage(jid, { text: caption }, { quoted: m })
+      // Un mensaje con botones por cada uno de los 3 primeros resultados (el id es el comando que se ejecuta).
+      for (const [i, v] of results.slice(0, 3).entries()) {
+        await sock.sendMessage(jid, {
+          text: `${['1️⃣', '2️⃣', '3️⃣'][i]} *${v.title.slice(0, 80)}*${v.duration ? `\n⏱️ ${v.duration}` : ''}`,
+          footer: 'Toca para descargar',
+          buttons: [
+            { id: `${p}ytmp3 ${v.url}`, text: '🎵 Audio' },
+            { id: `${p}ytmp4 ${v.url}`, text: '🎬 Video' },
+            { text: '🔗 Abrir', url: v.url }
+          ]
+        }, { quoted: m }).catch(() => {})
+      }
       return true
     }
 

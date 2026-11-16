@@ -217,3 +217,17 @@ Una mascota sana (con ánimo) da hasta +20% de Zenis en `.diario`. El campeón d
 ## IA más humana y música
 
 La IA ahora escribe como una persona en WhatsApp (frases cortas, natural; si le preguntan en serio, admite que es un bot). Si le pides una canción ("ponme una de Bad Bunny"), usa `.play`, la envía y deja botones **🎬 Ver el video**, **🔎 Más opciones** y **🔗 Buscar en YouTube**. También entiende "mándame el video de…" (`.ytmp4`) y "busca…" (`.yts`). Para cambiar su personalidad usa la variable `AI_PERSONA`.
+
+## Descargas de redes y botones en .yts
+
+| Comando | Qué hace |
+|---|---|
+| `.tiktok <enlace>` / `.tt` | Video de TikTok sin marca de agua (o fotos si es presentación) |
+| `.ig <enlace>` / `.instagram` | Reel, video o foto de Instagram |
+| `.fb <enlace>` / `.facebook` | Video de Facebook |
+| `.dl <enlace>` | Detecta la red solo (también responde a un mensaje con enlace) |
+| `.ttmp3 <enlace>` | Solo el audio de un TikTok |
+
+APIs gratuitas: **tikwm.com** (TikTok) y **downaria.vercel.app** (Instagram/Facebook, y respaldo de TikTok). Sin clave, downaria permite 5 pedidos cada 2 minutos; con `DOWNARIA_KEY` en Railway el límite sube.
+
+`.yts` ahora manda, para cada uno de los 3 primeros resultados, botones **🎵 Audio**, **🎬 Video** y **🔗 Abrir**.

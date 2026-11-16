@@ -20,6 +20,7 @@ const handlers = [
   require('./herramientas'),     // Filtros de imagen, memes y audio
   require('./visual'),           // imágenes, animaciones y stickers animados
   require('./general'),          // ping, owner
+  require('./descargas'),        // TikTok, Instagram y Facebook
   require('./youtube')           // YouTube: yts, play, ytmp3, ytmp4
 ]
 

@@ -16,6 +16,7 @@ const CATEGORIES = p => [
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`, `${p}regalar @usuario <zenis>`, `${p}ricos`]],
   ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
   ['Interactivo', [`${p}trivia (gana Zenis)`, `${p}menui (menú con botones)`, `${p}encuesta pregunta | a | b`, `${p}recordar 30m texto`]],
+  ['Descargas', [`${p}tiktok <enlace>`, `${p}ig <enlace>`, `${p}fb <enlace>`, `${p}dl <enlace> (detecta solo)`, `${p}ttmp3 <enlace de TikTok>`]],
   ['Diario y mascota', [`${p}diario (racha de días)`, `${p}racha`, `${p}adoptar`, `${p}mascota`, `${p}alimentar / ${p}acariciar`, `${p}skins / ${p}skin <nombre>`, `${p}nombrarmascota <nombre>`]],
   ['Torneo', [`${p}torneo (admin abre)`, `${p}unirme`, `${p}empezar (admin)`, `${p}torneo top`, `${p}cancelartorneo`]],
   ['WhatsApp', [`${p}copiar <texto>`, `${p}contacto`, `${p}ubicacion`, `${p}repo`, `${p}cargar`]],
