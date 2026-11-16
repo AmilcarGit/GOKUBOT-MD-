@@ -230,4 +230,4 @@ La IA ahora escribe como una persona en WhatsApp (frases cortas, natural; si le 
 
 APIs gratuitas: **tikwm.com** (TikTok) y **downaria.vercel.app** (Instagram/Facebook, y respaldo de TikTok). Sin clave, downaria permite 5 pedidos cada 2 minutos; con `DOWNARIA_KEY` en Railway el límite sube.
 
-`.yts` ahora manda, para cada uno de los 3 primeros resultados, botones **🎵 Audio**, **🎬 Video** y **🔗 Abrir**.
+`.yts` ahora manda una sola **cajita desplegable** (botón *📥 Elegir descarga*): cada resultado es una sección con filas **🎵 Audio** y **🎬 Video**.
