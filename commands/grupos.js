@@ -56,6 +56,8 @@ async function onMessage(sock, m, jid) {
   const sender = clean(m.key.participant)
   if (!sender) return
   groups.count(jid, sender, m.pushName)
+  // Silencios y antispam (moderación): si borró el mensaje, no hay más que revisar.
+  if (await require('./moderacion').enforce(sock, m, jid).catch(() => false)) return
   const g = groups.group(jid)
   if (!g.antilink) return
   const body = m.message?.conversation || m.message?.extendedTextMessage?.text || m.message?.imageMessage?.caption || m.message?.videoMessage?.caption || ''

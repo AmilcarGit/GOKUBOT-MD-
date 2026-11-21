@@ -274,3 +274,17 @@ Se usan desde el propio subbot o desde el bot principal (solo actúan sobre *tu*
 | `.bansub <número>` / `.unbansub <número>` | Suspende y borra un subbot y le impide crear otro |
 | `.limitesub <0-20>` | Cambia el máximo de subbots sin redeploy |
 | `.pausarsub <número>` / `.reiniciarsub <número>` | Pausa/reanuda o reinicia cualquier subbot |
+
+## 🛡️ Moderación (admins del grupo)
+`.warn @u [motivo]` (3 avisos = expulsión si el bot es admin) · `.unwarn` · `.warns` · `.kick` · `.promover` · `.degradar` · `.cerrar` / `.abrir` · `.silenciar @u [min]` / `.desilenciar` · `.antispam on/off` · `.reglas` / `.setreglas <texto>` · `.admins` · `.link` · `.eliminar` (responde a un mensaje) · `.moderar` (panel desplegable)
+
+## ⚔️ Juegos multijugador
+`.3enraya @rival` · `.jugar <1-9>` · `.combate @rival [apuesta ≤500]` · `.aceptar` / `.rechazar` · `.rendirse` · `.ppt <piedra|papel|tijera>` · `.ahorcado` · `.letra <x>`
+Premio: 40 Zenis por victoria (15 en ppt), máximo 5 victorias premiadas al día.
+
+## 💰 Economía y mercado
+`.banco` / `.cartera` · `.depositar <n|todo>` · `.retirar <n|todo>` · `.trabajar` (cada 45 min) · `.robar @u` (cada 30 min, con riesgo de multa) · `.mercado` · `.adquirir <escudo|llave|amuleto>` · `.mochila`
+El banco da 1 % diario de interés (máx. 200/día) y lo guardado ahí no se puede robar.
+
+## 📂 Menú
+`.menu` muestra un banner animado y una cajita desplegable con 10 secciones. `.menu <sección>` abre una; `.menu todo` muestra la lista completa.
