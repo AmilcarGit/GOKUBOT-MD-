@@ -249,3 +249,28 @@ Detalles:
 - Si el bot principal y un subbot están en el mismo grupo, responde solo uno (el principal tiene prioridad).
 - Quien escribe desde un subbot **no** recibe permisos de dueño del bot principal.
 - Un subbot no puede crear otros subbots.
+
+### Panel y personalización del subbot
+
+Se usan desde el propio subbot o desde el bot principal (solo actúan sobre *tu* subbot).
+
+| Comando | Qué hace |
+|---|---|
+| `.mibot` | Tarjeta con estado, tiempo activo, mensajes, comandos y los más usados + botones de control |
+| `.configbot` | Lista de ajustes |
+| `.miprefijo <símbolo>` | Prefijo propio (`! # $ % & / + - * ~ ?`) |
+| `.mibienvenida <texto\|off>` | Bienvenida propia en grupos (`{usuario}` se reemplaza por la mención) |
+| `.miia on/off` | Activa o apaga la IA en privado de tu subbot |
+| `.mipersona <texto\|reset>` | Personalidad propia de la IA |
+| `.pausarbot` / `.reanudarbot` | Pausa el subbot (solo responde a `.reanudarbot`) o lo despierta |
+| `.reiniciarbot` | Reinicia solo la conexión de tu subbot |
+
+### Herramientas del dueño (bot principal)
+
+| Comando | Qué hace |
+|---|---|
+| `.usosub` | Mensajes, comandos y top de comandos de cada subbot |
+| `.avisosub <texto>` | Mensaje a todos los dueños de subbots |
+| `.bansub <número>` / `.unbansub <número>` | Suspende y borra un subbot y le impide crear otro |
+| `.limitesub <0-20>` | Cambia el máximo de subbots sin redeploy |
+| `.pausarsub <número>` / `.reiniciarsub <número>` | Pausa/reanuda o reinicia cualquier subbot |

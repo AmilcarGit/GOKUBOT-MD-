@@ -109,7 +109,7 @@ async function answer(sock, m, jid, question) {
   lastUse.set(jid, Date.now())
   try {
     sock.sendPresenceUpdate('composing', jid).catch(() => {})
-    let reply = await evogb.ai(buildPrompt(jid, clip(question, MAX_INPUT)), cfg.ai.persona + ACTIONS_PROMPT)
+    let reply = await evogb.ai(buildPrompt(jid, clip(question, MAX_INPUT)), (sock.subSettings?.persona || cfg.ai.persona) + ACTIONS_PROMPT)
     const tag = reply.match(ACTION_TAG)
     reply = reply.replace(new RegExp(ACTION_TAG.source, 'gi'), '').trim() || '¡Claro, va!'
     const turns = history.get(jid) || []
@@ -196,6 +196,7 @@ function addressedToBot(sock, m) {
 
 async function autoReply(sock, m, jid, body) {
   if (m.key.fromMe || !body.trim()) return false
+  if (sock.subSettings?.ai === false) return false
   if (isPrivate(jid)) {
     if (!cfg.ai.private) return false
     await answer(sock, m, jid, body.trim())

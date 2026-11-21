@@ -11,7 +11,8 @@ const handlers = [
   require('./ia'),               // IA de Goku (.ia)
   require('./interactivo'),      // Trivia, menú con botones, encuesta, recordar
   require('./whatsapp'),         // Funciones de WhatsApp: copiar, contacto, ubicación, repo, cargar
-  require('./subbots'),          // Subbots: serbot, subbots, borrarsubbot
+  require('./subbots'),
+  require('./subpanel'),         // Panel, ajustes y herramientas de subbots          // Subbots: serbot, subbots, borrarsubbot
   require('./diario'),           // Recompensa diaria con racha
   require('./mascota'),          // Mascota: adoptar, alimentar, skins
   require('./torneo'),           // Torneo Tenkaichi en grupos
