@@ -17,7 +17,8 @@ const say = (sock, jid, m, kind, text) => sock.sendMessage(jid, { text: T.msg(ki
 const ownerIds = () => String(cfg.owner || '').split(/[,\s]+/).map(settings.digits).filter(Boolean)
 
 async function isOwner(sock, m) {
-  if (m.key.fromMe) return true
+  // En un subbot, quien escribe desde ese número NO es dueño del bot principal.
+  if (m.key.fromMe && !sock.isSub) return true
   const who = await sock.getSender(m)
   return [who.number, who.id].filter(Boolean).some(id => ownerIds().includes(settings.digits(id)))
 }

@@ -1,9 +1,7 @@
 const readline = require('readline')
 const pino = require('pino')
 const cfg = require('./config')
-const runCommand = require('./commands')
-const { wrapSock } = require('./lib/theme')
-const { getBody } = require('./lib/message')
+const { attach } = require('./lib/handlers')
 const status = require('./lib/status')
 
 const ask = q => new Promise(r => {
@@ -63,42 +61,10 @@ async function main() {
     }
   })
 
-  const p = cfg.prefix
+  attach(sock)
 
-  sock.ev.on('group-participants.update', event => {
-    require('./commands/grupos').onParticipants(wrapSock(sock), event).catch(e => console.error('[bienvenida]', e.message))
-  })
-
-  sock.ev.on('messages.upsert', async ({ messages, type }) => {
-    const m = messages[0]
-    console.log('MSG', type, m?.key?.fromMe, m?.key?.remoteJid, getBody(m || {}).slice(0, 40))
-    if (!m?.message || m.key.remoteJid === 'status@broadcast') return
-    status.countMessage()
-    if (!m.key.fromMe) {
-      const who = await sock.getSender(m).catch(() => null)
-      if (who && [who.number, who.id].some(id => require('./lib/settings').isBannedId(id))) return
-    }
-    const jid = m.key.remoteJid
-    const body = getBody(m).trim()
-    if (jid.endsWith('@g.us')) require('./commands/grupos').onMessage(wrapSock(sock), m, jid).catch(e => console.error('[grupos]', e.message))
-    if (!body.startsWith(p)) {
-      // Chat privado sin prefijo: responde la IA de Goku (config.js -> AI_PRIVATE).
-      if (type === 'notify') require('./commands/ia').autoReply(sock, m, jid, body).catch(e => status.countError(e))
-      return
-    }
-    const [cmdRaw, ...rest] = body.slice(p.length).split(/\s+/)
-    const cmd = cmdRaw.toLowerCase()
-    const text = rest.join(' ')
-    // Reacción ⚡ al recibir un comando (función nativa de WhatsApp).
-    if (cfg.reactions && !m.key.fromMe) sock.sendMessage(jid, { react: { text: '⚡', key: m.key } }).catch(() => {})
-    try {
-      await runCommand(sock, m, jid, cmd, text, p)
-    } catch (e) {
-      status.countError(e)
-      console.error(e)
-      await sock.sendMessage(jid, { text: '⚠️ Ocurrió un error, intenta de nuevo.' }, { quoted: m }).catch(() => {})
-    }
-  })
+  // Subbots guardados: se reconectan solos al arrancar.
+  require('./lib/subbots').restore().catch(e => console.error('[subbots] restore:', e.message))
 }
 
 main()

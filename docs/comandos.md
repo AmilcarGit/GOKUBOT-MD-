@@ -231,3 +231,21 @@ La IA ahora escribe como una persona en WhatsApp (frases cortas, natural; si le 
 APIs gratuitas: **tikwm.com** (TikTok) y **downaria.vercel.app** (Instagram/Facebook, y respaldo de TikTok). Sin clave, downaria permite 5 pedidos cada 2 minutos; con `DOWNARIA_KEY` en Railway el límite sube.
 
 `.yts` ahora manda una sola **cajita desplegable** (botón *📥 Elegir descarga*): cada resultado es una sección con filas **🎵 Audio** y **🎬 Video**.
+
+## Subbots
+
+Cualquier persona puede convertir su propio número en un bot con los mismos comandos.
+
+| Comando | Qué hace |
+|---|---|
+| `.serbot` | (en privado) Genera la **cápsula de vinculación**: imagen con el código de 8 caracteres y botón **📋 Copiar código**. Se escribe en WhatsApp > Dispositivos vinculados > Vincular con número de teléfono |
+| `.serbot <número>` | Igual, para otro número (solo el dueño; los demás solo su propio número) |
+| `.subbots` | **Radar** en imagen con tus subbots y su estado (el dueño ve todos) |
+| `.borrarsubbot [número]` | Elimina tu subbot y su sesión (el dueño puede borrar cualquiera) |
+
+Detalles:
+- Las sesiones se guardan en el volumen (`DATA_DIR/subbots`) y se reconectan solas al reiniciar.
+- Máximo `MAX_SUBBOTS` (por defecto 3, `0` desactiva). Una persona = un subbot.
+- Si el bot principal y un subbot están en el mismo grupo, responde solo uno (el principal tiene prioridad).
+- Quien escribe desde un subbot **no** recibe permisos de dueño del bot principal.
+- Un subbot no puede crear otros subbots.
