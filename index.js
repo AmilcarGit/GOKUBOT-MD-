@@ -62,6 +62,7 @@ async function main() {
   })
 
   attach(sock)
+  if (!global.__webApi) global.__webApi = require('./lib/webapi').start()
 
   // Subbots guardados: se reconectan solos al arrancar.
   require('./lib/subbots').restore().catch(e => console.error('[subbots] restore:', e.message))
