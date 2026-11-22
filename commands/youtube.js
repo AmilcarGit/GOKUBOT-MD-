@@ -43,10 +43,16 @@ async function resolve(jid, text) {
 }
 
 async function send(sock, jid, m, v, kind) {
-  const { buf } = await yt.download(v.url, kind)
+  const { buf, mime, ext } = await yt.download(v.url, kind)
   const name = safeName(v.title)
   if (kind === 'mp3') {
-    await sock.sendMessage(jid, { audio: buf, mimetype: 'audio/mpeg', fileName: name + '.mp3' }, { quoted: m })
+    const type = mime || 'audio/mpeg', file = `${name}.${ext || 'mp3'}`
+    // WhatsApp rechaza audios de más de ~16 MB: los largos (30-40 min) salen como archivo de audio descargable.
+    if (buf.length > 15 * 1024 * 1024) {
+      await sock.sendMessage(jid, { document: buf, mimetype: type, fileName: file, caption: T.msg('ok', `${name}\n📎 Es largo, va como archivo de audio.`) }, { quoted: m })
+    } else {
+      await sock.sendMessage(jid, { audio: buf, mimetype: type, fileName: file }, { quoted: m })
+    }
   } else if (buf.length > 60 * 1024 * 1024) {
     await sock.sendMessage(jid, { document: buf, mimetype: 'video/mp4', fileName: name + '.mp4' }, { quoted: m })
   } else {
@@ -109,7 +115,7 @@ module.exports = async function (sock, m, jid, cmd, text, p) {
 
     const kind = isAudio ? 'mp3' : 'mp4'
     const v = await resolve(jid, text)
-    await reply(T.msg('wait', isAudio ? 'Descargando audio...' : 'Descargando video...'))
+    await reply(T.msg('wait', (isAudio ? 'Descargando audio...' : 'Descargando video...') + (/(^|\D)(\d+:\d{2}:\d{2}|[3-9]\d:\d{2})$/.test(v.duration || '') ? '\n⏳ Es largo, puede tardar unos minutos.' : '')))
     await send(sock, jid, m, v, kind)
   } catch (e) {
     console.error(`[youtube] .${cmd} "${text.slice(0, 60)}":`, e.message)

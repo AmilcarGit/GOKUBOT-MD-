@@ -14,5 +14,8 @@
     "@yui-bails/yui-bails": "^1.4.0",
     "pino": "^8.19.0",
     "yui-bails": "npm:@yui-bails/yui-bails@^1.4.0"
+  },
+  "optionalDependencies": {
+    "youtubei.js": ">=10.0.0"
   }
 }
