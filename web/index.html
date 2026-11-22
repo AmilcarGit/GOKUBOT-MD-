@@ -178,7 +178,12 @@ function scrollDown() { const s = $('#scroll'); s.scrollTop = s.scrollHeight }
 function bubble(m, who) {
   const d = document.createElement('div'); d.className = 'b ' + who
   if (m.image) { const i = document.createElement('img'); i.src = m.image; i.onload = scrollDown; d.append(i) }
-  if (m.video) { const v = document.createElement('video'); v.src = m.video; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true; v.controls = true; d.append(v) }
+  if (m.video) {
+    const v = document.createElement('video'); v.src = m.video; v.playsInline = true; v.controls = true
+    // Animaciones del bot: bucle mudo. Videos descargados (YouTube, TikTok…): con sonido y sin reproducción automática.
+    if (m.gif) { v.autoplay = true; v.loop = true; v.muted = true } else v.preload = 'metadata'
+    d.append(v)
+  }
   if (m.voice) { const l = document.createElement('div'); l.className = 'ft'; l.style.marginBottom = '4px'; l.textContent = '🎤 Nota de voz'; d.append(l) }
   if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; a.preload = 'metadata'; a.onerror = () => { const e = document.createElement('div'); e.className = 'ft'; e.textContent = 'No se pudo reproducir el audio en este dispositivo.'; a.replaceWith(e) }; d.append(a) }
   if (m.file) { const f = document.createElement('a'); f.href = m.file.url; f.download = m.file.name; f.textContent = '⬇️ Descargar ' + m.file.name + ' (' + (m.file.size / 1048576).toFixed(1) + ' MB)'; f.style.cssText = 'display:block;color:var(--gold);padding:6px 0'; d.append(f) }
