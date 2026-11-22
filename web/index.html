@@ -172,14 +172,16 @@ function fmt(text) {
   s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>').replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/(^|[\s(])_([^_\n]+)_(?=$|[\s).,!?])/g, '$1<i>$2</i>').replace(/~([^~\n]+)~/g, '<s>$1</s>')
   return s.replace(/\u0000(\d+)\u0000/g, (_, i) => `<pre><button data-copy="${esc(blocks[i]).replace(/"/g, '&quot;')}">Copiar</button>${blocks[i]}</pre>`)
 }
-function save() { store.set('gb_hist', JSON.stringify(history.slice(-100).map(m => ({ ...m, image: undefined, video: undefined, audio: undefined })))) }
+function save() { store.set('gb_hist', JSON.stringify(history.slice(-100).map(m => ({ ...m, image: undefined, video: undefined, audio: undefined, file: undefined })))) }
 function scrollDown() { const s = $('#scroll'); s.scrollTop = s.scrollHeight }
 
 function bubble(m, who) {
   const d = document.createElement('div'); d.className = 'b ' + who
   if (m.image) { const i = document.createElement('img'); i.src = m.image; i.onload = scrollDown; d.append(i) }
   if (m.video) { const v = document.createElement('video'); v.src = m.video; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true; v.controls = true; d.append(v) }
-  if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; d.append(a) }
+  if (m.voice) { const l = document.createElement('div'); l.className = 'ft'; l.style.marginBottom = '4px'; l.textContent = '🎤 Nota de voz'; d.append(l) }
+  if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; a.preload = 'metadata'; a.onerror = () => { const e = document.createElement('div'); e.className = 'ft'; e.textContent = 'No se pudo reproducir el audio en este dispositivo.'; a.replaceWith(e) }; d.append(a) }
+  if (m.file) { const f = document.createElement('a'); f.href = m.file.url; f.download = m.file.name; f.textContent = '⬇️ Descargar ' + m.file.name + ' (' + (m.file.size / 1048576).toFixed(1) + ' MB)'; f.style.cssText = 'display:block;color:var(--gold);padding:6px 0'; d.append(f) }
   if (m.text) { const t = document.createElement('div'); t.innerHTML = fmt(m.text); d.append(t) }
   if (m.poll) { const p = document.createElement('div'); p.className = 'poll'; p.innerHTML = '📊 <b>' + esc(m.poll.name) + '</b><br>' + m.poll.options.map(o => '• ' + esc(o)).join('<br>'); d.append(p) }
   if (m.footer) { const f = document.createElement('span'); f.className = 'ft'; f.textContent = m.footer; d.append(f) }
