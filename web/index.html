@@ -185,7 +185,7 @@ function bubble(m, who) {
     d.append(v)
   }
   if (m.voice) { const l = document.createElement('div'); l.className = 'ft'; l.style.marginBottom = '4px'; l.textContent = '🎤 Nota de voz'; d.append(l) }
-  if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; a.preload = 'metadata'; a.onerror = () => { const e = document.createElement('div'); e.className = 'ft'; e.textContent = 'No se pudo reproducir el audio en este dispositivo.'; a.replaceWith(e) }; d.append(a) }
+  if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; a.preload = 'metadata'; a.onerror = () => { const e = document.createElement('a'); e.href = m.audio; e.download = 'audio'; e.textContent = '⬇️ No se pudo reproducir aquí. Toca para descargar el audio.'; e.style.cssText = 'display:block;color:var(--gold);padding:6px 0'; a.replaceWith(e) }; d.append(a) }
   if (m.file) { const f = document.createElement('a'); f.href = m.file.url; f.download = m.file.name; f.textContent = '⬇️ Descargar ' + m.file.name + ' (' + (m.file.size / 1048576).toFixed(1) + ' MB)'; f.style.cssText = 'display:block;color:var(--gold);padding:6px 0'; d.append(f) }
   if (m.text) { const t = document.createElement('div'); t.innerHTML = fmt(m.text); d.append(t) }
   if (m.poll) { const p = document.createElement('div'); p.className = 'poll'; p.innerHTML = '📊 <b>' + esc(m.poll.name) + '</b><br>' + m.poll.options.map(o => '• ' + esc(o)).join('<br>'); d.append(p) }
