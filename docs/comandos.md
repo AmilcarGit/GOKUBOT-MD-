@@ -288,3 +288,6 @@ El banco da 1 % diario de interés (máx. 200/día) y lo guardado ahí no se pue
 
 ## 📂 Menú
 `.menu` muestra un banner animado y una cajita desplegable con 10 secciones. `.menu <sección>` abre una; `.menu todo` muestra la lista completa.
+
+## 📱 App web instalable
+El bot sirve su propia app en `/app/` (PWA en `web/`): login por nombre, chat con los mismos comandos, buscador de comandos y vinculación de WhatsApp. Abre `https://<tu-dominio>/app/` en el teléfono y elige «Instalar».

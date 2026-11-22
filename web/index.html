@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a1040">
+<link rel="manifest" href="/app/manifest.webmanifest">
+<link rel="icon" href="/app/icon-192.png">
+<link rel="apple-touch-icon" href="/app/icon-192.png">
+<title>GokuBot</title>
+<style>
+:root{--bg:#0b0820;--bg2:#151036;--card:#1d1748;--line:#33296e;--tx:#f1eeff;--mut:#a79ed6;--gold:#ffcd40;--org:#ff8a1f;--ok:#4ade80;--me:#3b2a8f}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(1200px 600px at 50% -10%,#2a1a66 0,var(--bg) 60%);color:var(--tx);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+#app{display:flex;flex-direction:column;height:100%;padding-top:env(safe-area-inset-top)}
+.view{display:none;flex:1;min-height:0;flex-direction:column}
+.view.on{display:flex}
+header{padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);background:rgba(21,16,54,.8);backdrop-filter:blur(8px)}
+header h1{font-size:18px;margin:0;flex:1;background:linear-gradient(90deg,var(--gold),var(--org));-webkit-background-clip:text;background-clip:text;color:transparent}
+header button{background:none;border:1px solid var(--line);border-radius:10px;padding:6px 10px;color:var(--mut);font-size:13px}
+nav{display:flex;border-top:1px solid var(--line);background:var(--bg2);padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:none;border:0;padding:9px 2px 7px;color:var(--mut);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:20px;line-height:1}
+nav button.on{color:var(--gold)}
+.scroll{flex:1;overflow-y:auto;padding:14px 16px;-webkit-overflow-scrolling:touch}
+/* login */
+#login{align-items:center;justify-content:center;padding:24px;text-align:center;gap:14px}
+#login .logo{width:104px;height:104px;border-radius:26px;box-shadow:0 0 50px #ff8a1f66}
+#login h2{margin:0;font-size:28px;background:linear-gradient(90deg,var(--gold),var(--org));-webkit-background-clip:text;background-clip:text;color:transparent}
+#login p{margin:0;color:var(--mut);max-width:320px}
+input,textarea{width:100%;background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:14px;padding:13px 14px;font:inherit;outline:none}
+input:focus,textarea:focus{border-color:var(--org)}
+.btn{background:linear-gradient(90deg,var(--org),var(--gold));color:#2a1200;border:0;border-radius:14px;padding:13px 18px;font-weight:700;width:100%}
+.btn:disabled{opacity:.5}
+.btn.sec{background:var(--card);color:var(--tx);border:1px solid var(--line);font-weight:600}
+/* chat */
+#msgs{display:flex;flex-direction:column;gap:8px}
+.b{max-width:88%;padding:9px 12px;border-radius:16px;word-wrap:break-word;overflow-wrap:anywhere;white-space:pre-wrap}
+.b.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.b.me{align-self:flex-end;background:var(--me);border-bottom-right-radius:4px}
+.b img,.b video{max-width:100%;border-radius:10px;display:block;margin-bottom:6px}
+.b audio{width:100%;margin-bottom:6px}
+.b .ft{display:block;color:var(--mut);font-size:12px;margin-top:6px}
+.b pre{background:#0d0a28;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0;white-space:pre-wrap;font:13px/1.35 ui-monospace,monospace;position:relative}
+.b pre button{float:right;margin:0 0 4px 8px;background:var(--card);border:1px solid var(--line);border-radius:8px;font-size:12px;padding:2px 8px}
+.b code{background:#0d0a28;border-radius:6px;padding:1px 5px;font-family:ui-monospace,monospace;font-size:14px}
+.btns{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.btns button{background:#2c2266;border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:14px;text-align:center}
+.btns button:active{background:var(--line)}
+.poll{margin-top:6px;border:1px dashed var(--line);border-radius:10px;padding:8px}
+.typing{align-self:flex-start;color:var(--mut);font-size:14px;padding:4px 8px}
+.typing i{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--mut);animation:bl 1s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.composer{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--bg2)}
+.composer input{flex:1}
+.composer button{width:48px;flex:none;border:0;border-radius:14px;background:linear-gradient(90deg,var(--org),var(--gold));color:#2a1200;font-size:20px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 12px 0;background:var(--bg2)}
+.chips button{flex:none;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:5px 12px;font-size:13px;color:var(--mut)}
+/* sheet */
+#sheet{position:fixed;inset:0;background:#000a;display:none;align-items:flex-end;z-index:20}
+#sheet.on{display:flex}
+#sheet .in{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-height:75%;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+#sheet h3{margin:0;padding:14px 16px 6px;font-size:15px;color:var(--gold)}
+#sheet .rows{overflow-y:auto;padding:0 8px 10px}
+#sheet .row{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 10px}
+#sheet .row small{display:block;color:var(--mut)}
+/* comandos */
+.sec-card{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.sec-card>button{width:100%;text-align:left;background:none;border:0;padding:12px 14px;display:flex;flex-direction:column}
+.sec-card small{color:var(--mut)}
+.sec-card .list{display:none;padding:0 10px 10px;flex-wrap:wrap;gap:6px}
+.sec-card.open .list{display:flex}
+.sec-card .list button{background:#2c2266;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:13px}
+/* misc */
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.card h3{margin:0 0 6px}
+.card ol{margin:6px 0 0;padding-left:20px;color:var(--mut)}
+.code{font:700 34px ui-monospace,monospace;letter-spacing:6px;text-align:center;color:var(--gold);padding:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#000d;border:1px solid var(--line);padding:10px 16px;border-radius:12px;opacity:0;transition:.25s;pointer-events:none;z-index:30;max-width:90%;text-align:center}
+#toast.on{opacity:1}
+#install{display:none;margin:8px 12px 0;padding:8px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;align-items:center;gap:8px}
+#install button{margin-left:auto;background:var(--org);color:#2a1200;border:0;border-radius:8px;padding:5px 10px;font-weight:700}
+</style>
+</head>
+<body>
+<div id="app">
+  <section id="login" class="view on">
+    <img class="logo" src="/app/icon-192.png" alt="">
+    <h2>GokuBot</h2>
+    <p>Chatea con Goku, juega, gana Zenis y usa todos los comandos del bot. No necesitas WhatsApp.</p>
+    <div style="width:100%;max-width:340px;display:flex;flex-direction:column;gap:10px">
+      <input id="name" maxlength="20" placeholder="Elige tu nombre" autocomplete="nickname">
+      <button class="btn" id="enter">Entrar</button>
+    </div>
+  </section>
+
+  <section id="v-chat" class="view">
+    <header><h1>🐉 GokuBot</h1><button id="clear">Limpiar</button></header>
+    <div id="install"><span>📲 Instala GokuBot en tu teléfono</span><button id="doInstall">Instalar</button></div>
+    <div class="scroll" id="scroll"><div id="msgs"></div></div>
+    <div class="chips" id="chips"></div>
+    <form class="composer" id="form"><input id="text" placeholder="Habla con Goku o escribe .menu" autocomplete="off" enterkeyhint="send"><button>➤</button></form>
+  </section>
+
+  <section id="v-cmd" class="view">
+    <header><h1>📚 Comandos</h1></header>
+    <div class="scroll"><input id="q" placeholder="Buscar comando…" style="margin-bottom:12px"><div id="secs"></div></div>
+  </section>
+
+  <section id="v-link" class="view">
+    <header><h1>🔗 Vincular WhatsApp</h1></header>
+    <div class="scroll">
+      <div class="card"><h3>Es opcional y gratis</h3><div style="color:var(--mut)">Vincula tu número y tendrás tu propio bot con los mismos comandos, personalizable y con panel.</div></div>
+      <div class="card">
+        <input id="num" inputmode="numeric" placeholder="Tu número con código de país, ej. 51999888777">
+        <div style="height:10px"></div>
+        <button class="btn" id="getCode">Obtener código</button>
+        <div id="codeBox" style="display:none">
+          <div class="code" id="code"></div>
+          <button class="btn sec" id="copyCode">Copiar código</button>
+          <ol><li>Abre WhatsApp en ese número.</li><li>Ajustes → Dispositivos vinculados → Vincular un dispositivo.</li><li>Toca «Vincular con el número de teléfono» y escribe el código.</li><li>Luego escribe <b>.mibot</b> en el chat para ver tu panel.</li></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="v-me" class="view">
+    <header><h1>👤 Mi cuenta</h1></header>
+    <div class="scroll">
+      <div class="card"><h3 id="who">—</h3><div style="color:var(--mut)">Tu progreso se guarda en este dispositivo. Si cierras sesión, perderás el acceso a esta cuenta.</div></div>
+      <div class="card"><h3>Atajos</h3><div class="grid" id="shorts"></div></div>
+      <button class="btn sec" id="logout">Cerrar sesión</button>
+    </div>
+  </section>
+
+  <nav id="nav">
+    <button data-v="v-chat" class="on"><span>💬</span>Chat</button>
+    <button data-v="v-cmd"><span>📚</span>Comandos</button>
+    <button data-v="v-link"><span>🔗</span>Vincular</button>
+    <button data-v="v-me"><span>👤</span>Cuenta</button>
+  </nav>
+</div>
+<div id="sheet"><div class="in"><h3 id="sheetT"></h3><div class="rows" id="sheetR"></div></div></div>
+<div id="toast"></div>
+<script>
+const API = ''   // mismo servidor que el bot
+const $ = s => document.querySelector(s)
+const store = { get: k => { try { return localStorage.getItem(k) } catch { return null } }, set: (k, v) => { try { localStorage.setItem(k, v) } catch {} }, del: k => { try { localStorage.removeItem(k) } catch {} } }
+let token = store.get('gb_token'), uname = store.get('gb_name'), history = []
+try { history = JSON.parse(store.get('gb_hist') || '[]') } catch {}
+
+function toast(t) { const e = $('#toast'); e.textContent = t; e.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('on'), 2600) }
+async function api(path, body, ms = 100000) {
+  const ctl = new AbortController(); const timer = setTimeout(() => ctl.abort(), ms)
+  try {
+    const r = await fetch(API + path, { method: body ? 'POST' : 'GET', headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) }, body: body ? JSON.stringify(body) : undefined, signal: ctl.signal })
+    const j = await r.json().catch(() => ({}))
+    if (r.status === 401 && token) { logout(true); throw new Error(j.error || 'Sesión caducada') }
+    if (!r.ok) throw new Error(j.error || 'Error ' + r.status)
+    return j
+  } catch (e) { throw e.name === 'AbortError' ? new Error('Tardó demasiado, intenta de nuevo.') : e }
+  finally { clearTimeout(timer) }
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
+function fmt(text) {
+  const blocks = []
+  let s = esc(text).replace(/```([\s\S]*?)```/g, (_, c) => { blocks.push(c.replace(/^\n/, '')); return `\u0000${blocks.length - 1}\u0000` })
+  s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>').replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/(^|[\s(])_([^_\n]+)_(?=$|[\s).,!?])/g, '$1<i>$2</i>').replace(/~([^~\n]+)~/g, '<s>$1</s>')
+  return s.replace(/\u0000(\d+)\u0000/g, (_, i) => `<pre><button data-copy="${esc(blocks[i]).replace(/"/g, '&quot;')}">Copiar</button>${blocks[i]}</pre>`)
+}
+function save() { store.set('gb_hist', JSON.stringify(history.slice(-100).map(m => ({ ...m, image: undefined, video: undefined, audio: undefined })))) }
+function scrollDown() { const s = $('#scroll'); s.scrollTop = s.scrollHeight }
+
+function bubble(m, who) {
+  const d = document.createElement('div'); d.className = 'b ' + who
+  if (m.image) { const i = document.createElement('img'); i.src = m.image; i.onload = scrollDown; d.append(i) }
+  if (m.video) { const v = document.createElement('video'); v.src = m.video; v.autoplay = true; v.loop = true; v.muted = true; v.playsInline = true; v.controls = true; d.append(v) }
+  if (m.audio) { const a = document.createElement('audio'); a.src = m.audio; a.controls = true; d.append(a) }
+  if (m.text) { const t = document.createElement('div'); t.innerHTML = fmt(m.text); d.append(t) }
+  if (m.poll) { const p = document.createElement('div'); p.className = 'poll'; p.innerHTML = '📊 <b>' + esc(m.poll.name) + '</b><br>' + m.poll.options.map(o => '• ' + esc(o)).join('<br>'); d.append(p) }
+  if (m.footer) { const f = document.createElement('span'); f.className = 'ft'; f.textContent = m.footer; d.append(f) }
+  if (m.buttons?.length) {
+    const w = document.createElement('div'); w.className = 'btns'
+    for (const b of m.buttons) {
+      const e = document.createElement('button'); e.textContent = b.text
+      e.onclick = () => b.sections ? openSheet(b) : b.copy ? copy(b.copy) : b.url ? window.open(b.url, '_blank', 'noopener') : b.command && send(b.command)
+      w.append(e)
+    }
+    d.append(w)
+  }
+  return d
+}
+function add(m, who, persist = true) { $('#msgs').append(bubble(m, who)); if (persist) { history.push({ ...m, who }); save() } scrollDown() }
+function copy(t) { (navigator.clipboard?.writeText(t) || Promise.reject()).then(() => toast('📋 Copiado'), () => { const a = document.createElement('textarea'); a.value = t; document.body.append(a); a.select(); try { document.execCommand('copy'); toast('📋 Copiado') } catch { toast('No se pudo copiar') } a.remove() }) }
+document.addEventListener('click', e => { const c = e.target.closest('[data-copy]'); if (c) copy(c.dataset.copy) })
+
+function openSheet(b) {
+  $('#sheetT').textContent = b.text
+  const R = $('#sheetR'); R.innerHTML = ''
+  for (const s of b.sections) {
+    if (s.title) { const h = document.createElement('div'); h.style.cssText = 'color:var(--mut);font-size:12px;padding:8px 10px 2px'; h.textContent = s.title; R.append(h) }
+    for (const r of s.rows) {
+      const e = document.createElement('button'); e.className = 'row'; e.innerHTML = esc(r.title) + (r.description ? `<small>${esc(r.description)}</small>` : '')
+      e.onclick = () => { closeSheet(); r.command ? send(r.command) : r.info && add({ text: r.info }, 'bot') }
+      R.append(e)
+    }
+  }
+  $('#sheet').classList.add('on')
+}
+function closeSheet() { $('#sheet').classList.remove('on') }
+$('#sheet').onclick = e => { if (e.target.id === 'sheet') closeSheet() }
+
+let busy = false
+async function send(text) {
+  text = String(text).trim(); if (!text || busy) return
+  show('v-chat'); add({ text }, 'me'); busy = true
+  const t = document.createElement('div'); t.className = 'typing'; t.innerHTML = 'Goku está escribiendo <i></i><i></i><i></i>'; $('#msgs').append(t); scrollDown()
+  try { const r = await api('/api/cmd', { text }); for (const m of r.messages || []) add(m, 'bot') }
+  catch (e) { add({ text: '⚠️ ' + e.message }, 'bot', false) }
+  finally { t.remove(); busy = false }
+}
+$('#form').onsubmit = e => { e.preventDefault(); const v = $('#text').value; $('#text').value = ''; send(v) }
+$('#clear').onclick = () => { history = []; save(); $('#msgs').innerHTML = ''; toast('Chat limpio') }
+const QUICK = ['.menu', '.perfil', '.diario', '.entrenar', '.misiones', '.banco', '.trabajar', '.mascota', '.ranking', '.trivia']
+$('#chips').innerHTML = QUICK.map(c => `<button data-c="${c}">${c}</button>`).join('')
+$('#chips').onclick = e => { const b = e.target.closest('[data-c]'); if (b) send(b.dataset.c) }
+
+// navegación
+function show(v) {
+  document.querySelectorAll('.view').forEach(x => x.classList.toggle('on', x.id === v))
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.v === v))
+  if (v === 'v-chat') setTimeout(scrollDown, 30)
+  if (v === 'v-cmd') loadMenu()
+}
+$('#nav').onclick = e => { const b = e.target.closest('button'); if (b) show(b.dataset.v) }
+
+// comandos
+let menuData = null
+async function loadMenu() {
+  if (!menuData) { try { menuData = await api('/api/menu') } catch (e) { return toast(e.message) } }
+  renderMenu()
+}
+function renderMenu() {
+  const q = $('#q').value.trim().toLowerCase(), box = $('#secs'); box.innerHTML = ''
+  for (const s of menuData.sections) {
+    const cmds = q ? s.commands.filter(c => c.toLowerCase().includes(q)) : s.commands
+    if (!cmds.length) continue
+    const d = document.createElement('div'); d.className = 'sec-card' + (q ? ' open' : '')
+    d.innerHTML = `<button><b>${esc(s.title)}</b><small>${esc(s.desc)}</small></button><div class="list"></div>`
+    d.firstChild.onclick = () => d.classList.toggle('open')
+    for (const c of cmds) { const b = document.createElement('button'); b.textContent = c; b.onclick = () => pick(c); d.lastChild.append(b) }
+    box.append(d)
+  }
+  if (!box.children.length) box.innerHTML = '<div style="color:var(--mut);text-align:center;padding:30px">Nada encontrado</div>'
+}
+$('#q').oninput = () => menuData && renderMenu()
+function pick(c) {
+  const first = c.split(' / ')[0].trim(), name = first.split(' ')[0]
+  if (/[<\[]|@|\(/.test(first)) { show('v-chat'); $('#text').value = name + ' '; $('#text').focus() } else send(name)
+}
+
+// vincular
+$('#getCode').onclick = async () => {
+  const n = $('#num').value.replace(/\D/g, ''); if (n.length < 8) return toast('Escribe tu número con código de país')
+  const b = $('#getCode'); b.disabled = true; b.textContent = 'Generando…'
+  try { const r = await api('/api/vincular', { number: n }); $('#code').textContent = r.code; $('#codeBox').style.display = 'block'; toast('Código listo'); poll() }
+  catch (e) { toast(e.message) } finally { b.disabled = false; b.textContent = 'Obtener código' }
+}
+$('#copyCode').onclick = () => copy($('#code').textContent)
+let polling
+function poll() { clearInterval(polling); polling = setInterval(async () => { if (!$('#v-link').classList.contains('on')) return; try { const r = await api('/api/me'); (r.inbox || []).forEach(i => toast(i.text)) } catch {} }, 30000) }
+
+// cuenta
+const SHORTS = ['.perfil', '.diario', '.banco', '.mascota', '.misiones', '.ranking', '.mibot', '.menu']
+$('#shorts').innerHTML = SHORTS.map(c => `<button class="btn sec" data-c="${c}">${c}</button>`).join('')
+$('#shorts').onclick = e => { const b = e.target.closest('[data-c]'); if (b) send(b.dataset.c) }
+function logout(silent) { store.del('gb_token'); store.del('gb_name'); store.del('gb_hist'); token = null; history = []; $('#msgs').innerHTML = ''; $('#login').classList.add('on'); document.querySelectorAll('.view:not(#login)').forEach(v => v.classList.remove('on')); $('#nav').style.display = 'none'; if (!silent) toast('Sesión cerrada') }
+$('#logout').onclick = () => confirm('¿Cerrar sesión? Perderás esta cuenta.') && logout()
+
+// entrada
+$('#enter').onclick = async () => {
+  const name = $('#name').value.trim(); if (name.length < 2) return toast('Elige un nombre de al menos 2 letras')
+  const b = $('#enter'); b.disabled = true
+  try { const r = await api('/api/login', { name }); token = r.token; uname = r.name; store.set('gb_token', token); store.set('gb_name', uname); start(true) }
+  catch (e) { toast(e.message) } finally { b.disabled = false }
+}
+$('#name').onkeydown = e => { if (e.key === 'Enter') $('#enter').click() }
+function start(fresh) {
+  $('#login').classList.remove('on'); $('#nav').style.display = 'flex'; $('#who').textContent = uname
+  $('#msgs').innerHTML = ''; history.forEach(m => $('#msgs').append(bubble(m, m.who)))
+  show('v-chat')
+  if (fresh || !history.length) add({ text: `¡Hola, ${uname}! Soy *GokuBot* 🐉\nEscríbeme lo que quieras o toca un atajo de abajo. Con *.menu* ves todo lo que puedo hacer.` }, 'bot')
+}
+if (token) start(false); else $('#nav').style.display = 'none'
+
+// instalación
+let deferred
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; $('#install').style.display = 'flex' })
+$('#doInstall').onclick = async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice.catch(() => {}); deferred = null; $('#install').style.display = 'none' }
+addEventListener('appinstalled', () => { $('#install').style.display = 'none' })
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' }).catch(() => {})
+</script>
+</body>
+</html>
