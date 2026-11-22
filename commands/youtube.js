@@ -38,7 +38,15 @@ async function resolve(jid, text) {
     if (!item) throw Object.assign(new Error(`Elige un número del 1 al ${cached.results.length}`), { friendly: true })
     return item
   }
-  if (yt.isUrl(arg)) return { title: '', url: arg.split(/\s+/)[0] }
+  if (yt.isUrl(arg)) {
+    const url = arg.split(/\s+/)[0]
+    // Título y canal del enlace (oEmbed público de YouTube, sin clave).
+    try {
+      const r = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url), { signal: AbortSignal.timeout(5000) })
+      if (r.ok) { const d = await r.json(); return { title: d.title || '', channel: d.author_name || '', url, thumb: d.thumbnail_url || '' } }
+    } catch {}
+    return { title: '', url }
+  }
   return (await yt.search(arg, 1))[0]
 }
 

@@ -172,7 +172,48 @@ function fmt(text) {
   s = s.replace(/`([^`\n]+)`/g, '<code>$1</code>').replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/(^|[\s(])_([^_\n]+)_(?=$|[\s).,!?])/g, '$1<i>$2</i>').replace(/~([^~\n]+)~/g, '<s>$1</s>')
   return s.replace(/\u0000(\d+)\u0000/g, (_, i) => `<pre><button data-copy="${esc(blocks[i]).replace(/"/g, '&quot;')}">Copiar</button>${blocks[i]}</pre>`)
 }
-function save() { store.set('gb_hist', JSON.stringify(history.slice(-100).map(m => ({ ...m, image: undefined, video: undefined, audio: undefined, file: undefined })))) }
+// Medios guardados en el teléfono (IndexedDB) para que sigan al recargar la página.
+const idb = {
+  db: null,
+  open() { return this.db ||= new Promise((ok, no) => { try { const r = indexedDB.open('gokubot', 1); r.onupgradeneeded = () => r.result.createObjectStore('media'); r.onsuccess = () => ok(r.result); r.onerror = () => no(r.error) } catch (e) { no(e) } }) },
+  async tx(mode, fn) { const db = await this.open(); return new Promise((ok, no) => { const t = db.transaction('media', mode), st = t.objectStore('media'), req = fn(st); t.oncomplete = () => ok(req?.result); t.onerror = () => no(t.error) }) },
+  put(k, v) { return this.tx('readwrite', s => s.put(v, k)).catch(() => {}) },
+  get(k) { return this.tx('readonly', s => s.get(k)).catch(() => null) },
+  keys() { return this.tx('readonly', s => s.getAllKeys()).catch(() => []) },
+  del(k) { return this.tx('readwrite', s => s.delete(k)).catch(() => {}) },
+  clear() { return this.tx('readwrite', s => s.clear()).catch(() => {}) }
+}
+const MEDIA_KINDS = ['image', 'video', 'audio', 'file']
+const urlOf = (m, k) => k === 'file' ? m.file?.url : m[k]
+// Guarda en segundo plano los archivos de un mensaje nuevo.
+async function keepMedia(m) {
+  const kinds = []
+  for (const k of MEDIA_KINDS) {
+    const u = urlOf(m, k); if (!u) continue
+    try {
+      const r = await fetch(u); if (!r.ok) continue
+      const blob = await r.blob(); if (blob.size > 80 * 1048576) continue
+      await idb.put(m.mid + ':' + k, blob); kinds.push(k)
+    } catch {}
+  }
+  m.kinds = kinds; save()
+}
+// Al recargar: vuelve a poner los archivos guardados en cada mensaje.
+async function hydrate(m) {
+  if (!m.mid || !m.kinds?.length) return m
+  for (const k of m.kinds) {
+    const blob = await idb.get(m.mid + ':' + k); if (!blob) continue
+    const u = URL.createObjectURL(blob)
+    if (k === 'file') m.file = { ...(m.file || {}), url: u }; else m[k] = u
+  }
+  return m
+}
+async function cleanMedia() {
+  const keep = new Set(history.filter(m => m.mid).map(m => m.mid))
+  for (const k of await idb.keys()) if (!keep.has(String(k).split(':')[0])) idb.del(k)
+}
+
+function save() { store.set('gb_hist', JSON.stringify(history.slice(-100).map(m => ({ ...m, image: undefined, video: undefined, audio: undefined, file: m.file ? { name: m.file.name, size: m.file.size } : undefined })))) }
 function scrollDown() { const s = $('#scroll'); s.scrollTop = s.scrollHeight }
 
 function bubble(m, who) {
@@ -201,7 +242,13 @@ function bubble(m, who) {
   }
   return d
 }
-function add(m, who, persist = true) { $('#msgs').append(bubble(m, who)); if (persist) { history.push({ ...m, who }); save() } scrollDown() }
+function add(m, who, persist = true) {
+  const hasMedia = MEDIA_KINDS.some(k => urlOf(m, k))
+  if (persist && hasMedia) m.mid = Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
+  $('#msgs').append(bubble(m, who))
+  if (persist) { const entry = { ...m, who }; history.push(entry); save(); if (hasMedia) keepMedia(entry) }
+  scrollDown()
+}
 function copy(t) { (navigator.clipboard?.writeText(t) || Promise.reject()).then(() => toast('📋 Copiado'), () => { const a = document.createElement('textarea'); a.value = t; document.body.append(a); a.select(); try { document.execCommand('copy'); toast('📋 Copiado') } catch { toast('No se pudo copiar') } a.remove() }) }
 document.addEventListener('click', e => { const c = e.target.closest('[data-copy]'); if (c) copy(c.dataset.copy) })
 
@@ -231,7 +278,7 @@ async function send(text) {
   finally { t.remove(); busy = false }
 }
 $('#form').onsubmit = e => { e.preventDefault(); const v = $('#text').value; $('#text').value = ''; send(v) }
-$('#clear').onclick = () => { history = []; save(); $('#msgs').innerHTML = ''; toast('Chat limpio') }
+$('#clear').onclick = () => { history = []; save(); idb.clear(); $('#msgs').innerHTML = ''; toast('Chat limpio') }
 const QUICK = ['.menu', '.perfil', '.diario', '.entrenar', '.misiones', '.banco', '.trabajar', '.mascota', '.ranking', '.trivia']
 $('#chips').innerHTML = QUICK.map(c => `<button data-c="${c}">${c}</button>`).join('')
 $('#chips').onclick = e => { const b = e.target.closest('[data-c]'); if (b) send(b.dataset.c) }
@@ -285,7 +332,7 @@ function poll() { clearInterval(polling); polling = setInterval(async () => { if
 const SHORTS = ['.perfil', '.diario', '.banco', '.mascota', '.misiones', '.ranking', '.mibot', '.menu']
 $('#shorts').innerHTML = SHORTS.map(c => `<button class="btn sec" data-c="${c}">${c}</button>`).join('')
 $('#shorts').onclick = e => { const b = e.target.closest('[data-c]'); if (b) send(b.dataset.c) }
-function logout(silent) { store.del('gb_token'); store.del('gb_name'); store.del('gb_hist'); token = null; history = []; $('#msgs').innerHTML = ''; $('#login').classList.add('on'); document.querySelectorAll('.view:not(#login)').forEach(v => v.classList.remove('on')); $('#nav').style.display = 'none'; if (!silent) toast('Sesión cerrada') }
+function logout(silent) { store.del('gb_token'); store.del('gb_name'); store.del('gb_hist'); idb.clear(); token = null; history = []; $('#msgs').innerHTML = ''; $('#login').classList.add('on'); document.querySelectorAll('.view:not(#login)').forEach(v => v.classList.remove('on')); $('#nav').style.display = 'none'; if (!silent) toast('Sesión cerrada') }
 $('#logout').onclick = () => confirm('¿Cerrar sesión? Perderás esta cuenta.') && logout()
 
 // entrada
@@ -296,10 +343,12 @@ $('#enter').onclick = async () => {
   catch (e) { toast(e.message) } finally { b.disabled = false }
 }
 $('#name').onkeydown = e => { if (e.key === 'Enter') $('#enter').click() }
-function start(fresh) {
+async function start(fresh) {
   $('#login').classList.remove('on'); $('#nav').style.display = 'flex'; $('#who').textContent = uname
-  $('#msgs').innerHTML = ''; history.forEach(m => $('#msgs').append(bubble(m, m.who)))
   show('v-chat')
+  $('#msgs').innerHTML = ''
+  for (const m of history) { await hydrate(m); $('#msgs').append(bubble(m, m.who)) }
+  scrollDown(); cleanMedia()
   if (fresh || !history.length) add({ text: `¡Hola, ${uname}! Soy *GokuBot* 🐉\nEscríbeme lo que quieras o toca un atajo de abajo. Con *.menu* ves todo lo que puedo hacer.` }, 'bot')
 }
 if (token) start(false); else $('#nav').style.display = 'none'
