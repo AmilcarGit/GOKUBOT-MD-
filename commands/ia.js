@@ -30,7 +30,7 @@ async function sendVoice(sock, m, jid, reply) {
     sock.sendPresenceUpdate('recording', jid).catch(() => {})
     const audio = await voice.speak(reply)
     await sock.sendMessage(jid, { audio, mimetype: 'audio/ogg; codecs=opus', ptt: true }, { quoted: m })
-    return true
+    return !sock.isWeb   // en la app también se envía el texto para poder leerlo
   } catch (error) {
     console.error('[voz]', error.message)
     return false
@@ -49,9 +49,9 @@ function codeBlocks(reply) {
 const ACTIONS = {
   poder: 'poder', esferas: 'esferas', perfil: 'perfil', tarjeta: 'tarjeta', nevada: 'nevada', fuegos: 'fuegos',
   dragon: 'dragon', onda: 'onda', top: 'top', coleccion: 'coleccion', trivia: 'trivia', menu: 'menu', menui: 'menui', diario: 'diario', racha: 'racha', mascota: 'mascota',
-  play: 'play', video: 'ytmp4', buscar: 'yts'
+  play: 'play', video: 'ytmp4', buscar: 'yts', audiogoku: 'audiogoku'
 }
-const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su recompensa diaria, su racha, su mascota, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. MÚSICA Y VIDEO: si piden una canción, ponerla o escucharla, responde corto y natural ("va, ahí te la pongo 🎶") y añade [[accion:play|artista y canción]]; si piden el video, [[accion:video|nombre]]; si piden buscar o ver opciones, [[accion:buscar|texto]]. Siempre incluye el nombre tras la barra | y no pidas confirmación. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
+const ACTIONS_PROMPT = ` ACCIONES: si el usuario te pide mostrar su poder, sus esferas, su perfil, una tarjeta navideña (con su nombre), una animación de nevada, fuegos artificiales, dragón u onda de energía, el ranking, su recompensa diaria, su racha, su mascota, su colección de guerreros, una trivia o el menú, responde con una frase corta y añade AL FINAL, en una línea nueva, la etiqueta [[accion:nombre]] o [[accion:tarjeta|nombre]]. MÚSICA Y VIDEO: si piden una canción, ponerla o escucharla, responde corto y natural ("va, ahí te la pongo 🎶") y añade [[accion:play|artista y canción]]; si piden el video, [[accion:video|nombre]]; si piden buscar o ver opciones, [[accion:buscar|texto]]. AUDIO DE GOKU: si piden oír tu voz real, un audio de Goku, que grites o hables como Goku, responde corto y añade [[accion:audiogoku]]. Siempre incluye el nombre tras la barra | y no pidas confirmación. Nombres válidos: ${Object.keys(ACTIONS).join(', ')}. No inventes otras acciones ni uses la etiqueta si no te lo piden. También puedes explicar qué hace el bot: juegos RPG, guerreros originales, imágenes y animaciones, audios, grupos, trivia y recordatorios (si piden un recordatorio, diles que escriban por ejemplo "recuérdame en 10 minutos sacar la pizza").`
 const ACTION_TAG = /\[\[\s*accion\s*:\s*([a-z]+)\s*(?:\|([^\]]*))?\]\]/i
 
 // Recordatorios en lenguaje natural: "recuérdame en 10 minutos sacar la pizza".

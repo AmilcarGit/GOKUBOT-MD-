@@ -11,6 +11,7 @@ const handlers = [
   require('./ia'),               // IA de Goku (.ia)
   require('./interactivo'),      // Trivia, menú con botones, encuesta, recordar
   require('./whatsapp'),         // Funciones de WhatsApp: copiar, contacto, ubicación, repo, cargar
+  require('./audios'),           // Audio real de Goku
   require('./economia'),         // Banco, trabajos, robos y mercado
   require('./partidas'),         // Juegos multijugador
   require('./moderacion'),       // Moderación de grupos

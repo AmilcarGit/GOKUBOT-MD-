@@ -14,7 +14,7 @@ const CATEGORIES = p => [
   ['YouTube', [`${p}yts <texto>`, `${p}play <texto>`, `${p}ytmp3 <texto|link|nº>`, `${p}ytmp4 <texto|link|nº>`]],
   ['Guerreros originales', [`${p}invocar (250 Zenis)`, `${p}coleccion`, `${p}guerrero <nombre|nº>`, `${p}guerreros`]],
   ['Juegos Z', [`${p}slot <apuesta>`, `${p}ruleta <apuesta> <rojo|negro|verde>`, `${p}regalar @usuario <zenis>`, `${p}ricos`]],
-  ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
+  ['Imagen y audio', [`${p}meme arriba | abajo`, `${p}bn / ${p}negativo / ${p}espejo / ${p}blur / ${p}pixelar`, `${p}mp3`, `${p}audiogoku (audio real de Goku)`, `${p}rapido / ${p}lento / ${p}ardilla / ${p}grave / ${p}eco`]],
   ['Interactivo', [`${p}trivia (gana Zenis)`, `${p}menui (menú con botones)`, `${p}encuesta pregunta | a | b`, `${p}recordar 30m texto`]],
   ['Subbots', [`${p}serbot (crea tu subbot)`, `${p}subbots (radar)`, `${p}borrarsubbot`, `${p}mibot (panel)`, `${p}configbot`, `${p}miprefijo`, `${p}mibienvenida`, `${p}miia`, `${p}mipersona`, `${p}pausarbot / ${p}reanudarbot`, `${p}reiniciarbot`]],
   ['Descargas', [`${p}tiktok <enlace>`, `${p}ig <enlace>`, `${p}fb <enlace>`, `${p}dl <enlace> (detecta solo)`, `${p}ttmp3 <enlace de TikTok>`]],
